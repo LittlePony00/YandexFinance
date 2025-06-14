@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">YandexFinance</string>
+    <string name="account">Счёт</string>
+    <string name="income">Доходы</string>
+    <string name="articles">Статьи</string>
+    <string name="outcome">Расходы</string>
+    <string name="settings">Настройки</string>
+    <string name="my_account">Мой счёт</string>
+    <string name="my_articles">Мой статьи</string>
+    <string name="income_today">Доходы сегодня</string>
+    <string name="outcome_today">Расходы сегодня</string>
 </resources>
