@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -103,7 +102,6 @@ private fun IncomeTodayScreenContent(
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         ListItem(
-            modifier = Modifier.height(72.dp),
             onClick = {},
             contentPaddings = PaddingValues(
                 vertical = 16.dp,
@@ -119,7 +117,6 @@ private fun IncomeTodayScreenContent(
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         ListItem(
-            modifier = Modifier.height(72.dp),
             onClick = {},
             content = {
                 Text(text = "Зарплата")
@@ -140,7 +137,6 @@ private fun IncomeTodayScreenContent(
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         ListItem(
-            modifier = Modifier.height(72.dp),
             onClick = {},
             contentPaddings = PaddingValues(
                 vertical = 23.5.dp,
