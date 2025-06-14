@@ -96,6 +96,7 @@ private fun SettingsScreenContent(
             .fillMaxSize()
     ) {
         ListItem(
+            modifier = Modifier.height(56.dp),
             onClick = {},
             isOnClickEnabled = false,
             content = {
@@ -107,7 +108,7 @@ private fun SettingsScreenContent(
             ),
             trailingContent = {
                 Switch(
-                    modifier = Modifier.height(24.dp),
+                    modifier = Modifier.height(32.dp),
                     checked = settingsData.value.isDarkMode,
                     onCheckedChange = {
                         onThemeChange(it)
@@ -116,89 +117,28 @@ private fun SettingsScreenContent(
             }
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        ListItem(
-            onClick = {},
-            contentPaddings = PaddingValues(
-                vertical = 16.dp,
-                horizontal = 16.dp
-            ),
-            content = {
-                Text(text = "Основной цвет")
-            },
-            trailingContent = {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .rotate(-90f),
-                    imageVector = Icons.Default.ArrowDropDown,
-                    tint = MaterialTheme.colorScheme.surfaceVariant,
-                    contentDescription = null
-                )
-            }
-        )
-        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        ListItem(
-            onClick = {},
-            contentPaddings = PaddingValues(
-                vertical = 16.dp,
-                horizontal = 16.dp
-            ),
-            content = {
-                Text(text = "Звуки")
-            },
-            trailingContent = {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .rotate(-90f),
-                    imageVector = Icons.Default.ArrowDropDown,
-                    tint = MaterialTheme.colorScheme.surfaceVariant,
-                    contentDescription = null
-                )
-            }
-        )
-        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        ListItem(
-            onClick = {},
-            contentPaddings = PaddingValues(
-                vertical = 16.dp,
-                horizontal = 16.dp
-            ),
-            content = {
-                Text(text = "Хаптики")
-            },
-            trailingContent = {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .rotate(-90f),
-                    imageVector = Icons.Default.ArrowDropDown,
-                    tint = MaterialTheme.colorScheme.surfaceVariant,
-                    contentDescription = null
-                )
-            }
-        )
-        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        ListItem(
-            onClick = {},
-            contentPaddings = PaddingValues(
-                vertical = 16.dp,
-                horizontal = 16.dp
-            ),
-            content = {
-                Text(text = "О программе")
-            },
-            trailingContent = {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .rotate(-90f),
-                    imageVector = Icons.Default.ArrowDropDown,
-                    tint = MaterialTheme.colorScheme.surfaceVariant,
-                    contentDescription = null
-                )
-            }
-        )
-        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        settingsData.value.chapters.forEach { chapter ->
+            ListItem(
+                onClick = {},
+                contentPaddings = PaddingValues(
+                    vertical = 16.dp,
+                    horizontal = 16.dp
+                ),
+                content = {
+                    Text(text = chapter.title)
+                },
+                trailingContent = {
+                    Icon(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .rotate(-90f),
+                        imageVector = Icons.Default.ArrowDropDown,
+                        tint = MaterialTheme.colorScheme.surfaceVariant,
+                        contentDescription = null
+                    )
+                }
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        }
     }
 }

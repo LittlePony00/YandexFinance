@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import com.yandex.finance.R
 import com.yandex.finance.core.ui.component.icon.Search
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
+import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.feature.articles.domain.UiArticleModel
 import com.yandex.finance.feature.articles.presentation.viewmodel.MyArticlesViewModel
 import io.github.composegears.valkyrie.TestIcon
@@ -90,10 +92,16 @@ private fun MyArticlesScreenContent(
     LazyColumn(modifier = modifier.fillMaxSize()) {
         item {
             TextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
                 value = "",
                 placeholder = {
-                    Text(text = "Найти статью")
+                    Text(
+                        text = "Найти статью",
+                        style = RobotoBodyLargeStyle,
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    )
                 },
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -105,6 +113,7 @@ private fun MyArticlesScreenContent(
                     Icon(
                         modifier = Modifier.size(24.dp),
                         imageVector = Icons.Search,
+                        tint = MaterialTheme.colorScheme.surfaceVariant,
                         contentDescription = Icons.Search.name
                     )
                 }

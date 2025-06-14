@@ -2,6 +2,7 @@ package com.yandex.finance.feature.settings.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yandex.finance.feature.settings.domain.UiChapterModel
 import com.yandex.finance.feature.settings.domain.UiSettingsModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,16 @@ class SettingsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<State>(State.Loading)
 
     val uiState: StateFlow<State> = _uiState.asStateFlow()
+
+    private val chapters = listOf(
+        UiChapterModel(title = "Основной цвет"),
+        UiChapterModel(title = "Звуки"),
+        UiChapterModel(title = "Хаптики"),
+        UiChapterModel(title = "Код пароль"),
+        UiChapterModel(title = "Синхронизация"),
+        UiChapterModel(title = "Язык"),
+        UiChapterModel(title = "О программе"),
+    )
 
     init {
         loadData()
@@ -37,6 +48,10 @@ class SettingsViewModel : ViewModel() {
     private fun loadData() {
         viewModelScope.launch {
             delay(500)
+
+            _settingsUiState.value = _settingsUiState.value.copy(
+                chapters = chapters
+            )
             _uiState.value = State.Content(_settingsUiState.asStateFlow())
         }
     }

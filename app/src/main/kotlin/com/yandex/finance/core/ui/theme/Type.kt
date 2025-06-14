@@ -41,26 +41,28 @@ val RobotoTitleLargeStyle = RobotoStyle.copy(
 
 val RobotoBodyLargeStyle = RobotoStyle.copy(
     fontSize = 16.sp,
-    letterSpacing = .5.sp
+    lineHeight = 24.sp,
+    letterSpacing = .5.sp,
+    fontWeight = FontWeight.Normal
 )
 
 val RobotoBodyMediumStyle = RobotoStyle.copy(
     fontSize = 14.sp,
     lineHeight = 20.sp,
     letterSpacing = .25.sp,
-    fontWeight = FontWeight(400),
+    fontWeight = FontWeight.Normal,
 )
 
 val RobotoLabelLargeStyle = RobotoStyle.copy(
     fontSize = 14.sp,
     lineHeight = 20.sp,
     letterSpacing = .1.sp,
-    fontWeight = FontWeight(500)
+    fontWeight = FontWeight.Medium
 )
 
 val RobotoLabelMediumStyle = RobotoStyle.copy(
     fontSize = 12.sp,
     lineHeight = 16.sp,
     letterSpacing = .5.sp,
-    fontWeight = FontWeight(500)
+    fontWeight = FontWeight.Medium
 )
