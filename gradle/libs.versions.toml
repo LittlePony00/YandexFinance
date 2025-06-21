@@ -7,7 +7,7 @@ mockk = "1.13.9"
 org-jetbrains-kotlin = "2.1.21"
 org-jetbrains-kotlin-jvm = "1.9.25"
 org-jetbrains-coroutines = "1.10.2"
-org-jetbrains-kotlin-serialization = "2.1.20"
+org-jetbrains-kotlin-serialization = "1.9.25"
 org-jetbrains-kotlinx-serialization-json = "1.8.1"
 # endregion
 
@@ -43,6 +43,14 @@ org-slf4j = "2.0.16"
 lottie = "6.5.1"
 #endregion
 
+# region Koin
+io-koin = "3.5.3"
+# endregion
+
+# region ktor
+io-ktor-client = "2.3.12"
+# endregion
+
 [libraries]
 
 #Android
@@ -59,6 +67,24 @@ jakewharton-timber = { group = "com.jakewharton.timber", name = "timber", versio
 #Lottie
 airbnb-lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
+#Koin
+io-insert-koin-androidx = { module = "io.insert-koin:koin-android", version.ref = "io-koin" }
+io-insert-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "io-koin" }
+io-insert-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "io-koin" }
+
+#Ktor
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinTest" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+org-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "org-slf4j" }
+org-slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "org-slf4j" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "io-ktor-client" }
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "io-ktor-client" }
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "io-ktor-client" }
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "io-ktor-client" }
+ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "io-ktor-client" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "io-ktor-client" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "io-ktor-client" }
 
 #Compose
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -104,6 +130,8 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "or
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "org-jetbrains-kotlin-serialization" }
 
 #Plugins defined by this project
+yandex-finance-android-ktor = { id = "yandex.finance.android.ktor", version = "unspecified" }
+yandex-finance-android-koin = { id = "yandex.finance.android.koin", version = "unspecified" }
 yandex-finance-android-timber = { id = "yandex.finance.android.timber", version = "unspecified" }
 yandex-finance-android-library = { id = "yandex.finance.android.library", version = "unspecified" }
 yandex-finance-android-application = { id = "yandex.finance.android.application", version = "unspecified" }

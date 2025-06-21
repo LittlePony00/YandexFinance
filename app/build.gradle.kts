@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.yandex.finance.android.application)
+    alias(libs.plugins.yandex.finance.android.koin)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
@@ -30,6 +31,23 @@ android {
 }
 
 dependencies {
+
+    /**
+     *  Module dependencies
+     */
+    // region module dependencies
+    implementation(project(":core:ui"))
+    implementation(project(":core:data"))
+    implementation(project(":core:common"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:network"))
+    implementation(project(":core:navigation"))
+    implementation(project(":feature:income"))
+    implementation(project(":feature:outcome"))
+    implementation(project(":feature:account"))
+    implementation(project(":feature:settings"))
+    implementation(project(":feature:articles"))
+    // endregion
 
     /**
      * Core dependencies
