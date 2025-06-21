@@ -114,7 +114,9 @@ private fun MyAccountScreenContent(
                 Text(text = "Баланс")
             },
             navigationContent = {
-                Image(
+                accountUiState.value.icon?.let {
+                    Text(text = it)
+                } ?: Image(
                     imageVector = Icons.TestIcon,
                     contentDescription = Icons.TestIcon.name
                 )

@@ -1,8 +1,6 @@
 package com.yandex.finance.feature.income.presentation.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yandex.finance.core.ui.component.button.FabButton
 import com.yandex.finance.core.ui.component.icon.History
-import com.yandex.finance.core.ui.component.icon.TestIcon
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
 import com.yandex.finance.core.ui.theme.RobotoBodyMediumStyle
@@ -140,10 +137,9 @@ private fun IncomeTodayScreenContent(
                 },
                 onClick = {},
                 navigationContent = {
-                    Image(
-                        imageVector = Icons.TestIcon,
-                        contentDescription = Icons.TestIcon.name
-                    )
+                    income.category.emoji?.let {
+                        Text(text = it)
+                    }
                 },
                 trailingContent = {
                     Text(

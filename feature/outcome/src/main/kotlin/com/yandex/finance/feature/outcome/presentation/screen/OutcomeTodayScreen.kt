@@ -142,10 +142,9 @@ private fun OutcomeTodayScreenContent(
                 },
                 onClick = {},
                 navigationContent = {
-                    Image(
-                        imageVector = Icons.TestIcon,
-                        contentDescription = Icons.TestIcon.name
-                    )
+                    outcome.category.emoji?.let {
+                        Text(text = it)
+                    }
                 },
                 trailingContent = {
                     Text(
