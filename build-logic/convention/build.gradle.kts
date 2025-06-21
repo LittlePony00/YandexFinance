@@ -45,5 +45,15 @@ gradlePlugin {
             id = "yandex.finance.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+
+        register("androidKtor") {
+            id = "yandex.finance.android.ktor"
+            implementationClass = "AndroidKtorConventionPlugin"
+        }
+
+        register("androidKoin") {
+            id = "yandex.finance.android.koin"
+            implementationClass = "AndroidKoinConventionPlugin"
+        }
     }
 }

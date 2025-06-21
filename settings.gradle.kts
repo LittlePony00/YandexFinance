@@ -22,4 +22,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "YandexFinance"
 include(":app")
- 
+include(":core:ui")
+include(":core:data")
+include(":core:common")
+include(":core:domain")
+include(":core:network")
+include(":core:navigation")
+include(":feature:income")
+include(":feature:outcome")
+include(":feature:account")
+include(":feature:settings")
+include(":feature:articles")
