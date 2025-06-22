@@ -8,6 +8,7 @@ val provideAccountModule = module {
     
     viewModel<MyAccountViewModel> { 
         MyAccountViewModel(
+            id = get(),
             accountRepository = get()
         )
     }

@@ -46,7 +46,7 @@ fun PrimaryButton(
     progressIndicatorColor: Color = MaterialTheme.colorScheme.onPrimary,
 ) {
     Button(
-        modifier = modifier,
+        modifier = modifier.height(ButtonDefaults.MinHeight),
         enabled = isEnabled,
         onClick = onButtonClick,
         contentPadding = PaddingValues(

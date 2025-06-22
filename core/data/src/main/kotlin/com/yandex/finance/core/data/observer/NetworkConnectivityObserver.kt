@@ -8,7 +8,6 @@ import android.net.NetworkCapabilities
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import timber.log.Timber
 
 interface NetworkConnectivityObserver {
@@ -41,28 +40,23 @@ class NetworkConnectivityObserverImpl(context: Context) : NetworkConnectivityObs
                     val connected = networkCapabilities.hasCapability(
                         NetworkCapabilities.NET_CAPABILITY_VALIDATED
                     )
+
                     trySend(connected)
+                    Timber.d("onCapabilitiesChanged reached to the end. status: $connected")
                 }
 
                 override fun onUnavailable() {
-                    Timber.d("onUnavailable was called")
+                    Timber.d("onUnavailable was called. status: false")
                     super.onUnavailable()
 
                     trySend(false)
                 }
 
                 override fun onLost(network: Network) {
-                    Timber.d("onLost was called")
+                    Timber.d("onLost was called. status: false")
                     super.onLost(network)
 
                     trySend(false)
-                }
-
-                override fun onAvailable(network: Network) {
-                    Timber.d("onAvailable was called")
-                    super.onAvailable(network)
-
-                    trySend(true)
                 }
             }
 
@@ -71,7 +65,7 @@ class NetworkConnectivityObserverImpl(context: Context) : NetworkConnectivityObs
             awaitClose {
                 connectivityManager.unregisterNetworkCallback(callback)
             }
-        }.distinctUntilChanged()
+        }
 
     private fun getCurrentNetworkState(): Boolean {
         return try {

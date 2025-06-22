@@ -1,4 +1,4 @@
-package com.yandex.finance.core.ui.component.utils
+package com.yandex.finance.core.ui.util
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope

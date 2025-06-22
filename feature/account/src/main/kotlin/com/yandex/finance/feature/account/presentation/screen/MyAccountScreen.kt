@@ -1,6 +1,5 @@
 package com.yandex.finance.feature.account.presentation.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,10 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yandex.finance.core.ui.component.button.FabButton
+import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.component.icon.Edit
-import com.yandex.finance.core.ui.component.icon.TestIcon
+import com.yandex.finance.core.ui.component.icon.EmojiWrapper
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
+import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
+import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.account.R
 import com.yandex.finance.feature.account.domain.UiAccountModel
 import com.yandex.finance.feature.account.presentation.viewmodel.MyAccountViewModel
@@ -81,7 +83,18 @@ fun MyAccountScreen(
                         .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Error") // Пока так
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = stringResource(R.string.error_text),
+                            style = RobotoBodyLargeStyle
+                        )
+                        PrimaryButton(
+                            text = stringResource(R.string.retry_text),
+                            onButtonClick = {
+                                state.retry.invoke()
+                            }
+                        )
+                    }
                 }
             }
 
@@ -111,18 +124,23 @@ private fun MyAccountScreenContent(
             ),
             containerColor = MaterialTheme.colorScheme.secondary,
             content = {
-                Text(text = "Баланс")
+                Text(text = stringResource(R.string.balance))
             },
             navigationContent = {
-                accountUiState.value.icon?.let {
-                    Text(text = it)
-                } ?: Image(
-                    imageVector = Icons.TestIcon,
-                    contentDescription = Icons.TestIcon.name
+                EmojiWrapper(
+                    text = "",
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    emoji = accountUiState.value.icon
                 )
             },
             trailingContent = {
-                Text(text = "${accountUiState.value.balance} ${accountUiState.value.currency.type}")
+                Text(
+                    text = "${
+                        accountUiState.value.balance.formatWithSeparator()
+                    } ${
+                        accountUiState.value.currency.type
+                    }"
+                )
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = Icons.AutoMirrored.Filled.KeyboardArrowRight.name,
@@ -139,7 +157,7 @@ private fun MyAccountScreenContent(
             ),
             containerColor = MaterialTheme.colorScheme.secondary,
             content = {
-                Text(text = "Валюта")
+                Text(text = stringResource(R.string.currency))
             },
             trailingContent = {
                 Text(text = accountUiState.value.currency.type)

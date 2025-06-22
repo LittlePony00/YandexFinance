@@ -1,8 +1,9 @@
 package com.yandex.finance.feature.outcome.presentation.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,16 +26,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.ui.component.button.FabButton
+import com.yandex.finance.core.ui.component.button.PrimaryButton
+import com.yandex.finance.core.ui.component.icon.EmojiWrapper
 import com.yandex.finance.core.ui.component.icon.History
-import com.yandex.finance.core.ui.component.icon.TestIcon
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
-import com.yandex.finance.core.ui.provider.LocalSnackBarHostState
-import com.yandex.finance.core.ui.theme.RobotoBodyMediumStyle
+import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.core.ui.theme.RobotoLabelMediumStyle
+import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.outcome.R
-import com.yandex.finance.feature.outcome.domain.UiOutcomeTodayModel
+import com.yandex.finance.feature.outcome.domain.UiOutcomeMainModel
 import com.yandex.finance.feature.outcome.presentation.viewmodel.OutcomeTodayViewModel
 
 @Composable
@@ -44,7 +47,6 @@ fun OutcomeTodayScreen(
     modifier: Modifier = Modifier,
 ) {
     val uiState = outcomeTodayVM.uiState.collectAsStateWithLifecycle()
-    val snackBarHostState = LocalSnackBarHostState.current
 
     Scaffold(
         topBar = {
@@ -88,7 +90,18 @@ fun OutcomeTodayScreen(
                         .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Error") // Пока так
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = stringResource(R.string.error_text),
+                            style = RobotoBodyLargeStyle
+                        )
+                        PrimaryButton(
+                            text = stringResource(R.string.retry_text),
+                            onButtonClick = {
+                                state.retry.invoke()
+                            }
+                        )
+                    }
                 }
             }
 
@@ -106,7 +119,7 @@ fun OutcomeTodayScreen(
 
 @Composable
 private fun OutcomeTodayScreenContent(
-    outcomeTodayUiState: State<UiOutcomeTodayModel>,
+    outcomeTodayUiState: State<UiOutcomeMainModel>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
@@ -120,10 +133,30 @@ private fun OutcomeTodayScreenContent(
                 isOnClickEnabled = false,
                 containerColor = MaterialTheme.colorScheme.secondary,
                 content = {
-                    Text(text = "Всего")
+                    Text(text = stringResource(R.string.total))
                 },
                 trailingContent = {
-                    Text(text = outcomeTodayUiState.value.sumOfAllOutcomes.toString())
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = outcomeTodayUiState
+                                .value
+                                .sumOfAllOutcomes
+                                .toInt()
+                                .toString()
+                                .formatWithSeparator()
+                        )
+                        Text(
+                            text = " ${
+                                outcomeTodayUiState
+                                    .value
+                                    .outcomes
+                                    .firstOrNull()
+                                    ?.account
+                                    ?.currency
+                                    ?.type ?: CurrencyType.RUB.type
+                            }"
+                        )
+                    }
                 }
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -131,33 +164,34 @@ private fun OutcomeTodayScreenContent(
 
         items(outcomeTodayUiState.value.outcomes) { outcome ->
             ListItem(
+                onClick = {},
+                isOnClickEnabled = false,
                 content = {
                     Text(text = outcome.category.name)
-                    outcome.comment?.let {
+                    if (!outcome.comment.isNullOrEmpty()) {
                         Text(
-                            text = it,
-                            style = RobotoBodyMediumStyle
+                            text = outcome.comment,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = RobotoLabelMediumStyle
                         )
                     }
                 },
-                onClick = {},
                 navigationContent = {
-                    outcome.category.emoji?.let {
-                        Text(text = it)
-                    }
+                    EmojiWrapper(
+                        text = outcome.category.name,
+                        emoji = outcome.category.emoji,
+                    )
                 },
                 trailingContent = {
-                    Text(
-                        modifier = Modifier,
-                        text = "${outcome.account.balance} ${outcome.account.currency}",
-                        softWrap = false,
-                        overflow = TextOverflow.Clip
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = "${outcome.amount.toDouble().toInt()} ")
+                        Text(text = outcome.account.currency.type)
+                    }
                     Icon(
-                        modifier = Modifier.size(24.dp),
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                         tint = MaterialTheme.colorScheme.tertiary,
-                        contentDescription = null
+                        contentDescription = Icons.AutoMirrored.Filled.KeyboardArrowRight.name
                     )
                 }
             )

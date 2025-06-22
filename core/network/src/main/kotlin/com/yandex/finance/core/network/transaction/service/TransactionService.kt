@@ -1,6 +1,5 @@
 package com.yandex.finance.core.network.transaction.service
 
-import com.yandex.finance.core.network.category.model.NetworkCategory
 import com.yandex.finance.core.network.safeResponse
 import com.yandex.finance.core.network.transaction.model.NetworkCreatedTransaction
 import com.yandex.finance.core.network.transaction.model.NetworkTransaction

@@ -19,7 +19,6 @@ import com.yandex.finance.core.ui.provider.LocalSnackBarHostState
 import com.yandex.finance.core.ui.provider.showMessage
 import com.yandex.finance.core.ui.provider.showShortMessage
 import com.yandex.finance.core.ui.theme.YandexFinanceTheme
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -57,7 +56,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun observeNetworkConnectivity(snackBarHostState: SnackbarHostState) {
-        lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.isConnected.collectLatest { isConnected ->
                     Timber.d("isConnected: $isConnected, wasDisconnected: ${mainViewModel.wasDisconnected.value}")

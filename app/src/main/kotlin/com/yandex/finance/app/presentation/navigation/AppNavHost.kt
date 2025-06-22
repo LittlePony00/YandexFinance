@@ -32,6 +32,7 @@ fun AppNavHost(
 ) {
     val snackBarHostState = LocalSnackBarHostState.current
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+
     val shouldShowNavBar = navBackStackEntry?.destination?.hierarchy?.any {
         it.hasRoute(SplashGraph::class)
     } == false

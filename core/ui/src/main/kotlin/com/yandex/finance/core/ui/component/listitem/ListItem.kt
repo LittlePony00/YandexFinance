@@ -38,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.yandex.finance.core.ui.component.icon.TestIcon
-import com.yandex.finance.core.ui.component.utils.SpacerWithWeight
 import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.core.ui.theme.RobotoBodyMediumStyle
 import com.yandex.finance.core.ui.theme.YandexFinanceTheme
@@ -81,6 +80,7 @@ fun ListItem(
             ) {
                 navigationContent?.invoke(this)
                 Column(
+                    modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(
                         space = verticalSpaceBetweenItems,
                         alignment = Alignment.CenterVertically
@@ -89,7 +89,6 @@ fun ListItem(
                 ) {
                     content()
                 }
-                SpacerWithWeight(weight = 1f)
                 trailingContent?.invoke(this)
             }
         }

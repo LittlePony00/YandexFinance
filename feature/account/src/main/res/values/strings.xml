@@ -1,3 +1,7 @@
 <resources>
     <string name="my_account">Мой счёт</string>
+    <string name="balance">Баланс</string>
+    <string name="currency">Валюта</string>
+    <string name="error_text">Ошбика</string>
+    <string name="retry_text">Повторить</string>
 </resources>

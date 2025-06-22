@@ -19,6 +19,13 @@ dependencies {
     // endregion
 
     /**
+     * Date dependencies
+     */
+    // region datetime
+    implementation(libs.kotlinx.datetime)
+    // endregion
+
+    /**
      * Navigation dependencies
      */
     // region navigation

@@ -2,24 +2,24 @@ package com.yandex.finance.feature.income.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yandex.finance.core.domain.repository.TransactionRepository
-import com.yandex.finance.feature.income.domain.UiIncomeTodayModel
-import com.yandex.finance.feature.income.domain.asUiModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import com.yandex.finance.core.common.Id
+import com.yandex.finance.feature.income.domain.GetUiIncomeTodayModelByPeriodUseCase
+import com.yandex.finance.feature.income.domain.UiIncomeMainModel
+import com.yandex.finance.core.ui.util.dateTimeComponentsFormat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.format
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class IncomeTodayViewModel(
-    private val transactionRepository: TransactionRepository
+    private val id: Id,
+    private val getUiIncomeTodayModelByPeriodUseCase: GetUiIncomeTodayModelByPeriodUseCase
 ) : ViewModel() {
 
-    private val _incomeTodayUiState = MutableStateFlow(UiIncomeTodayModel.initial)
+    private val _incomeTodayUiState = MutableStateFlow(UiIncomeMainModel.initial)
 
     private val _uiState = MutableStateFlow<State>(State.Loading)
 
@@ -33,46 +33,34 @@ class IncomeTodayViewModel(
 
         data object Loading : State
 
-        data object Error : State
+        @JvmInline
+        value class Error(val retry: () -> Unit) : State
 
-        data class Content(val incomeTodayUiState: StateFlow<UiIncomeTodayModel>) : State
+        data class Content(val incomeTodayUiState: StateFlow<UiIncomeMainModel>) : State
     }
 
     private fun loadData() {
         Timber.d("loadData was called")
 
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch {
             _uiState.value = State.Loading
 
-            val startDate = SimpleDateFormat("yyyy-MM-dd").format(Date()) // Будет изменено на kotlinx date time
-            val endDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+            val startDate = Clock.System.now().format(dateTimeComponentsFormat)
+            val endDate = Clock.System.now().format(dateTimeComponentsFormat)
 
-            transactionRepository.fetchTransactionsByPeriod(
-                id = "1",
+            getUiIncomeTodayModelByPeriodUseCase(
+                id = id,
                 startDate = startDate,
                 endDate = endDate
             ).onSuccess {
-                Timber.d("loadData was called with success: $it")
+                Timber.d("getUiIncomeTodayModelByPeriodUseCase was called with success: $it")
 
-                var sum = 0
-                val transactions = it.filter { transaction ->
-                    transaction.category.isIncome
-                }.asUiModel()
-                transactions.forEach { transaction ->
-                    sum += transaction.amount.substringBefore('.').toInt() // Пока так
-                }
-
-                _incomeTodayUiState.value = _incomeTodayUiState.value.copy(
-                    sumOfAllIncomes = sum,
-                    incomes = transactions
-                )
-
+                _incomeTodayUiState.value = it
                 _uiState.value = State.Content(_incomeTodayUiState.asStateFlow())
-
             }.onFailure {
-                Timber.e(it, "loadData was called with error: ")
+                Timber.e(it, "getUiIncomeTodayModelByPeriodUseCase was called with error: ")
 
-                _uiState.value = State.Error
+                _uiState.value = State.Error(retry = { loadData() })
             }
         }
     }

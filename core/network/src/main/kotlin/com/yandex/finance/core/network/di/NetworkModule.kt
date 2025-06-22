@@ -24,13 +24,19 @@ val provideNetworkModule = module {
 
     single {
         HttpClient(Android) {
+            engine {
+                connectTimeout = 5000
+                socketTimeout = 5000
+            }
+
             install(ContentNegotiation) {
                 json(get())
             }
 
             install(HttpTimeout) {
-                requestTimeoutMillis = 30000
-                connectTimeoutMillis = 10000
+                requestTimeoutMillis = 5000
+                connectTimeoutMillis = 5000
+                socketTimeoutMillis = 5000
             }
 
             install(DefaultRequest) {

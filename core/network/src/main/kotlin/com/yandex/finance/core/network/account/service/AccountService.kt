@@ -1,6 +1,5 @@
 package com.yandex.finance.core.network.account.service
 
-import com.yandex.finance.core.network.BuildConfig
 import com.yandex.finance.core.network.account.model.NetworkAccountDetailed
 import com.yandex.finance.core.network.account.model.NetworkAccountHistory
 import com.yandex.finance.core.network.account.model.NetworkAccountWithoutId
@@ -9,8 +8,6 @@ import com.yandex.finance.core.network.safeResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
@@ -28,7 +25,7 @@ interface AccountService {
 
     suspend fun createAccount(body: NetworkAccountWithoutId): Result<NetworkAccountDetailed>
 
-    suspend fun fetchAccount(id: String = BuildConfig.ID): Result<NetworkMainAccount>
+    suspend fun fetchAccount(id: String): Result<NetworkMainAccount>
 
     suspend fun updateAccount(
         id: String,

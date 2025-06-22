@@ -15,6 +15,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
+    implementation(project(":core:common"))
     implementation(project(":core:navigation"))
 
     /**
@@ -22,6 +23,13 @@ dependencies {
      */
     // region core
     implementation(libs.androidx.core.ktx)
+    // endregion
+
+    /**
+     * Date dependencies
+     */
+    // region datetime
+    implementation(libs.kotlinx.datetime)
     // endregion
 
     /**

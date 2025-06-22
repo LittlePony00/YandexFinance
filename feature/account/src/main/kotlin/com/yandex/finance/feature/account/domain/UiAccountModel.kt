@@ -1,6 +1,6 @@
 package com.yandex.finance.feature.account.domain
 
-import kotlin.reflect.typeOf
+import com.yandex.finance.core.domain.model.CurrencyType
 
 data class UiAccountModel(
     val id: Int,
@@ -18,23 +18,5 @@ data class UiAccountModel(
                 icon = String(),
                 currency = CurrencyType.RUB
             )
-    }
-}
-
-enum class CurrencyType(val type: String) {
-    RUB(type = "₽"),
-    USD(type ="$"),
-    EUR(type = "€"),
-    ;
-
-    companion object {
-
-        fun convertFromString(type: String): CurrencyType {
-            return when(type) {
-                "USD" -> USD
-                "EUR" -> EUR
-                else -> RUB
-            }
-        }
     }
 }

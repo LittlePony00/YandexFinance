@@ -1,4 +1,10 @@
 <resources>
     <string name="outcome_today">Расходы сегодня</string>
     <string name="my_history">Моя история</string>
+    <string name="beginning">Начало</string>
+    <string name="end">Конец</string>
+    <string name="sum">Сумма</string>
+    <string name="total">Всего</string>
+    <string name="error_text">Ошбика</string>
+    <string name="retry_text">Повторить</string>
 </resources>

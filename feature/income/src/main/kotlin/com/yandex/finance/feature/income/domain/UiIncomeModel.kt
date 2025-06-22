@@ -1,5 +1,6 @@
 package com.yandex.finance.feature.income.domain
 
+import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.domain.model.account.Account
 import com.yandex.finance.core.domain.model.category.Category
 import com.yandex.finance.core.domain.model.transaction.Transaction
@@ -14,24 +15,6 @@ data class UiIncomeModel(
     val category: UiCategory,
     val transactionDate: String
 )
-
-enum class CurrencyType(val type: String) {
-    RUB(type = "₽"),
-    USD(type ="$"),
-    EUR(type = "€"),
-    ;
-
-    companion object {
-
-        fun convertFromString(type: String): CurrencyType {
-            return when(type) {
-                "USD" -> USD
-                "EUR" -> EUR
-                else -> RUB
-            }
-        }
-    }
-}
 
 data class UiAccount(
     val id: Int,

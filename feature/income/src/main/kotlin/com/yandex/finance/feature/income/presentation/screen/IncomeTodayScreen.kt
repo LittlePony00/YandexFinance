@@ -1,7 +1,9 @@
 package com.yandex.finance.feature.income.presentation.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,13 +26,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.ui.component.button.FabButton
+import com.yandex.finance.core.ui.component.button.PrimaryButton
+import com.yandex.finance.core.ui.component.icon.EmojiWrapper
 import com.yandex.finance.core.ui.component.icon.History
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
-import com.yandex.finance.core.ui.theme.RobotoBodyMediumStyle
+import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
+import com.yandex.finance.core.ui.theme.RobotoLabelMediumStyle
+import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.income.R
-import com.yandex.finance.feature.income.domain.UiIncomeTodayModel
+import com.yandex.finance.feature.income.domain.UiIncomeMainModel
 import com.yandex.finance.feature.income.presentation.viewmodel.IncomeTodayViewModel
 
 @Composable
@@ -83,7 +90,18 @@ fun IncomeTodayScreen(
                         .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Error") // Пока так
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = stringResource(R.string.error_text),
+                            style = RobotoBodyLargeStyle
+                        )
+                        PrimaryButton(
+                            text = stringResource(R.string.retry_text),
+                            onButtonClick = {
+                                state.retry.invoke()
+                            }
+                        )
+                    }
                 }
             }
 
@@ -102,7 +120,7 @@ fun IncomeTodayScreen(
 @Composable
 private fun IncomeTodayScreenContent(
     modifier: Modifier = Modifier,
-    incomeTodayUiState: State<UiIncomeTodayModel>
+    incomeTodayUiState: State<UiIncomeMainModel>
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         item {
@@ -115,10 +133,30 @@ private fun IncomeTodayScreenContent(
                 isOnClickEnabled = false,
                 containerColor = MaterialTheme.colorScheme.secondary,
                 content = {
-                    Text(text = "Всего")
+                    Text(text = stringResource(R.string.total))
                 },
                 trailingContent = {
-                    Text(text = incomeTodayUiState.value.sumOfAllIncomes.toString())
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = incomeTodayUiState
+                                .value
+                                .sumOfAllIncomes
+                                .toInt()
+                                .toString()
+                                .formatWithSeparator()
+                        )
+                        Text(
+                            text = " ${
+                                incomeTodayUiState
+                                    .value
+                                    .incomes
+                                    .firstOrNull()
+                                    ?.account
+                                    ?.currency
+                                    ?.type ?: CurrencyType.RUB.type
+                            }"
+                        )
+                    }
                 }
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -126,33 +164,34 @@ private fun IncomeTodayScreenContent(
 
         items(incomeTodayUiState.value.incomes) { income ->
             ListItem(
+                onClick = {},
+                isOnClickEnabled = false,
                 content = {
                     Text(text = income.category.name)
-                    income.comment?.let {
+                    if (!income.comment.isNullOrEmpty()) {
                         Text(
-                            text = it,
-                            style = RobotoBodyMediumStyle
+                            text = income.comment,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = RobotoLabelMediumStyle
                         )
                     }
                 },
-                onClick = {},
                 navigationContent = {
-                    income.category.emoji?.let {
-                        Text(text = it)
-                    }
+                    EmojiWrapper(
+                        text = income.category.name,
+                        emoji = income.category.emoji,
+                    )
                 },
                 trailingContent = {
-                    Text(
-                        modifier = Modifier,
-                        text = "${income.account.balance} ${income.account.currency}",
-                        softWrap = false,
-                        overflow = TextOverflow.Clip
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = "${income.amount.toDouble().toInt()} ")
+                        Text(text = income.account.currency.type)
+                    }
                     Icon(
-                        modifier = Modifier.size(24.dp),
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                         tint = MaterialTheme.colorScheme.tertiary,
-                        contentDescription = null
+                        contentDescription = Icons.AutoMirrored.Filled.KeyboardArrowRight.name
                     )
                 }
             )

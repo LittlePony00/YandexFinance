@@ -66,3 +66,10 @@ val RobotoLabelMediumStyle = RobotoStyle.copy(
     letterSpacing = .5.sp,
     fontWeight = FontWeight.Medium
 )
+
+val RobotoEmojiStyle = RobotoStyle.copy(
+    fontSize = 10.sp,
+    lineHeight = 22.sp,
+    letterSpacing = 0.sp,
+    fontWeight = FontWeight(500)
+)
