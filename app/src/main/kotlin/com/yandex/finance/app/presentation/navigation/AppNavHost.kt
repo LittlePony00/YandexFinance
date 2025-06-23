@@ -21,8 +21,8 @@ import com.yandex.finance.core.ui.component.navBar.YandexFinanceNavigationBar
 import com.yandex.finance.core.ui.provider.LocalSnackBarHostState
 import com.yandex.finance.feature.account.presentation.navigation.accountGraph
 import com.yandex.finance.feature.articles.presentation.navigation.articlesGraph
-import com.yandex.finance.feature.income.presentation.navigation.incomeNavGraph
-import com.yandex.finance.feature.outcome.presentation.navigation.outcomeGraph
+import com.yandex.finance.income.impl.presentation.navigation.incomeNavGraph
+import com.yandex.finance.outcome.impl.presentation.navigation.outcomeGraph
 import com.yandex.finance.feature.settings.presentation.navigation.settingsNavGraph
 
 @Composable

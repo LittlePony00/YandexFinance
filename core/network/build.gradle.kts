@@ -38,4 +38,11 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.ktor.client.core)
+
+    /**
+     * Date dependencies
+     */
+    // region datetime
+    implementation(libs.kotlinx.datetime)
+    // endregion
 }

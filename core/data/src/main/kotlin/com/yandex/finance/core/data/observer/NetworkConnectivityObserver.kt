@@ -15,7 +15,6 @@ interface NetworkConnectivityObserver {
     val isConnected: Flow<Boolean>
 }
 
-
 class NetworkConnectivityObserverImpl(context: Context) : NetworkConnectivityObserver {
 
     private val connectivityManager =

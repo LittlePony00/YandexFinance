@@ -1,11 +1,12 @@
 package com.yandex.finance.core.ui.component.calendar
 
 import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerColors
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -14,16 +15,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.yandex.finance.core.ui.theme.RobotoLabelLargeStyle
 import com.yandex.finance.core.ui.theme.YandexFinanceTheme
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun YandexFinanceCalendar(
     onDateSelected: (Long?) -> Unit,
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val datePickerState = rememberDatePickerState()
+    modifier: Modifier = Modifier,
+    datePickerState: DatePickerState = rememberDatePickerState(
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                return utcTimeMillis <= Clock.System.now().toEpochMilliseconds()
+            }
 
+            override fun isSelectableYear(year: Int): Boolean {
+                return year <= Clock.System.now()
+                    .toLocalDateTime(TimeZone.currentSystemDefault()).year
+            }
+        },
+    )
+) {
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -38,7 +52,7 @@ fun YandexFinanceCalendar(
                 )
             }
         },
-        colors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.secondary,),
+        colors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.secondary),
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
@@ -77,6 +91,7 @@ fun YandexFinanceCalendar(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun YandexFinanceCalendarPreview() {

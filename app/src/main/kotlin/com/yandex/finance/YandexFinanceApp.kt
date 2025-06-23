@@ -8,8 +8,8 @@ import com.yandex.finance.core.data.di.provideDataModule
 import com.yandex.finance.core.network.di.provideNetworkModule
 import com.yandex.finance.core.network.di.provideNetworkServiceModule
 import com.yandex.finance.feature.account.di.provideAccountModule
-import com.yandex.finance.feature.income.di.provideIncomeModule
-import com.yandex.finance.feature.outcome.di.provideOutcomeModule
+import com.yandex.finance.income.impl.di.provideIncomeModule
+import com.yandex.finance.outcome.impl.di.provideOutcomeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

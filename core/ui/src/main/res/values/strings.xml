@@ -11,4 +11,32 @@
     <string name="outcome_today">Расходы сегодня</string>
     <string name="no_internet_connection">Интернет отсутствует</string>
     <string name="internet_connection_restored">Интернет-соединение восстановлено</string>
+
+    <!-- Месяцы -->
+    <string name="month_january">января</string>
+    <string name="month_february">февраля</string>
+    <string name="month_march">марта</string>
+    <string name="month_april">апреля</string>
+    <string name="month_may">мая</string>
+    <string name="month_june">июня</string>
+    <string name="month_july">июля</string>
+    <string name="month_august">августа</string>
+    <string name="month_september">сентября</string>
+    <string name="month_october">октября</string>
+    <string name="month_november">ноября</string>
+    <string name="month_december">декабря</string>
+
+    <!-- Месяцы в именительном падеже -->
+    <string name="month_january_nominative">январь</string>
+    <string name="month_february_nominative">февраль</string>
+    <string name="month_march_nominative">март</string>
+    <string name="month_april_nominative">апрель</string>
+    <string name="month_may_nominative">май</string>
+    <string name="month_june_nominative">июнь</string>
+    <string name="month_july_nominative">июль</string>
+    <string name="month_august_nominative">август</string>
+    <string name="month_september_nominative">сентябрь</string>
+    <string name="month_october_nominative">октябрь</string>
+    <string name="month_november_nominative">ноябрь</string>
+    <string name="month_december_nominative">декабрь</string>
 </resources>

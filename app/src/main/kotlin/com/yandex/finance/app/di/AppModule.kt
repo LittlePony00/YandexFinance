@@ -5,6 +5,7 @@ import com.yandex.finance.app.presentation.viewmodel.MainViewModel
 import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.common.UserId
 import com.yandex.finance.core.network.BuildConfig
+import com.yandex.finance.core.ui.util.UiDateTimeFormatter
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,5 +21,9 @@ val provideAppModule = module {
 
     single<Id> {
         BuildConfig.ID
+    }
+
+    single<UiDateTimeFormatter> {
+        UiDateTimeFormatter(context = get())
     }
 }
