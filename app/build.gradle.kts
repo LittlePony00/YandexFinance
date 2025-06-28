@@ -50,14 +50,16 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:domain"))
     implementation(project(":core:network"))
-    implementation(project(":core:navigation"))
     implementation(project(":feature:income:api"))
     implementation(project(":feature:income:impl"))
     implementation(project(":feature:outcome:api"))
     implementation(project(":feature:outcome:impl"))
-    implementation(project(":feature:account"))
-    implementation(project(":feature:settings"))
-    implementation(project(":feature:articles"))
+    implementation(project(":feature:account:api"))
+    implementation(project(":feature:account:impl"))
+    implementation(project(":feature:settings:api"))
+    implementation(project(":feature:settings:impl"))
+    implementation(project(":feature:articles:api"))
+    implementation(project(":feature:articles:impl"))
     // endregion
 
     /**

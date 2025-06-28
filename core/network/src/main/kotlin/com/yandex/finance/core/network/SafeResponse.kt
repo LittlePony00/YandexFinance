@@ -45,9 +45,7 @@ internal suspend inline fun <reified T> HttpClient.safeResponse(
     runCatching {
         block().handleResponse<T>()
     }.onSuccess {
-        methodName?.run {
-            Timber.d("$this method was called with success")
-        } ?: run {
+        methodName?.run { Timber.d("$this method was called with success") } ?: run {
             Timber.d("Network call was called with success")
         }
     }.onFailure { throwable ->

@@ -8,9 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.yandex.finance.app.presentation.screen.SplashScreen
-import com.yandex.finance.core.navigation.outcome.OutcomeGraph
-import com.yandex.finance.core.navigation.splash.SplashFlow
-import com.yandex.finance.core.navigation.splash.SplashGraph
+import com.yandex.finance.feature.outcome.api.navigation.OutcomeGraph
 
 fun NavGraphBuilder.splashNavGraph(navController: NavController) {
 

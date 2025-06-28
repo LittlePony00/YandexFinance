@@ -6,8 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.yandex.finance.core.navigation.income.IncomeFlow
-import com.yandex.finance.core.navigation.income.IncomeGraph
+import com.yandex.finance.feature.income.api.navigation.IncomeFlow
+import com.yandex.finance.feature.income.api.navigation.IncomeGraph
 import com.yandex.finance.income.impl.presentation.screen.IncomeTodayScreen
 import com.yandex.finance.income.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.income.impl.presentation.viewmodel.IncomeTodayViewModel

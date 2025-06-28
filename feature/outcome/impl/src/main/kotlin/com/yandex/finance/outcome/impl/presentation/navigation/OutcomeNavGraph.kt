@@ -11,8 +11,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.yandex.finance.core.navigation.outcome.OutcomeFlow
-import com.yandex.finance.core.navigation.outcome.OutcomeGraph
+import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
+import com.yandex.finance.feature.outcome.api.navigation.OutcomeGraph
 import com.yandex.finance.outcome.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.outcome.impl.presentation.screen.OutcomeTodayScreen
 import com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel

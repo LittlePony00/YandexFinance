@@ -6,18 +6,6 @@ data class UiTransactionMainModel(
     val transactions: List<UiTransactionModel>
 ) {
 
-    companion object {
-
-        fun initialIncome() = UiTransactionMainModel(
-            sumOfAllTransactions = 0.0,
-            transactions = listOf(),
-            isIncome = true
-        )
-
-        fun initialOutcome() = UiTransactionMainModel(
-            sumOfAllTransactions = 0.0,
-            transactions = listOf(),
-            isIncome = false
-        )
-    }
+    companion object
 }
+

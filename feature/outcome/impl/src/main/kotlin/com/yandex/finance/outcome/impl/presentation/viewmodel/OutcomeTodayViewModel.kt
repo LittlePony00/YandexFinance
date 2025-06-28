@@ -6,14 +6,13 @@ import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.ui.util.dateTimeComponentsFormat
 import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionMainModel
 import com.yandex.finance.feature.outcome.api.domain.usecase.GetUiTransactionByPeriod
+import com.yandex.finance.outcome.impl.domain.model.initialOutcome
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.format
-import kotlinx.datetime.format.DateTimeComponents
-import kotlinx.datetime.format.char
 import timber.log.Timber
 
 class OutcomeTodayViewModel(
@@ -21,7 +20,7 @@ class OutcomeTodayViewModel(
     private val getUiTransactionByPeriod: GetUiTransactionByPeriod,
 ) : ViewModel() {
 
-    private val _outcomeTodayUiState = MutableStateFlow(UiTransactionMainModel.initialOutcome())
+    private val _outcomeTodayUiState = MutableStateFlow(UiTransactionMainModel.Companion.initialOutcome)
 
     private val _uiState = MutableStateFlow<State>(State.Loading)
 
