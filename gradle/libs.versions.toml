@@ -52,6 +52,10 @@ io-koin = "3.5.3"
 io-ktor-client = "2.3.12"
 # endregion
 
+# region Detekt
+detekt = "1.23.7"
+# endregion
+
 [libraries]
 
 #Android
@@ -130,6 +134,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbr
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "org-jetbrains-kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "org-jetbrains-kotlin-serialization" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 #Plugins defined by this project
 yandex-finance-android-ktor = { id = "yandex.finance.android.ktor", version = "unspecified" }
