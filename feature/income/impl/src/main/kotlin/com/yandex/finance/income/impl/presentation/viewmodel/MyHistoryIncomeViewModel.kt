@@ -6,6 +6,7 @@ import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.ui.util.dateTimeComponentsFormat
 import com.yandex.finance.feature.outcome.api.domain.model.UiMyHistoryModel
 import com.yandex.finance.feature.outcome.api.domain.usecase.GetUiTransactionByPeriod
+import com.yandex.finance.income.impl.domain.model.initialIncome
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,7 @@ class MyHistoryIncomeViewModel(
     private val getUiTransactionByPeriod: GetUiTransactionByPeriod,
 ) : ViewModel() {
 
-    private val _myHistoryUiState = MutableStateFlow(UiMyHistoryModel.initialIncome())
+    private val _myHistoryUiState = MutableStateFlow(UiMyHistoryModel.Companion.initialIncome)
 
     private val _uiState = MutableStateFlow<State>(State.Loading)
 

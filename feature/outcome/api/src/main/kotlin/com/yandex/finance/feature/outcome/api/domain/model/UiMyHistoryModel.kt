@@ -1,27 +1,13 @@
 package com.yandex.finance.feature.outcome.api.domain.model
 
-import com.yandex.finance.core.ui.util.dateTimeComponentsFormat
-import kotlinx.datetime.Clock
-import kotlinx.datetime.format
+import androidx.compose.runtime.Immutable
 
+@Immutable
 data class UiMyHistoryModel(
-    val uiTransactionMainModel: UiTransactionMainModel,
-    val startDate: String,
     val endDate: String,
+    val startDate: String,
+    val uiTransactionMainModel: UiTransactionMainModel,
 ) {
 
-    companion object {
-
-        fun initialIncome() = UiMyHistoryModel(
-            uiTransactionMainModel = UiTransactionMainModel.initialIncome(),
-            startDate = Clock.System.now().format(dateTimeComponentsFormat),
-            endDate = Clock.System.now().format(dateTimeComponentsFormat)
-        )
-
-        fun initialOutcome() = UiMyHistoryModel(
-            uiTransactionMainModel = UiTransactionMainModel.initialOutcome(),
-            startDate = Clock.System.now().format(dateTimeComponentsFormat),
-            endDate = Clock.System.now().format(dateTimeComponentsFormat)
-        )
-    }
+    companion object
 }

@@ -12,14 +12,14 @@ class TransactionRepositoryImpl(
 ) : TransactionRepository {
 
     override suspend fun createTransaction(body: TransactionWithoutId): Result<CreatedTransaction> {
-        return transactionService.createTransaction(body.asNetworkModel()).asExternalResult { 
-            it.asExternalModel() 
+        return transactionService.createTransaction(body.asNetworkModel()).asExternalResult {
+            it.asExternalModel()
         }
     }
 
     override suspend fun fetchTransactionById(id: String): Result<Transaction> {
-        return transactionService.fetchTransactionById(id).asExternalResult { 
-            it.asExternalModel() 
+        return transactionService.fetchTransactionById(id).asExternalResult {
+            it.asExternalModel()
         }
     }
 
@@ -27,8 +27,8 @@ class TransactionRepositoryImpl(
         id: String,
         body: TransactionWithoutId
     ): Result<Transaction> {
-        return transactionService.updateTransaction(id, body.asNetworkModel()).asExternalResult { 
-            it.asExternalModel() 
+        return transactionService.updateTransaction(id, body.asNetworkModel()).asExternalResult {
+            it.asExternalModel()
         }
     }
 
@@ -41,8 +41,9 @@ class TransactionRepositoryImpl(
         startDate: String?,
         endDate: String?
     ): Result<List<Transaction>> {
-        return transactionService.fetchTransactionsByPeriod(id, startDate, endDate).asExternalResult { transactionList ->
-            transactionList.map { it.asExternalModel() }
-        }
+        return transactionService.fetchTransactionsByPeriod(id, startDate, endDate)
+            .asExternalResult { transactionList ->
+                transactionList.map { it.asExternalModel() }
+            }
     }
 }

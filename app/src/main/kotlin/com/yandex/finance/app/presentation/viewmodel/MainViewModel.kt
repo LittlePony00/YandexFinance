@@ -24,7 +24,7 @@ class MainViewModel(
         .onCompletion { cause -> Timber.w("onCompletion was called. cause: $cause") }
         .stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
+            SharingStarted.WhileSubscribed(MAX_TIMEOUT_MILLIS),
             true
         )
 
@@ -34,5 +34,10 @@ class MainViewModel(
         viewModelScope.launch {
             _wasDisconnected.value = state
         }
+    }
+
+    companion object {
+
+        private const val MAX_TIMEOUT_MILLIS = 5000L
     }
 }

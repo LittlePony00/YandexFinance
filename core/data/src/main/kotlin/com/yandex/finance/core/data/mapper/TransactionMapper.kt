@@ -1,7 +1,11 @@
 package com.yandex.finance.core.data.mapper
 
-import com.yandex.finance.core.domain.model.transaction.*
-import com.yandex.finance.core.network.transaction.model.*
+import com.yandex.finance.core.domain.model.transaction.CreatedTransaction
+import com.yandex.finance.core.domain.model.transaction.Transaction
+import com.yandex.finance.core.domain.model.transaction.TransactionWithoutId
+import com.yandex.finance.core.network.transaction.model.NetworkCreatedTransaction
+import com.yandex.finance.core.network.transaction.model.NetworkTransaction
+import com.yandex.finance.core.network.transaction.model.NetworkTransactionWithoutId
 
 // Domain to Network mappers
 fun Transaction.asNetworkModel() = NetworkTransaction(

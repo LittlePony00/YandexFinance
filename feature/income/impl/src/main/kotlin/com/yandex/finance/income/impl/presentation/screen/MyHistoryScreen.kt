@@ -46,6 +46,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
 import kotlinx.datetime.toLocalDateTime
 
+// Возможно можно вынести в отдельный модуль вместе с viewmodel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyHistoryScreen(

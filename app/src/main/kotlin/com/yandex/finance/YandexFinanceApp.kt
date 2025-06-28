@@ -7,7 +7,7 @@ import com.yandex.finance.core.common.provideDispatcherModule
 import com.yandex.finance.core.data.di.provideDataModule
 import com.yandex.finance.core.network.di.provideNetworkModule
 import com.yandex.finance.core.network.di.provideNetworkServiceModule
-import com.yandex.finance.feature.account.di.provideAccountModule
+import com.yandex.finance.feature.account.impl.di.provideAccountModule
 import com.yandex.finance.income.impl.di.provideIncomeModule
 import com.yandex.finance.outcome.impl.di.provideOutcomeModule
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +15,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class YandexFinanceApp: Application() {
+class YandexFinanceApp : Application() {
 
     override fun onCreate() {
         super.onCreate()

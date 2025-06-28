@@ -128,21 +128,21 @@ fun MyHistoryScreen(
                     modifier = modifier.padding(innerPadding),
                     myHistoryUiState = myHistoryUiState,
                     onBeginClick = {
-                        myHistoryVM.changeAction(action = MyHistoryOutcomeViewModel.Action.ChangeStartDate)
+                        myHistoryVM.changeAction(action = MyHistoryOutcomeViewModel.ContentAction.ChangeStartDate)
                     },
                     onEndClick = {
-                        myHistoryVM.changeAction(action = MyHistoryOutcomeViewModel.Action.ChangeEndDate)
+                        myHistoryVM.changeAction(action = MyHistoryOutcomeViewModel.ContentAction.ChangeEndDate)
                     }
                 )
 
                 when (val action = state.action) {
-                    is MyHistoryOutcomeViewModel.Action.ChangeEndDate, MyHistoryOutcomeViewModel.Action.ChangeStartDate -> {
+                    is MyHistoryOutcomeViewModel.ContentAction.ChangeEndDate, MyHistoryOutcomeViewModel.ContentAction.ChangeStartDate -> {
                         YandexFinanceCalendar(
                             onDismiss = {
                                 myHistoryVM.changeAction(null)
                             },
                             onDateSelected = {
-                                if (action is MyHistoryOutcomeViewModel.Action.ChangeStartDate) {
+                                if (action is MyHistoryOutcomeViewModel.ContentAction.ChangeStartDate) {
                                     myHistoryVM.changeStartDate(startDate = it)
                                 } else {
                                     myHistoryVM.changeEndDate(endDate = it)

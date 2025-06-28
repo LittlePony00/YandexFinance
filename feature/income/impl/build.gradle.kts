@@ -16,8 +16,6 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
-    implementation(project(":core:navigation"))
-
     implementation(project(":feature:outcome:api"))
     implementation(project(":feature:income:api"))
 

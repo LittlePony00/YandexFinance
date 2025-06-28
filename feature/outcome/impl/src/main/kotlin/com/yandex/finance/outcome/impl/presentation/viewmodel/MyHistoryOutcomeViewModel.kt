@@ -6,6 +6,7 @@ import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.ui.util.dateTimeComponentsFormat
 import com.yandex.finance.feature.outcome.api.domain.model.UiMyHistoryModel
 import com.yandex.finance.feature.outcome.api.domain.usecase.GetUiTransactionByPeriod
+import com.yandex.finance.outcome.impl.domain.model.initialOutcome
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,7 @@ class MyHistoryOutcomeViewModel(
     private val getUiTransactionByPeriod: GetUiTransactionByPeriod,
 ) : ViewModel() {
 
-    private val _myHistoryUiState = MutableStateFlow(UiMyHistoryModel.initialOutcome())
+    private val _myHistoryUiState = MutableStateFlow(UiMyHistoryModel.initialOutcome)
 
     private val _uiState = MutableStateFlow<State>(State.Loading)
 
@@ -38,22 +39,22 @@ class MyHistoryOutcomeViewModel(
         value class Error(val retry: () -> Unit) : State
 
         data class Content(
-            val action: Action? = null,
+            val action: ContentAction? = null,
             val myHistoryUiState: StateFlow<UiMyHistoryModel>
         ) : State
     }
 
-    sealed interface Action {
+    sealed interface ContentAction {
 
-        data object ChangeStartDate : Action
+        data object ChangeStartDate : ContentAction
 
-        data object ChangeEndDate : Action
+        data object ChangeEndDate : ContentAction
     }
 
-    fun changeAction(action: Action? = null) {
-        onContentDisplayState { content ->
-            Timber.d("change action was called. action: $action")
+    fun changeAction(action: ContentAction? = null) {
+        Timber.d("change action was called. action: $action")
 
+        onContentDisplayState { content ->
             _uiState.value = content.copy(action = action)
         }
     }

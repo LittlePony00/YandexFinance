@@ -9,8 +9,6 @@ android {
 
 dependencies {
 
-    implementation(project(":core:navigation"))
-
     /**
      * Core dependencies
      */

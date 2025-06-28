@@ -37,7 +37,7 @@ suspend fun SnackbarHostState.showShortMessage(message: String) {
 
 @Stable
 suspend fun SnackbarHostState.showLongMessage(message: String) {
-    Timber.d("showShortMessage: $message")
+    Timber.d("showLongMessage: $message")
 
     showSnackbar(
         message = message,

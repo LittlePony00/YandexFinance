@@ -1,6 +1,5 @@
 package com.yandex.finance.app.di
 
-
 import com.yandex.finance.app.presentation.viewmodel.MainViewModel
 import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.common.UserId

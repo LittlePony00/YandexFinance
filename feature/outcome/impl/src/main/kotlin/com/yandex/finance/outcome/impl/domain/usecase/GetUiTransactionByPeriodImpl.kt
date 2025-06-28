@@ -6,6 +6,7 @@ import com.yandex.finance.feature.outcome.api.domain.model.asUiModel
 import com.yandex.finance.feature.outcome.api.domain.usecase.GetUiTransactionByPeriod
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 import timber.log.Timber
 
 class GetUiTransactionByPeriodImpl(
@@ -40,6 +41,8 @@ class GetUiTransactionByPeriodImpl(
                     sum += transaction.amount.toDoubleOrNull() ?: 0.0
                     true
                 }
+            }.sortedBy { transaction ->
+                Instant.parse(transaction.updatedAt)
             }
 
             UiTransactionMainModel(
