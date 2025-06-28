@@ -15,7 +15,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class YandexFinanceApp: Application() {
+class YandexFinanceApp : Application() {
 
     override fun onCreate() {
         super.onCreate()

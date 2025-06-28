@@ -38,6 +38,14 @@ private val navigationBarItems = listOf(
     NavigationBarItem.Settings,
 )
 
+private val screensWithNavBar = listOf(
+    IncomeFlow.IncomeToday,
+    OutcomeFlow.OutcomeToday,
+    AccountFlow.MyAccount,
+    ArticlesFlow.MyArticles,
+    SettingsFlow.Settings
+)
+
 @Composable
 fun AppNavHost(
     navHostController: NavHostController,
@@ -45,14 +53,6 @@ fun AppNavHost(
 ) {
     val snackBarHostState = LocalSnackBarHostState.current
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-
-    val screensWithNavBar = listOf(
-        IncomeFlow.IncomeToday,
-        OutcomeFlow.OutcomeToday,
-        AccountFlow.MyAccount,
-        ArticlesFlow.MyArticles,
-        SettingsFlow.Settings
-    )
 
     val shouldShowNavBar = navBackStackEntry?.destination?.hierarchy?.any { hierarchy ->
         screensWithNavBar.any { screen -> hierarchy.hasRoute(screen::class) }
