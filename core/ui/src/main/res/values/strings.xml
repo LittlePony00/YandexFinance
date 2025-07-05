@@ -39,4 +39,14 @@
     <string name="month_october_nominative">октябрь</string>
     <string name="month_november_nominative">ноябрь</string>
     <string name="month_december_nominative">декабрь</string>
+
+    <!-- Currency symbols -->
+    <string name="euro_symbol">€</string>
+    <string name="dollar_symbol">$</string>
+    <string name="russian_rubble_symbol">₽</string>
+
+    <!-- Currency names -->
+    <string name="euro_name">Евро</string>
+    <string name="american_dollar_name">Американский доллар</string>
+    <string name="russian_dollar_name">Российский рубль</string>
 </resources>

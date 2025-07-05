@@ -44,15 +44,14 @@ import com.yandex.finance.core.ui.theme.YandexFinanceTheme
 
 @Composable
 fun ListItem(
-    onClick: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit,
     modifier: Modifier = Modifier,
-    isOnClickEnabled: Boolean = true,
+    onClick: (() -> Unit)? = null,
     indication: Indication? = ripple(),
     verticalSpaceBetweenItems: Dp = 0.dp,
     horizontalSpaceBetweenItems: Dp = 16.dp,
     textStyle: TextStyle = RobotoBodyLargeStyle,
     interactionSource: MutableInteractionSource? = null,
+    content: (@Composable ColumnScope.() -> Unit)? = null,
     containerColor: Color = MaterialTheme.colorScheme.surface,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     trailingContent: (@Composable RowScope.() -> Unit)? = null,
@@ -67,9 +66,9 @@ fun ListItem(
             modifier = modifier
                 .background(containerColor)
                 .clickable(
-                    onClick = onClick,
+                    onClick = { onClick?.invoke() },
                     indication = indication,
-                    enabled = isOnClickEnabled,
+                    enabled = onClick != null,
                     interactionSource = interactionSource
                 ),
         ) {
@@ -87,7 +86,7 @@ fun ListItem(
                     ),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    content()
+                    content?.invoke(this)
                 }
                 trailingContent?.invoke(this)
             }

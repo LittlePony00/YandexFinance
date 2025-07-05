@@ -46,10 +46,10 @@ dependencies {
      */
     // region module dependencies
     implementation(project(":core:ui"))
-    implementation(project(":core:data"))
+    implementation(project(":core:data:impl"))
     implementation(project(":core:common"))
     implementation(project(":core:domain"))
-    implementation(project(":core:network"))
+    implementation(project(":core:network:impl"))
     implementation(project(":feature:income:api"))
     implementation(project(":feature:income:impl"))
     implementation(project(":feature:outcome:api"))

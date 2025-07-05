@@ -13,16 +13,16 @@ import kotlinx.datetime.toLocalDateTime
 internal val UiMyHistoryModel.Companion.initialOutcome: UiMyHistoryModel
     get() {
         val now = Clock.System.now()
-        val localDateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
+        val localDateTime = now.toLocalDateTime(TimeZone.UTC)
 
         val firstDayOfMonth = LocalDateTime(
             year = localDateTime.year,
             month = localDateTime.month,
             dayOfMonth = 1,
-            hour = 12,
+            hour = 0,
             minute = 0,
             second = 0
-        ).toInstant(TimeZone.currentSystemDefault())
+        ).toInstant(TimeZone.UTC)
 
         return UiMyHistoryModel(
             uiTransactionMainModel = UiTransactionMainModel.Companion.initialOutcome,

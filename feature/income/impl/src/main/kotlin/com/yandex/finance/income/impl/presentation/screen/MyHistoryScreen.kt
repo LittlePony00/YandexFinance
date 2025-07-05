@@ -2,6 +2,7 @@ package com.yandex.finance.income.impl.presentation.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.component.calendar.YandexFinanceCalendar
 import com.yandex.finance.core.ui.component.icon.Analys
@@ -172,6 +172,10 @@ private fun MyHistoryScreenContent(
             ListItem(
                 onClick = onBeginClick,
                 content = {},
+                contentPaddings = PaddingValues(
+                    vertical = 16.dp,
+                    horizontal = 16.dp
+                ),
                 containerColor = MaterialTheme.colorScheme.secondary,
                 navigationContent = {
                     Text(text = stringResource(R.string.beginning))
@@ -187,6 +191,10 @@ private fun MyHistoryScreenContent(
             ListItem(
                 onClick = onEndClick,
                 content = {},
+                contentPaddings = PaddingValues(
+                    vertical = 16.dp,
+                    horizontal = 16.dp
+                ),
                 containerColor = MaterialTheme.colorScheme.secondary,
                 navigationContent = {
                     Text(text = stringResource(R.string.end))
@@ -202,6 +210,10 @@ private fun MyHistoryScreenContent(
             ListItem(
                 onClick = {},
                 content = {},
+                contentPaddings = PaddingValues(
+                    vertical = 16.dp,
+                    horizontal = 16.dp
+                ),
                 containerColor = MaterialTheme.colorScheme.secondary,
                 navigationContent = {
                     Text(text = stringResource(R.string.sum))
@@ -219,11 +231,7 @@ private fun MyHistoryScreenContent(
                         )
                         Text(
                             text =
-                                myHistoryUiState.value.uiTransactionMainModel.transactions
-                                    .firstOrNull()
-                                    ?.account
-                                    ?.currency
-                                    ?.type ?: CurrencyType.convertFromString("").type
+                                myHistoryUiState.value.uiTransactionMainModel.currentCurrencyType.type
                         )
                     }
                 }
@@ -233,8 +241,6 @@ private fun MyHistoryScreenContent(
 
         items(myHistoryUiState.value.uiTransactionMainModel.transactions) { transaction ->
             ListItem(
-                onClick = {},
-                isOnClickEnabled = false,
                 content = {
                     Text(text = transaction.category.name)
                     transaction.comment?.let { comment ->
@@ -262,7 +268,7 @@ private fun MyHistoryScreenContent(
                         }
                         Text(
                             text = Instant.parse(transaction.updatedAt)
-                                .toLocalDateTime(TimeZone.currentSystemDefault())
+                                .toLocalDateTime(TimeZone.UTC)
                                 .format(localDateTimeFormatter)
                         )
                     }

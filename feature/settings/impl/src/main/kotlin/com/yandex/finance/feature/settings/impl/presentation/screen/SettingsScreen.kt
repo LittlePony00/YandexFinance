@@ -94,8 +94,6 @@ private fun SettingsScreenContent(
     Column(modifier = modifier.fillMaxSize()) {
         ListItem(
             modifier = Modifier.height(56.dp),
-            onClick = {},
-            isOnClickEnabled = false,
             content = {
                 Text(text = "Тёмная тема")
             },

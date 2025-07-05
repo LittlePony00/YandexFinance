@@ -32,8 +32,7 @@ fun YandexFinanceCalendar(
             }
 
             override fun isSelectableYear(year: Int): Boolean {
-                return year <= Clock.System.now()
-                    .toLocalDateTime(TimeZone.currentSystemDefault()).year
+                return year <= Clock.System.now().toLocalDateTime(TimeZone.UTC).year
             }
         },
     )

@@ -13,7 +13,7 @@ android {
 dependencies {
 
     implementation(project(":core:ui"))
-    implementation(project(":core:data"))
+    implementation(project(":core:data:api"))
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
     implementation(project(":feature:outcome:api"))

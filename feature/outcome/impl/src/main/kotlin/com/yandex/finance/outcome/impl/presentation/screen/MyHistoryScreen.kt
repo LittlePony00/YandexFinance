@@ -2,6 +2,7 @@ package com.yandex.finance.outcome.impl.presentation.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.component.calendar.YandexFinanceCalendar
 import com.yandex.finance.core.ui.component.icon.Analys
@@ -59,13 +59,9 @@ fun MyHistoryScreen(
     Scaffold(
         topBar = {
             YandexFinanceTopAppBar(
-                title = {
-                    Text(text = stringResource(R.string.my_history))
-                },
+                title = { Text(text = stringResource(R.string.my_history)) },
                 actions = {
-                    IconButton(
-                        onClick = onAnalysClick
-                    ) {
+                    IconButton(onClick = onAnalysClick) {
                         Icon(
                             modifier = Modifier.size(24.dp),
                             imageVector = Icons.Analys,
@@ -74,9 +70,7 @@ fun MyHistoryScreen(
                     }
                 },
                 navigationIcon = {
-                    IconButton(
-                        onClick = onBackClick
-                    ) {
+                    IconButton(onClick = onBackClick) {
                         Icon(
                             modifier = Modifier.size(24.dp),
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -151,7 +145,8 @@ fun MyHistoryScreen(
                         )
                     }
 
-                    else -> { /* Do nothing */
+                    else -> {
+                        /* Do nothing */
                     }
                 }
             }
@@ -170,6 +165,10 @@ private fun MyHistoryScreenContent(
         item {
             ListItem(
                 onClick = onBeginClick,
+                contentPaddings = PaddingValues(
+                    vertical = 16.dp,
+                    horizontal = 16.dp
+                ),
                 content = {},
                 containerColor = MaterialTheme.colorScheme.secondary,
                 navigationContent = {
@@ -185,6 +184,10 @@ private fun MyHistoryScreenContent(
         item {
             ListItem(
                 onClick = onEndClick,
+                contentPaddings = PaddingValues(
+                    vertical = 16.dp,
+                    horizontal = 16.dp
+                ),
                 content = {},
                 containerColor = MaterialTheme.colorScheme.secondary,
                 navigationContent = {
@@ -201,6 +204,10 @@ private fun MyHistoryScreenContent(
             ListItem(
                 onClick = {},
                 content = {},
+                contentPaddings = PaddingValues(
+                    vertical = 16.dp,
+                    horizontal = 16.dp
+                ),
                 containerColor = MaterialTheme.colorScheme.secondary,
                 navigationContent = {
                     Text(text = stringResource(R.string.sum))
@@ -208,21 +215,19 @@ private fun MyHistoryScreenContent(
                 trailingContent = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "${myHistoryUiState
-                                .value
-                                .uiTransactionMainModel
-                                .sumOfAllTransactions
-                                .toInt()
-                                .toString()
-                                .formatWithSeparator()} "
+                            text = "${
+                                myHistoryUiState
+                                    .value
+                                    .uiTransactionMainModel
+                                    .sumOfAllTransactions
+                                    .toInt()
+                                    .toString()
+                                    .formatWithSeparator()
+                            } "
                         )
                         Text(
                             text =
-                                myHistoryUiState.value.uiTransactionMainModel.transactions
-                                    .firstOrNull()
-                                    ?.account
-                                    ?.currency
-                                    ?.type ?: CurrencyType.convertFromString("").type
+                                myHistoryUiState.value.uiTransactionMainModel.currentCurrencyType.type
                         )
                     }
                 }
@@ -232,8 +237,6 @@ private fun MyHistoryScreenContent(
 
         items(myHistoryUiState.value.uiTransactionMainModel.transactions) { transaction ->
             ListItem(
-                onClick = {},
-                isOnClickEnabled = false,
                 content = {
                     Text(text = transaction.category.name)
                     transaction.comment?.let { comment ->
@@ -256,12 +259,17 @@ private fun MyHistoryScreenContent(
                 trailingContent = {
                     Column(horizontalAlignment = Alignment.End) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(text = "${transaction.amount.toDouble().toInt().toString().formatWithSeparator()} ")
+                            Text(
+                                text = "${
+                                    transaction.amount.toDouble().toInt().toString()
+                                        .formatWithSeparator()
+                                } "
+                            )
                             Text(text = transaction.account.currency.type)
                         }
                         Text(
                             text = Instant.parse(transaction.updatedAt)
-                                .toLocalDateTime(TimeZone.currentSystemDefault())
+                                .toLocalDateTime(TimeZone.UTC)
                                 .format(localDateTimeFormatter)
                         )
                     }

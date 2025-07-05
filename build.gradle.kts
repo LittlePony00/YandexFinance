@@ -13,9 +13,11 @@ detekt {
     source.setFrom(
         "app/src",
         "core/common/src",
-        "core/data/src", 
+        "core/data/api/src",
+        "core/data/impl/src",
         "core/domain/src",
-        "core/network/src",
+        "core/network/api/src",
+        "core/network/impl/src",
         "core/ui/src",
         "feature/account/api/src",
         "feature/account/impl/src",
