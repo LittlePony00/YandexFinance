@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.ui.util.dateTimeComponentsFormat
 import com.yandex.finance.feature.outcome.api.domain.model.UiMyHistoryModel
-import com.yandex.finance.feature.outcome.api.domain.usecase.GetUiTransactionByPeriod
+import com.yandex.finance.feature.outcome.api.domain.usecase.GetUiTransactionByPeriodUseCase
 import com.yandex.finance.income.impl.domain.model.initialIncome
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ import timber.log.Timber
 
 class MyHistoryIncomeViewModel(
     private val id: Id,
-    private val getUiTransactionByPeriod: GetUiTransactionByPeriod,
+    private val getUiTransactionByPeriodUseCase: GetUiTransactionByPeriodUseCase,
 ) : ViewModel() {
 
     private val _myHistoryUiState = MutableStateFlow(UiMyHistoryModel.Companion.initialIncome)
@@ -86,7 +86,7 @@ class MyHistoryIncomeViewModel(
         viewModelScope.launch {
             _uiState.value = State.Loading
 
-            getUiTransactionByPeriod(
+            getUiTransactionByPeriodUseCase(
                 id = id,
                 startDate = _myHistoryUiState.value.startDate,
                 endDate = _myHistoryUiState.value.endDate

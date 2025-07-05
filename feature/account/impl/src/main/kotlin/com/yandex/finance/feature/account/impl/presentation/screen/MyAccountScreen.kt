@@ -30,26 +30,28 @@ import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
 import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.core.ui.util.formatWithSeparator
-import com.yandex.finance.feature.account.domain.UiAccountModel
 import com.yandex.finance.feature.account.impl.R
+import com.yandex.finance.feature.account.impl.domain.UiAccountModel
 import com.yandex.finance.feature.account.impl.presentation.viewmodel.MyAccountViewModel
 
 @Composable
 fun MyAccountScreen(
-    modifier: Modifier = Modifier,
+    onEditClick: (UiAccountModel) -> Unit,
     myAccountVM: MyAccountViewModel,
+    modifier: Modifier = Modifier,
 ) {
     val uiState = myAccountVM.uiState.collectAsStateWithLifecycle()
+    val accountUiState = myAccountVM.accountUiState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
             YandexFinanceTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.my_account))
+                    Text(text = accountUiState.value.name)
                 },
                 actions = {
                     IconButton(
-                        onClick = {}
+                        onClick = { onEditClick(accountUiState.value) }
                     ) {
                         Icon(
                             modifier = Modifier.size(24.dp),
@@ -99,8 +101,6 @@ fun MyAccountScreen(
             }
 
             is MyAccountViewModel.State.Content -> {
-                val accountUiState = state.accountUiState.collectAsStateWithLifecycle()
-
                 MyAccountScreenContent(
                     modifier = modifier.padding(innerPadding),
                     accountUiState = accountUiState

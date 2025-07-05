@@ -2,7 +2,6 @@ package com.yandex.finance.feature.articles.presentation.navigation
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -11,6 +10,7 @@ import com.yandex.finance.feature.articles.api.navigation.ArticlesFlow
 import com.yandex.finance.feature.articles.api.navigation.ArticlesGraph
 import com.yandex.finance.feature.articles.presentation.screen.MyArticlesScreen
 import com.yandex.finance.feature.articles.presentation.viewmodel.MyArticlesViewModel
+import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.articlesGraph(navController: NavController) {
 
@@ -24,7 +24,7 @@ fun NavGraphBuilder.articlesGraph(navController: NavController) {
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut() }
         ) {
-            val myArticlesVM = viewModel<MyArticlesViewModel>()
+            val myArticlesVM = koinViewModel<MyArticlesViewModel>()
 
 
             MyArticlesScreen(myArticlesVM = myArticlesVM)

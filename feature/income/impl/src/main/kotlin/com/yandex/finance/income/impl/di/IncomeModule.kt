@@ -10,14 +10,14 @@ val provideIncomeModule = module {
     viewModel<IncomeTodayViewModel> {
         IncomeTodayViewModel(
             id = get(),
-            getUiTransactionByPeriod = get()
+            getUiTransactionByPeriodUseCase = get()
         )
     }
 
     viewModel<MyHistoryIncomeViewModel> {
         MyHistoryIncomeViewModel(
             id = get(),
-            getUiTransactionByPeriod = get()
+            getUiTransactionByPeriodUseCase = get()
         )
     }
 }

@@ -70,7 +70,7 @@ fun AppNavHost(
                     navigationBackStackEntry = navBackStackEntry,
                     onNavBarItemClick = { item ->
                         navHostController.navigate(item) {
-                            popUpTo(OutcomeFlow.OutcomeToday) {
+                            popUpTo(0) {
                                 inclusive = false
                                 saveState = false
                             }

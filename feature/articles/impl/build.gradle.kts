@@ -13,6 +13,8 @@ android {
 dependencies {
 
     implementation(project(":core:ui"))
+    implementation(project(":core:data:api"))
+    implementation(project(":core:domain"))
     implementation(project(":feature:articles:api"))
 
     /**

@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.ui.component.button.FabButton
 import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.component.icon.EmojiWrapper
@@ -125,12 +124,10 @@ private fun OutcomeTodayScreenContent(
     LazyColumn(modifier = modifier.fillMaxSize()) {
         item {
             ListItem(
-                onClick = {},
                 contentPaddings = PaddingValues(
                     vertical = 16.dp,
                     horizontal = 16.dp
                 ),
-                isOnClickEnabled = false,
                 containerColor = MaterialTheme.colorScheme.secondary,
                 content = {
                     Text(text = stringResource(R.string.total))
@@ -149,11 +146,8 @@ private fun OutcomeTodayScreenContent(
                             text = " ${
                                 outcomeTodayUiState
                                     .value
-                                    .transactions
-                                    .firstOrNull()
-                                    ?.account
-                                    ?.currency
-                                    ?.type ?: CurrencyType.RUB.type
+                                    .currentCurrencyType
+                                    .type
                             }"
                         )
                     }
@@ -164,8 +158,6 @@ private fun OutcomeTodayScreenContent(
 
         items(outcomeTodayUiState.value.transactions) { transaction ->
             ListItem(
-                onClick = {},
-                isOnClickEnabled = false,
                 content = {
                     Text(text = transaction.category.name)
                     transaction.comment?.let { comment ->
