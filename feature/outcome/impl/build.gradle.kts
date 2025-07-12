@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:dagger"))
     implementation(project(":feature:outcome:api"))
+    implementation(project(":feature:transaction-edit:api"))
 
     /**
      * Core dependencies

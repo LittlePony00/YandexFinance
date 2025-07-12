@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NetworkTransaction(
-    val id: Int,
-    val amount: String,
-    val comment: String?,
-    val createdAt: String,
-    val updatedAt: String,
-    val transactionDate: String,
-    val account: NetworkAccount,
-    val category: NetworkCategory
+    val id: Int? = null,
+    val amount: String? = null,
+    val comment: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val transactionDate: String? = null,
+    val account: NetworkAccount? = null,
+    val category: NetworkCategory? = null
 )

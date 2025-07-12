@@ -11,11 +11,11 @@ interface TransactionService {
     suspend fun fetchTransactionById(id: String): Result<NetworkTransaction>
 
     suspend fun updateTransaction(
-        id: String,
+        id: Int,
         body: NetworkTransactionWithoutId
     ): Result<NetworkTransaction>
 
-    suspend fun deleteTransaction(id: String): Result<Boolean>
+    suspend fun deleteTransaction(id: Int): Result<Unit>
 
     suspend fun fetchTransactionsByPeriod(
         id: String,

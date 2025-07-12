@@ -14,12 +14,16 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -53,6 +57,15 @@ object NetworkModule {
                 requestTimeoutMillis = 5000
                 connectTimeoutMillis = 5000
                 socketTimeoutMillis = 5000
+            }
+
+            install(Logging) {
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Timber.d("HTTP_CLIENT: $message")
+                    }
+                }
+                level = LogLevel.ALL
             }
 
             install(DefaultRequest) {

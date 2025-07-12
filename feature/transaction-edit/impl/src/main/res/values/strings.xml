@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_outcome">Мои расходы</string>
+    <string name="my_income">Мои доходы</string>
+    <string name="delete_income">Удалить доход</string>
+    <string name="delete_outcome">Удалить расход</string>
+    <string name="error_occurred">Произошла ошибка</string>
+    
+    <!-- Error messages -->
+    <string name="error_text">Ошибка</string>
+    <string name="retry_text">Повторить</string>
+    <string name="error_network">Ошибка сети</string>
+    <string name="error_save_transaction">Ошибка сохранения транзакции</string>
+    <string name="error_delete_transaction">Ошибка удаления транзакции</string>
+    <string name="error_load_data">Ошибка загрузки данных</string>
+    
+    <!-- Validation messages -->
+    <string name="enter_amount">Введите сумму</string>
+    <string name="select_account">Выберите счёт</string>
+    <string name="select_category">Выберите категорию</string>
+    <string name="select_date">Выберите дату</string>
+    <string name="select_time">Выберите время</string>
+    <string name="add_description">Добавить описание</string>
+    
+    <!-- Navigation -->
+    <string name="account">Счёт</string>
+    <string name="category">Категория</string>
+    <string name="amount">Сумма</string>
+    <string name="description">Описание</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+</resources>

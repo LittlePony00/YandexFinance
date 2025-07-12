@@ -7,9 +7,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.feature.income.api.navigation.IncomeFlow
 import com.yandex.finance.feature.income.api.navigation.IncomeGraph
+import com.yandex.finance.feature.transaction_edit.api.navigation.TransactionEditFlow
 import com.yandex.finance.income.impl.presentation.screen.IncomeTodayScreen
 import com.yandex.finance.income.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.income.impl.presentation.viewmodel.IncomeTodayViewModel
@@ -32,6 +34,30 @@ fun NavGraphBuilder.incomeNavGraph(navController: NavController) {
 
             IncomeTodayScreen(
                 incomeTodayVM = incomeTodayVM,
+                onIncomeClick = { transaction ->
+                    navController.navigate(
+                        TransactionEditFlow.EditTransaction(
+                            transactionId = transaction.id,
+                            amount = transaction.amount,
+                            isEdit = true,
+                            isIncome = true,
+                            description = transaction.comment ?: "",
+                            currencyType = transaction.account.currency
+                        )
+                    )
+                },
+                onFabButtonClick = {
+                    navController.navigate(
+                        TransactionEditFlow.EditTransaction(
+                            transactionId = 0,
+                            amount = "0.0",
+                            isEdit = false,
+                            isIncome = true,
+                            description = "",
+                            currencyType = CurrencyType.RUB
+                        )
+                    )
+                },
                 onHistoryClick = {
                     navController.navigate(IncomeFlow.MyHistory)
                 }

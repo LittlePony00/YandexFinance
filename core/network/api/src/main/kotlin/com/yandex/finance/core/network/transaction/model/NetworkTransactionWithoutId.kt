@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NetworkTransactionWithoutId(
     val accountId: Int,
-    val amount: String,
     val categoryId: Int,
-    val comment: String?,
-    val transactionDate: String
+    val amount: String,
+    val transactionDate: String,
+    val comment: String?
 )

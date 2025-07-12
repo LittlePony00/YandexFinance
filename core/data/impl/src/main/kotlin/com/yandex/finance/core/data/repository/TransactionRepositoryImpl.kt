@@ -5,6 +5,7 @@ import com.yandex.finance.core.data.mapper.asAnotherResult
 import com.yandex.finance.core.data.mapper.asNetworkModel
 import com.yandex.finance.core.domain.model.transaction.*
 import com.yandex.finance.core.network.transaction.service.TransactionService
+import timber.log.Timber
 
 class TransactionRepositoryImpl(
     private val transactionService: TransactionService
@@ -23,15 +24,18 @@ class TransactionRepositoryImpl(
     }
 
     override suspend fun updateTransaction(
-        id: String,
+        id: Int,
         body: TransactionWithoutId
     ): Result<Transaction> {
+        Timber.d("updateTransaction was called. id: $id, body: $body")
         return transactionService.updateTransaction(id, body.asNetworkModel()).asAnotherResult {
             it.asExternalModel()
+        }.also {
+            Timber.d("updateTransaction was called. ${it.getOrNull()}")
         }
     }
 
-    override suspend fun deleteTransaction(id: String): Result<Boolean> {
+    override suspend fun deleteTransaction(id: Int): Result<Unit> {
         return transactionService.deleteTransaction(id)
     }
 

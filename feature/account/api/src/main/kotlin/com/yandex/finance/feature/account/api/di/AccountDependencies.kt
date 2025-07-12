@@ -30,4 +30,4 @@ interface AccountDependencies : Dependencies {
      * Factory for creating MyAccountEditViewModel with SavedStateHandle
      */
     val myAccountEditViewModelFactory: MyAccountEditViewModelFactory
-} 
+}

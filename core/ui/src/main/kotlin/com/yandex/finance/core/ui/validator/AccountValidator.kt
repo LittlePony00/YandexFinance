@@ -1,9 +1,10 @@
-package com.yandex.finance.feature.account.impl.domain.validator
+package com.yandex.finance.core.ui.validator
 
-import com.yandex.finance.feature.account.impl.R
+
+import com.yandex.finance.core.ui.R
 import java.math.BigDecimal
 
-internal class AccountValidator {
+class AccountValidator {
     
     sealed class ValidationError {
         data object AccountNameEmpty : ValidationError()
@@ -45,7 +46,7 @@ internal class AccountValidator {
     }
 }
 
-internal fun AccountValidator.ValidationError.validationErrorToString(): Int {
+fun AccountValidator.ValidationError.validationErrorToString(): Int {
     return when (this) {
         AccountValidator.ValidationError.AccountNameEmpty -> R.string.validation_account_name_empty
         AccountValidator.ValidationError.AccountNameTooShort -> R.string.validation_account_name_too_short

@@ -10,6 +10,7 @@ import com.yandex.finance.app.di.modules.NetworkModule
 import com.yandex.finance.app.di.modules.OutcomeDependenciesModule
 import com.yandex.finance.app.di.modules.OutcomeUseCaseModule
 import com.yandex.finance.app.di.modules.SettingsDependenciesModule
+import com.yandex.finance.app.di.modules.TransactionEditDependenciesModule
 import com.yandex.finance.app.di.modules.ViewModelModule
 import com.yandex.finance.app.presentation.activity.MainActivity
 import com.yandex.finance.core.common.DepsMap
@@ -19,6 +20,7 @@ import com.yandex.finance.feature.articles.api.di.ArticlesDependencies
 import com.yandex.finance.feature.income.api.di.IncomeDependencies
 import com.yandex.finance.feature.outcome.api.di.OutcomeDependencies
 import com.yandex.finance.feature.settings.api.di.SettingsDependencies
+import com.yandex.finance.feature.transaction_edit.api.di.TransactionEditDependencies
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -38,7 +40,8 @@ import javax.inject.Singleton
         OutcomeDependenciesModule::class,
         IncomeDependenciesModule::class,
         ArticlesDependenciesModule::class,
-        SettingsDependenciesModule::class
+        SettingsDependenciesModule::class,
+        TransactionEditDependenciesModule::class
     ]
 )
 @Singleton
@@ -47,7 +50,8 @@ interface MainActivityComponent :
     OutcomeDependencies,
     IncomeDependencies,
     ArticlesDependencies,
-    SettingsDependencies {
+    SettingsDependencies,
+    TransactionEditDependencies {
     
     /**
      * Provides the map of all dependencies for use by HasDependencies

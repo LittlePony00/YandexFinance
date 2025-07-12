@@ -8,7 +8,7 @@ import com.yandex.finance.core.data.repository.AccountRepository
 import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.domain.model.account.AccountWithoutId
 import com.yandex.finance.feature.account.impl.domain.UiAccountModel
-import com.yandex.finance.feature.account.impl.domain.validator.AccountValidator
+import com.yandex.finance.core.ui.validator.AccountValidator
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

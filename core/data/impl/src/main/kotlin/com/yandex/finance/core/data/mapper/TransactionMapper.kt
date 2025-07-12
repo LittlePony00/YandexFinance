@@ -63,25 +63,25 @@ fun TransactionWithoutId.asNetworkModel() = NetworkTransactionWithoutId(
 
 // Network to Domain mappers
 fun NetworkTransaction.asExternalModel() = Transaction(
-    id = id,
-    amount = amount,
-    comment = comment,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    transactionDate = transactionDate,
-    account = account.asExternalModel(),
-    category = category.asExternalModel()
+    id = id ?: 0,
+    amount = amount ?: "",
+    comment = comment ?: "",
+    createdAt = createdAt ?: "",
+    updatedAt = updatedAt ?: "",
+    transactionDate = transactionDate ?: "",
+    account = account?.asExternalModel() ?: com.yandex.finance.core.domain.model.account.Account(0, "", "", ""),
+    category = category?.asExternalModel() ?: com.yandex.finance.core.domain.model.category.Category(0, "", null, false)
 )
 
 fun NetworkCreatedTransaction.asExternalModel() = CreatedTransaction(
-    id = id,
-    amount = amount,
-    accountId = accountId,
-    categoryId = categoryId,
-    comment = comment,
-    updatedAt = updatedAt,
-    createdAt = createdAt,
-    transactionDate = transactionDate
+    id = id ?: 0,
+    amount = amount ?: "",
+    accountId = accountId ?: 0,
+    categoryId = categoryId ?: 0,
+    comment = comment ?: "",
+    updatedAt = updatedAt ?: "",
+    createdAt = createdAt ?: "",
+    transactionDate = transactionDate ?: ""
 )
 
 fun NetworkTransactionWithoutId.asExternalModel() = TransactionWithoutId(

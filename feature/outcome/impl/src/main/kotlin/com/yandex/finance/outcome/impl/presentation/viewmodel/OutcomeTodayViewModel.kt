@@ -27,10 +27,6 @@ class OutcomeTodayViewModel @Inject constructor(
 
     val uiState: StateFlow<State> = _uiState.asStateFlow()
 
-    init {
-        loadData()
-    }
-
     sealed interface State {
 
         data object Loading : State
@@ -41,7 +37,7 @@ class OutcomeTodayViewModel @Inject constructor(
         data class Content(val outcomeTodayUiState: StateFlow<UiTransactionMainModel>) : State
     }
 
-    private fun loadData() {
+    fun loadData() {
         Timber.d("loadData was called")
 
         viewModelScope.launch {

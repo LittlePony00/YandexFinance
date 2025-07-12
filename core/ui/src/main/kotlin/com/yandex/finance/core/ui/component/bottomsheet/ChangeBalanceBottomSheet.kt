@@ -1,4 +1,4 @@
-package com.yandex.finance.feature.account.impl.presentation.component
+package com.yandex.finance.core.ui.component.bottomsheet
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,20 +26,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.yandex.finance.core.ui.component.bottomsheet.YFBottomSheet
-import com.yandex.finance.core.ui.component.bottomsheet.closeBottomSheet
+import com.yandex.finance.core.ui.R
 import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.theme.RobotoTitleLargeStyle
 import com.yandex.finance.core.ui.theme.YandexFinanceTheme
 import com.yandex.finance.core.ui.util.SpacerHeight
-import com.yandex.finance.feature.account.impl.R
-import com.yandex.finance.feature.account.impl.domain.validator.AccountValidator
-import com.yandex.finance.feature.account.impl.domain.validator.validationErrorToString
+import com.yandex.finance.core.ui.validator.AccountValidator
+import com.yandex.finance.core.ui.validator.validationErrorToString
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ChangeBalanceBottomSheet(
+fun ChangeBalanceBottomSheet(
     initialValue: String,
     onDismiss: () -> Unit,
     onSave: (String) -> Unit,

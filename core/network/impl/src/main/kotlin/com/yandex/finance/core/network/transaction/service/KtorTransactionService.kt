@@ -10,12 +10,14 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.put
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.http.path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import timber.log.Timber
 
 class KtorTransactionService(
@@ -25,6 +27,8 @@ class KtorTransactionService(
 
     override suspend fun createTransaction(body: NetworkTransactionWithoutId): Result<NetworkCreatedTransaction> {
         Timber.d("createTransaction was called. body: $body")
+        Timber.d("CREATE TRANSACTION URL: https://shmr-finance.ru/api/v1/transactions")
+        Timber.d("CREATE TRANSACTION BODY JSON: ${kotlinx.serialization.json.Json.encodeToString(NetworkTransactionWithoutId.serializer(), body)}")
 
         return withContext(dispatcher) {
             client.safeResponse<NetworkCreatedTransaction> {
@@ -34,6 +38,7 @@ class KtorTransactionService(
                         path("transactions")
                     }
                     contentType(ContentType.Application.Json)
+                    setBody(body)
                 }
             }
         }
@@ -47,17 +52,16 @@ class KtorTransactionService(
                 get {
                     url {
                         protocol = URLProtocol.HTTP
-                        path("transactions")
+                        path("transactions", id)
                     }
                     contentType(ContentType.Application.Json)
-                    parameter(key = "id", value = id)
                 }
             }
         }
     }
 
     override suspend fun updateTransaction(
-        id: String,
+        id: Int,
         body: NetworkTransactionWithoutId
     ): Result<NetworkTransaction> {
         Timber.d("updateTransaction was called. id: $id, body: $body")
@@ -67,27 +71,26 @@ class KtorTransactionService(
                 put {
                     url {
                         protocol = URLProtocol.HTTP
-                        path("transactions")
+                        path("transactions", "$id")
                     }
                     contentType(ContentType.Application.Json)
-                    parameter(key = "id", value = id)
+                    setBody(body)
                 }
             }
         }
     }
 
-    override suspend fun deleteTransaction(id: String): Result<Boolean> {
+    override suspend fun deleteTransaction(id: Int): Result<Unit> {
         Timber.d("deleteTransaction was called. id: $id")
 
         return withContext(dispatcher) {
-            client.safeResponse<Boolean> {
+            client.safeResponse<Unit> {
                 delete {
                     url {
                         protocol = URLProtocol.HTTP
-                        path("transactions")
+                        path("transactions", "$id")
                     }
                     contentType(ContentType.Application.Json)
-                    parameter(key = "id", value = id)
                 }
             }
         }

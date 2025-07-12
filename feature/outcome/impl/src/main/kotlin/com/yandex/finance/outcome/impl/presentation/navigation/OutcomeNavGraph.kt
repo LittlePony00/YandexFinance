@@ -12,9 +12,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeGraph
+import com.yandex.finance.feature.transaction_edit.api.navigation.TransactionEditFlow
 import com.yandex.finance.outcome.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.outcome.impl.presentation.screen.OutcomeTodayScreen
 import com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel
@@ -37,6 +39,30 @@ fun NavGraphBuilder.outcomeGraph(navController: NavController) {
 
             OutcomeTodayScreen(
                 outcomeTodayVM = outcomeTodayVM,
+                onOutcomeClick = { transaction ->
+                    navController.navigate(
+                        TransactionEditFlow.EditTransaction(
+                            transactionId = transaction.id,
+                            amount = transaction.amount,
+                            isEdit = true,
+                            isIncome = false,
+                            description = transaction.comment ?: "",
+                            currencyType = transaction.account.currency
+                        )
+                    )
+                },
+                onFabButtonClick = {
+                    navController.navigate(
+                        TransactionEditFlow.EditTransaction(
+                            transactionId = 0,
+                            amount = "0.0",
+                            isEdit = false,
+                            isIncome = false,
+                            description = "",
+                            currencyType = CurrencyType.RUB
+                        )
+                    )
+                },
                 onHistoryClick = {
                     navController.navigate(OutcomeFlow.MyHistory)
                 }
