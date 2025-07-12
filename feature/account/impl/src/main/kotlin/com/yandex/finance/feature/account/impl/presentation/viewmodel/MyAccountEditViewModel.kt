@@ -9,27 +9,40 @@ import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.core.domain.model.account.AccountWithoutId
 import com.yandex.finance.feature.account.impl.domain.UiAccountModel
 import com.yandex.finance.feature.account.impl.domain.validator.AccountValidator
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
-class MyAccountEditViewModel @Inject constructor(
+class MyAccountEditViewModel @AssistedInject constructor(
     private val accountRepository: AccountRepository,
-    private val savedStateHandle: SavedStateHandle
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(savedStateHandle: SavedStateHandle): MyAccountEditViewModel
+    }
 
     private val accountValidator = AccountValidator()
 
+    private val accountId: Int = savedStateHandle.get<Int>("id") ?: 0
+    private val accountName: String = savedStateHandle.get<String>("name") ?: ""
+    private val accountIcon: String = savedStateHandle.get<String?>("icon") ?: "💰"
+    private val accountBalance: String = savedStateHandle.get<String>("balance") ?: "0.00"
+    private val currencyType: CurrencyType = savedStateHandle.get<CurrencyType>("currencyType") ?: CurrencyType.RUB
+    
     private val uiAccountModel = UiAccountModel(
-        id = 1,
-        name = "Test Account",
-        icon = "💰",
-        balance = "1000.00",
-        currency = CurrencyType.RUB
+        id = accountId,
+        name = accountName,
+        icon = accountIcon,
+        balance = accountBalance,
+        currency = currencyType
     )
 
     private val _uiState: MutableStateFlow<State> = MutableStateFlow(

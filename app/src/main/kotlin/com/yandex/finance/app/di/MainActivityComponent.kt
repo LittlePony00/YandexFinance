@@ -9,7 +9,6 @@ import com.yandex.finance.app.di.modules.IncomeDependenciesModule
 import com.yandex.finance.app.di.modules.NetworkModule
 import com.yandex.finance.app.di.modules.OutcomeDependenciesModule
 import com.yandex.finance.app.di.modules.OutcomeUseCaseModule
-import com.yandex.finance.app.di.modules.SavedStateModule
 import com.yandex.finance.app.di.modules.SettingsDependenciesModule
 import com.yandex.finance.app.di.modules.ViewModelModule
 import com.yandex.finance.app.presentation.activity.MainActivity
@@ -35,7 +34,6 @@ import javax.inject.Singleton
         NetworkModule::class,
         OutcomeUseCaseModule::class,
         ViewModelModule::class,
-        SavedStateModule::class,
         AccountDependenciesModule::class,
         OutcomeDependenciesModule::class,
         IncomeDependenciesModule::class,

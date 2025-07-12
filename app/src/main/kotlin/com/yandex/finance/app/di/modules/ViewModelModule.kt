@@ -3,7 +3,6 @@ package com.yandex.finance.app.di.modules
 import androidx.lifecycle.ViewModel
 import com.yandex.finance.core.dagger.ViewModelKey
 import com.yandex.finance.feature.account.impl.presentation.viewmodel.MyAccountViewModel
-import com.yandex.finance.feature.account.impl.presentation.viewmodel.MyAccountEditViewModel
 import com.yandex.finance.feature.articles.presentation.viewmodel.MyArticlesViewModel
 import com.yandex.finance.feature.settings.impl.presentation.viewmodel.SettingsViewModel
 import com.yandex.finance.income.impl.presentation.viewmodel.IncomeTodayViewModel
@@ -25,11 +24,6 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(MyAccountViewModel::class)
     fun bindMyAccountViewModel(viewModel: MyAccountViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MyAccountEditViewModel::class)
-    fun bindMyAccountEditViewModel(viewModel: MyAccountEditViewModel): ViewModel
 
     @Binds
     @IntoMap
