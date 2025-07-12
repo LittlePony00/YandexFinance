@@ -312,8 +312,8 @@ private fun TransactionEditContent(
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
         ListItemForTransactionEdit(
-            navigationText = "",
-            trailingText = state.description.ifEmpty { stringResource(R.string.add_description) },
+            navigationText = state.description.ifEmpty { stringResource(R.string.add_description) },
+            trailingText = "",
             onClick = { onIntent(TransactionEditViewModel.Intent.ShowDescriptionInput) }
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)

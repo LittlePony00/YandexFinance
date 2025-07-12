@@ -23,7 +23,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -478,8 +480,30 @@ class TransactionEditViewModel @AssistedInject constructor(
     }
 
     private fun combineDateTime(dateString: String, timeString: String): String {
-        // dateString is in ISO format (yyyy-MM-dd), timeString is in HH:mm format
-        return "${dateString}T${timeString}:00Z"
+        return try {
+            // dateString is in ISO format (yyyy-MM-dd), timeString is in HH:mm format
+            val timeParts = timeString.split(":")
+            val hour = timeParts[0].toInt()
+            val minute = timeParts[1].toInt()
+            
+            val dateParts = dateString.split("-")
+            val year = dateParts[0].toInt()
+            val month = dateParts[1].toInt()
+            val day = dateParts[2].toInt()
+            
+            // Create local date time
+            val localDateTime = LocalDateTime(year, month, day, hour, minute, 0)
+            
+            // Convert to UTC instant
+            val instant = localDateTime.toInstant(TimeZone.currentSystemDefault())
+            
+            // Return as ISO string in UTC
+            instant.toString()
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to combine date and time: $dateString, $timeString")
+            // Fallback to old method if parsing fails
+            "${dateString}T${timeString}:00Z"
+        }
     }
 
     private fun formatDateForDisplay(isoDate: String): String {

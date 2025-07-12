@@ -115,6 +115,7 @@ fun ChangeNameBottomSheet(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
+                isEnabled = localValidationError == null,
                 text = stringResource(R.string.save_changes),
                 onButtonClick = { onSave(localValue) }
             )
