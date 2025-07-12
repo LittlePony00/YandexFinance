@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,16 +37,23 @@ import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.core.ui.theme.RobotoLabelMediumStyle
 import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionMainModel
+import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionModel
 import com.yandex.finance.feature.outcome.impl.R
 import com.yandex.finance.outcome.impl.presentation.viewmodel.OutcomeTodayViewModel
 
 @Composable
 fun OutcomeTodayScreen(
     onHistoryClick: () -> Unit,
+    onFabButtonClick: () -> Unit,
+    onOutcomeClick: (UiTransactionModel) -> Unit,
     outcomeTodayVM: OutcomeTodayViewModel,
     modifier: Modifier = Modifier,
 ) {
     val uiState = outcomeTodayVM.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        outcomeTodayVM.loadData()
+    }
 
     Scaffold(
         topBar = {
@@ -67,7 +75,7 @@ fun OutcomeTodayScreen(
             )
         },
         floatingActionButton = {
-            FabButton(onClick = {})
+            FabButton(onClick = onFabButtonClick)
         }
     ) { innerPadding ->
         when (val state = uiState.value) {
@@ -108,6 +116,7 @@ fun OutcomeTodayScreen(
                 val outcomeTodayUiState = state.outcomeTodayUiState.collectAsStateWithLifecycle()
 
                 OutcomeTodayScreenContent(
+                    onOutcomeClick = onOutcomeClick,
                     modifier = modifier.padding(innerPadding),
                     outcomeTodayUiState = outcomeTodayUiState
                 )
@@ -118,6 +127,7 @@ fun OutcomeTodayScreen(
 
 @Composable
 private fun OutcomeTodayScreenContent(
+    onOutcomeClick: (UiTransactionModel) -> Unit,
     outcomeTodayUiState: State<UiTransactionMainModel>,
     modifier: Modifier = Modifier,
 ) {
@@ -170,6 +180,9 @@ private fun OutcomeTodayScreenContent(
                             )
                         }
                     }
+                },
+                onClick = {
+                    onOutcomeClick(transaction)
                 },
                 navigationContent = {
                     EmojiWrapper(

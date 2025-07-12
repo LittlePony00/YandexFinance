@@ -29,15 +29,16 @@ import com.yandex.finance.core.ui.component.icon.Search
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
 import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
-import com.yandex.finance.feature.articles.R
+import com.yandex.finance.feature.articles.impl.R
 import com.yandex.finance.feature.articles.domain.UiArticleModel
 import com.yandex.finance.feature.articles.presentation.viewmodel.MyArticlesViewModel
-import org.koin.androidx.compose.koinViewModel
+import com.yandex.finance.core.ui.provider.LocalViewModelFactory
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun MyArticlesScreen(
     modifier: Modifier = Modifier,
-    myArticlesVM: MyArticlesViewModel = koinViewModel(),
+    myArticlesVM: MyArticlesViewModel = viewModel(factory = LocalViewModelFactory.current),
 ) {
     val uiState by myArticlesVM.uiState.collectAsStateWithLifecycle()
     val searchQuery by myArticlesVM.searchQuery.collectAsStateWithLifecycle()

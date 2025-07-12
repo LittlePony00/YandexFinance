@@ -7,12 +7,15 @@ plugins {
 }
 
 android {
-    namespace = "com.yandex.finance.feature.articles"
+    namespace = "com.yandex.finance.feature.articles.api"
 }
 
 dependencies {
 
     implementation(project(":core:ui"))
+    implementation(project(":core:data:api"))
+    implementation(project(":core:common"))
+    implementation(project(":core:dagger"))
 
     /**
      * Core dependencies

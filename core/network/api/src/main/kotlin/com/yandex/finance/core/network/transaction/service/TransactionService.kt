@@ -8,14 +8,14 @@ interface TransactionService {
 
     suspend fun createTransaction(body: NetworkTransactionWithoutId): Result<NetworkCreatedTransaction>
 
-    suspend fun fetchTransactionById(id: String): Result<NetworkTransaction>
+    suspend fun fetchTransactionById(id: Int): Result<NetworkTransaction>
 
     suspend fun updateTransaction(
-        id: String,
+        id: Int,
         body: NetworkTransactionWithoutId
     ): Result<NetworkTransaction>
 
-    suspend fun deleteTransaction(id: String): Result<Boolean>
+    suspend fun deleteTransaction(id: Int): Result<Unit>
 
     suspend fun fetchTransactionsByPeriod(
         id: String,

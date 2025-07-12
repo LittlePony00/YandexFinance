@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,15 +38,22 @@ import com.yandex.finance.core.ui.theme.RobotoLabelMediumStyle
 import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.income.impl.R
 import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionMainModel
+import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionModel
 import com.yandex.finance.income.impl.presentation.viewmodel.IncomeTodayViewModel
 
 @Composable
 fun IncomeTodayScreen(
     onHistoryClick: () -> Unit,
+    onFabButtonClick: () -> Unit,
+    onIncomeClick: (UiTransactionModel) -> Unit,
     incomeTodayVM: IncomeTodayViewModel,
     modifier: Modifier = Modifier,
 ) {
     val uiState = incomeTodayVM.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        incomeTodayVM.loadData()
+    }
 
     Scaffold(
         topBar = {
@@ -67,7 +75,7 @@ fun IncomeTodayScreen(
             )
         },
         floatingActionButton = {
-            FabButton(onClick = {})
+            FabButton(onClick = onFabButtonClick)
         }
     ) { innerPadding ->
         when (val state = uiState.value) {
@@ -109,7 +117,8 @@ fun IncomeTodayScreen(
 
                 IncomeTodayScreenContent(
                     modifier = modifier.padding(innerPadding),
-                    incomeTodayUiState = incomeTodayUiState
+                    incomeTodayUiState = incomeTodayUiState,
+                    onIncomeClick = onIncomeClick
                 )
             }
         }
@@ -118,6 +127,7 @@ fun IncomeTodayScreen(
 
 @Composable
 private fun IncomeTodayScreenContent(
+    onIncomeClick: (UiTransactionModel) -> Unit,
     modifier: Modifier = Modifier,
     incomeTodayUiState: State<UiTransactionMainModel>
 ) {
@@ -170,6 +180,9 @@ private fun IncomeTodayScreenContent(
                             )
                         }
                     }
+                },
+                onClick = {
+                    onIncomeClick(transaction)
                 },
                 navigationContent = {
                     EmojiWrapper(

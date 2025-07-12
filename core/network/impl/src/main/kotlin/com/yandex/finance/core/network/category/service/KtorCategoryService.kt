@@ -42,10 +42,9 @@ class KtorCategoryService(
                 get {
                     url {
                         protocol = URLProtocol.HTTP
-                        path("categories", "type")
+                        path("categories", "type", "$isIncome")
                     }
                     contentType(ContentType.Application.Json)
-                    parameter(key = "isIncome", value = isIncome)
                 }
             }
         }

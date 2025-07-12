@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":core:data:api"))
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
+    implementation(project(":core:dagger"))
 
     /**
      * Core dependencies

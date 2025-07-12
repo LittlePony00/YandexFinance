@@ -14,8 +14,9 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.format
 import timber.log.Timber
+import javax.inject.Inject
 
-class IncomeTodayViewModel(
+class IncomeTodayViewModel @Inject constructor(
     private val id: Id,
     private val getUiTransactionByPeriodUseCase: GetUiTransactionByPeriodUseCase
 ) : ViewModel() {
@@ -25,10 +26,6 @@ class IncomeTodayViewModel(
     private val _uiState = MutableStateFlow<State>(State.Loading)
 
     val uiState: StateFlow<State> = _uiState.asStateFlow()
-
-    init {
-        loadData()
-    }
 
     sealed interface State {
 
@@ -40,7 +37,7 @@ class IncomeTodayViewModel(
         data class Content(val incomeTodayUiState: StateFlow<UiTransactionMainModel>) : State
     }
 
-    private fun loadData() {
+    fun loadData() {
         Timber.d("loadData was called")
 
         viewModelScope.launch {

@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.yandex.finance.android.library.compose)
     alias(libs.plugins.yandex.finance.android.library)
-    alias(libs.plugins.yandex.finance.android.koin)
+    alias(libs.plugins.yandex.finance.android.dagger)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":core:data:api"))
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
+    implementation(project(":core:dagger"))
     implementation(project(":feature:account:api"))
 
     /**

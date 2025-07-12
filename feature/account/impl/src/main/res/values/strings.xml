@@ -5,10 +5,10 @@
     <string name="error_text">Ошибка</string>
     <string name="my_account">Мой счёт</string>
     <string name="retry_text">Повторить</string>
-    <string name="account_name">Название счёта</string>
+    <string name="account_name">Название</string>
     <string name="delete_account">Удалить счёт</string>
-    <string name="enter_account_name">Введите название счёта</string>
-    <string name="change_account_name">Изменение имени счёта</string>
+    <string name="enter_account_name">Введите название</string>
+    <string name="change_account_name">Изменение имени</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="change_balance">Изменение баланса</string>
     <string name="enter_balance">Введите баланс</string>

@@ -9,25 +9,35 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.yandex.finance.R
 import com.yandex.finance.app.presentation.navigation.AppNavHost
 import com.yandex.finance.app.presentation.viewmodel.MainViewModel
+import com.yandex.finance.appComponent
+import com.yandex.finance.core.common.HasDependencies
 import com.yandex.finance.core.ui.provider.LocalSnackBarHostState
+import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.core.ui.provider.showMessage
 import com.yandex.finance.core.ui.provider.showShortMessage
 import com.yandex.finance.core.ui.theme.YandexFinanceTheme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
-import org.koin.compose.KoinContext
 import timber.log.Timber
+import javax.inject.Inject
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), HasDependencies {
 
-    private val mainViewModel by inject<MainViewModel>()
+    @Inject
+    lateinit var mainViewModelFactory: MainViewModel.Factory
+    
+    private lateinit var mainViewModel: MainViewModel
+
+    override val depsMap by lazy { 
+        appComponent.depsMap()
+    }
 
     private val snackBarHostState = SnackbarHostState()
 
@@ -35,21 +45,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        // Inject dependencies
+        appComponent.inject(this)
+        
+        // Create ViewModel with factory
+        val factory =  appComponent.viewModelFactory()
+        mainViewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
+
         observeNetworkConnectivity(snackBarHostState)
 
         setContent {
             val navHostController = rememberNavController()
 
-            KoinContext {
-                YandexFinanceTheme {
-                    CompositionLocalProvider(
-                        LocalSnackBarHostState provides snackBarHostState
-                    ) {
-                        AppNavHost(
-                            modifier = Modifier.fillMaxSize(),
-                            navHostController = navHostController
-                        )
-                    }
+            YandexFinanceTheme {
+                CompositionLocalProvider(
+                    LocalSnackBarHostState provides snackBarHostState,
+                    LocalViewModelFactory provides factory
+                ) {
+                    AppNavHost(
+                        modifier = Modifier.fillMaxSize(),
+                        navHostController = navHostController
+                    )
                 }
             }
         }

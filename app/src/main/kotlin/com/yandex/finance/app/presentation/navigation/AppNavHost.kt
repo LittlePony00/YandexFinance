@@ -16,19 +16,20 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.yandex.finance.feature.account.api.navigation.AccountFlow
-import com.yandex.finance.feature.articles.api.navigation.ArticlesFlow
-import com.yandex.finance.feature.income.api.navigation.IncomeFlow
-import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
-import com.yandex.finance.feature.settings.api.navigation.SettingsFlow
 import com.yandex.finance.app.presentation.navigation.navBar.NavigationBarItem
 import com.yandex.finance.app.presentation.navigation.navBar.YandexFinanceNavigationBar
 import com.yandex.finance.core.ui.provider.LocalSnackBarHostState
+import com.yandex.finance.feature.account.api.navigation.AccountFlow
 import com.yandex.finance.feature.account.impl.presentation.navigation.accountGraph
+import com.yandex.finance.feature.articles.api.navigation.ArticlesFlow
 import com.yandex.finance.feature.articles.presentation.navigation.articlesGraph
+import com.yandex.finance.feature.income.api.navigation.IncomeFlow
+import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
+import com.yandex.finance.feature.settings.api.navigation.SettingsFlow
+import com.yandex.finance.feature.settings.impl.presentation.navigation.settingsNavGraph
+import com.yandex.finance.feature.transaction_edit.impl.presentation.navigation.transactionEditGraph
 import com.yandex.finance.income.impl.presentation.navigation.incomeNavGraph
 import com.yandex.finance.outcome.impl.presentation.navigation.outcomeGraph
-import com.yandex.finance.feature.settings.impl.presentation.navigation.settingsNavGraph
 
 private val navigationBarItems = listOf(
     NavigationBarItem.OutcomeToday,
@@ -103,6 +104,7 @@ fun AppNavHost(
             articlesGraph(navController = navHostController)
             accountGraph(navController = navHostController)
             settingsNavGraph(navController = navHostController)
+            transactionEditGraph(navController = navHostController)
         }
     }
 }

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
-import com.yandex.finance.feature.settings.R
+import com.yandex.finance.feature.settings.impl.R
 import com.yandex.finance.feature.settings.impl.domain.UiSettingsModel
 import com.yandex.finance.feature.settings.impl.presentation.viewmodel.SettingsViewModel
 

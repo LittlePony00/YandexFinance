@@ -37,8 +37,8 @@ import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
 import com.yandex.finance.core.ui.util.SpacerHeight
 import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.account.impl.R
-import com.yandex.finance.feature.account.impl.presentation.component.ChangeAccountNameBottomSheet
-import com.yandex.finance.feature.account.impl.presentation.component.ChangeBalanceBottomSheet
+import com.yandex.finance.core.ui.component.bottomsheet.ChangeNameBottomSheet
+import com.yandex.finance.core.ui.component.bottomsheet.ChangeBalanceBottomSheet
 import com.yandex.finance.feature.account.impl.presentation.component.ChooseCurrencyBottomSheet
 import com.yandex.finance.feature.account.impl.presentation.viewmodel.MyAccountEditViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -163,7 +163,7 @@ internal fun MyAccountEditScreen(
                     }
 
                     is MyAccountEditViewModel.Action.ShowAccountNameDialog -> {
-                        ChangeAccountNameBottomSheet(
+                        ChangeNameBottomSheet(
                             initialValue = state.tempAccountName,
                             onDismiss = {
                                 myAccountEditVM.handleIntent(MyAccountEditViewModel.Intent.HideBottomSheet)

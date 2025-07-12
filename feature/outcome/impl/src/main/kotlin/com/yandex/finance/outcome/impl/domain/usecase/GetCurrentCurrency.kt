@@ -5,9 +5,10 @@ import com.yandex.finance.core.data.repository.AccountRepository
 import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.feature.outcome.api.domain.usecase.GetUiCurrentCurrencyUseCase
 import timber.log.Timber
+import javax.inject.Inject
 
 
-class GetUiCurrentCurrencyUseCaseImpl(
+class GetUiCurrentCurrencyUseCaseImpl @Inject constructor(
     private val id: Id,
     private val accountRepository: AccountRepository
 ) : GetUiCurrentCurrencyUseCase {

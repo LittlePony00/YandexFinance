@@ -55,5 +55,10 @@ gradlePlugin {
             id = "yandex.finance.android.koin"
             implementationClass = "AndroidKoinConventionPlugin"
         }
+
+        register("androidDagger") {
+            id = "yandex.finance.android.dagger"
+            implementationClass = "AndroidDaggerConventionPlugin"
+        }
     }
 }

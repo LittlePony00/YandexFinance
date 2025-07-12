@@ -11,6 +11,7 @@ import com.yandex.finance.feature.settings.api.navigation.SettingsFlow
 import com.yandex.finance.feature.settings.api.navigation.SettingsGraph
 import com.yandex.finance.feature.settings.impl.presentation.screen.SettingsScreen
 import com.yandex.finance.feature.settings.impl.presentation.viewmodel.SettingsViewModel
+import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 
 fun NavGraphBuilder.settingsNavGraph(navController: NavController) {
 
@@ -24,7 +25,7 @@ fun NavGraphBuilder.settingsNavGraph(navController: NavController) {
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut() }
         ) {
-            val settingsVM = viewModel<SettingsViewModel>()
+            val settingsVM = viewModel<SettingsViewModel>(factory = LocalViewModelFactory.current)
 
             SettingsScreen(settingsVM = settingsVM)
         }

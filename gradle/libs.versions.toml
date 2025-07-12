@@ -56,6 +56,12 @@ io-ktor-client = "2.3.12"
 detekt = "1.23.7"
 # endregion
 
+# region Dagger
+dagger = "2.56"
+ksp = "1.9.0-1.0.12"
+lifecycleViewmodelAndroid = "2.9.1"
+# endregion
+
 [libraries]
 
 #Android
@@ -123,9 +129,17 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "org-jetbrains-kotlinx-serialization-json" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "org-jetbrains-kotlinx-datetime" }
 
+#Dagger
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+dagger-android = { group = "com.google.dagger", name = "dagger-android", version.ref = "dagger" }
+dagger-android-processor = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger" }
+
 #Gradle
 gradle-plugin-android = { module = "com.android.tools.build:gradle", version.ref = "android-gradle-plugin" }
 gradle-plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin" }
+ksp-gradle-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
+androidx-lifecycle-viewmodel-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-android", version.ref = "lifecycleViewmodelAndroid" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android-agp" }
@@ -135,10 +149,12 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jet
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "org-jetbrains-kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "org-jetbrains-kotlin-serialization" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 #Plugins defined by this project
 yandex-finance-android-ktor = { id = "yandex.finance.android.ktor", version = "unspecified" }
 yandex-finance-android-koin = { id = "yandex.finance.android.koin", version = "unspecified" }
+yandex-finance-android-dagger = { id = "yandex.finance.android.dagger", version = "unspecified" }
 yandex-finance-android-timber = { id = "yandex.finance.android.timber", version = "unspecified" }
 yandex-finance-android-library = { id = "yandex.finance.android.library", version = "unspecified" }
 yandex-finance-android-application = { id = "yandex.finance.android.application", version = "unspecified" }

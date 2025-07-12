@@ -7,17 +7,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.yandex.finance.core.domain.model.CurrencyType
+import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeGraph
+import com.yandex.finance.feature.transaction_edit.api.navigation.TransactionEditFlow
 import com.yandex.finance.outcome.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.outcome.impl.presentation.screen.OutcomeTodayScreen
 import com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel
 import com.yandex.finance.outcome.impl.presentation.viewmodel.OutcomeTodayViewModel
-import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.outcomeGraph(navController: NavController) {
 
@@ -31,10 +34,35 @@ fun NavGraphBuilder.outcomeGraph(navController: NavController) {
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut() }
         ) {
-            val outcomeTodayVM = koinViewModel<OutcomeTodayViewModel>()
+            val factory = LocalViewModelFactory.current
+            val outcomeTodayVM = viewModel<OutcomeTodayViewModel>(factory = factory)
 
             OutcomeTodayScreen(
                 outcomeTodayVM = outcomeTodayVM,
+                onOutcomeClick = { transaction ->
+                    navController.navigate(
+                        TransactionEditFlow.EditTransaction(
+                            transactionId = transaction.id,
+                            amount = transaction.amount,
+                            isEdit = true,
+                            isIncome = false,
+                            description = transaction.comment ?: "",
+                            currencyType = transaction.account.currency
+                        )
+                    )
+                },
+                onFabButtonClick = {
+                    navController.navigate(
+                        TransactionEditFlow.EditTransaction(
+                            transactionId = 0,
+                            amount = "0.0",
+                            isEdit = false,
+                            isIncome = false,
+                            description = "",
+                            currencyType = CurrencyType.RUB
+                        )
+                    )
+                },
                 onHistoryClick = {
                     navController.navigate(OutcomeFlow.MyHistory)
                 }
@@ -51,7 +79,8 @@ fun NavGraphBuilder.outcomeGraph(navController: NavController) {
         }
 
         composable<OutcomeFlow.MyHistory> {
-            val myHistoryVM = koinViewModel<MyHistoryOutcomeViewModel>()
+            val factory = LocalViewModelFactory.current
+            val myHistoryVM = viewModel<MyHistoryOutcomeViewModel>(factory = factory)
 
             MyHistoryScreen(
                 onAnalysClick = {},

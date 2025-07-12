@@ -23,7 +23,7 @@ interface TransactionRepository {
      *
      * @return Result<[Transaction]>
      */
-    suspend fun fetchTransactionById(id: String): Result<Transaction>
+    suspend fun fetchTransactionById(id: Int): Result<Transaction>
 
     /**
      * Updates an existing transaction
@@ -34,7 +34,7 @@ interface TransactionRepository {
      * @return Result<[Transaction]>
      */
     suspend fun updateTransaction(
-        id: String,
+        id: Int,
         body: TransactionWithoutId
     ): Result<Transaction>
 
@@ -45,7 +45,7 @@ interface TransactionRepository {
      *
      * @return Result<[Boolean]> if transaction was removed then returns true, else false
      */
-    suspend fun deleteTransaction(id: String): Result<Boolean>
+    suspend fun deleteTransaction(id: Int): Result<Unit>
 
     /**
      * Fetches transactions by period
