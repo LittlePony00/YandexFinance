@@ -1,6 +1,7 @@
 package com.yandex.finance.feature.account.impl.presentation.viewmodel
 
 import androidx.compose.runtime.Immutable
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yandex.finance.core.data.repository.AccountRepository
@@ -14,13 +15,22 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-internal class MyAccountEditViewModel(
-    uiAccountModel: UiAccountModel,
-    private val accountRepository: AccountRepository
+class MyAccountEditViewModel @Inject constructor(
+    private val accountRepository: AccountRepository,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val accountValidator = AccountValidator()
+
+    private val uiAccountModel = UiAccountModel(
+        id = 1,
+        name = "Test Account",
+        icon = "💰",
+        balance = "1000.00",
+        currency = CurrencyType.RUB
+    )
 
     private val _uiState: MutableStateFlow<State> = MutableStateFlow(
         State.Content(
@@ -127,8 +137,6 @@ internal class MyAccountEditViewModel(
         }
     }
 
-
-
     private fun selectCurrency(currency: CurrencyType) {
         Timber.d("selectCurrency was called. currency: $currency")
 
@@ -159,28 +167,12 @@ internal class MyAccountEditViewModel(
                 )
 
                 result.fold(
-                    onSuccess = { accountDetailed ->
-                        val updatedAccount = currentState.accountData.copy(
-                            name = accountDetailed.name,
-                            balance = accountDetailed.balance,
-                            currency = CurrencyType.convertFromString(accountDetailed.currency)
-                        )
-
-                        updateContentState { content ->
-                            content.copy(
-                                accountData = updatedAccount,
-                                tempAccountName = updatedAccount.name,
-                                tempBalance = updatedAccount.balance,
-                                tempCurrency = updatedAccount.currency,
-                                action = null
-                            )
-                        }
-
+                    onSuccess = {
                         _sideEffect.send(SideEffect.AccountSaved)
                         _sideEffect.send(SideEffect.NavigateBack)
                     },
                     onFailure = { throwable ->
-                        Timber.e(throwable, "Error saving account changes")
+                        Timber.e(throwable, "Error saving account")
                         _sideEffect.send(SideEffect.ShowSaveError)
                     }
                 )
@@ -229,7 +221,7 @@ internal class MyAccountEditViewModel(
         }
     }
 
-        private fun saveAccountNameChanges(name: String) {
+    private fun saveAccountNameChanges(name: String) {
         Timber.d("saveAccountNameChanges was called. name: $name")
 
         val validationError = accountValidator.validateAccountName(name)

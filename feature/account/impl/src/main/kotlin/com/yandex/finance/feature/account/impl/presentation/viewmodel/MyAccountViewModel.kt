@@ -11,8 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class MyAccountViewModel(
+class MyAccountViewModel @Inject constructor(
     private val id: Id,
     private val accountRepository: AccountRepository
 ) : ViewModel() {

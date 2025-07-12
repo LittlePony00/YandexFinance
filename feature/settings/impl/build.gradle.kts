@@ -1,18 +1,20 @@
 plugins {
     alias(libs.plugins.yandex.finance.android.library.compose)
     alias(libs.plugins.yandex.finance.android.library)
-    alias(libs.plugins.yandex.finance.android.koin)
+    alias(libs.plugins.yandex.finance.android.dagger)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
-    namespace = "com.yandex.finance.feature.settings"
+    namespace = "com.yandex.finance.feature.settings.impl"
 }
 
 dependencies {
 
     implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":core:dagger"))
     implementation(project(":feature:settings:api"))
 
     /**

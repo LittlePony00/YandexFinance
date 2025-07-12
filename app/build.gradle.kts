@@ -2,7 +2,8 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.yandex.finance.android.application)
-    alias(libs.plugins.yandex.finance.android.koin)
+    alias(libs.plugins.yandex.finance.android.dagger)
+    alias(libs.plugins.yandex.finance.android.ktor)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
@@ -46,9 +47,12 @@ dependencies {
      */
     // region module dependencies
     implementation(project(":core:ui"))
+    implementation(project(":core:data:api"))
     implementation(project(":core:data:impl"))
     implementation(project(":core:common"))
+    implementation(project(":core:dagger"))
     implementation(project(":core:domain"))
+    implementation(project(":core:network:api"))
     implementation(project(":core:network:impl"))
     implementation(project(":feature:income:api"))
     implementation(project(":feature:income:impl"))

@@ -15,8 +15,9 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.format
 import timber.log.Timber
+import javax.inject.Inject
 
-class MyHistoryOutcomeViewModel(
+class MyHistoryOutcomeViewModel @Inject constructor(
     private val id: Id,
     private val getUiTransactionByPeriodUseCase: GetUiTransactionByPeriodUseCase,
 ) : ViewModel() {

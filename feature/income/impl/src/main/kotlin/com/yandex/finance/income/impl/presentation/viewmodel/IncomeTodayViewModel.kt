@@ -14,8 +14,9 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.format
 import timber.log.Timber
+import javax.inject.Inject
 
-class IncomeTodayViewModel(
+class IncomeTodayViewModel @Inject constructor(
     private val id: Id,
     private val getUiTransactionByPeriodUseCase: GetUiTransactionByPeriodUseCase
 ) : ViewModel() {

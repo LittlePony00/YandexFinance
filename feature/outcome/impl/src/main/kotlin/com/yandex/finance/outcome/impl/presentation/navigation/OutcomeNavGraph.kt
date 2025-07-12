@@ -7,17 +7,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeGraph
 import com.yandex.finance.outcome.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.outcome.impl.presentation.screen.OutcomeTodayScreen
 import com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel
 import com.yandex.finance.outcome.impl.presentation.viewmodel.OutcomeTodayViewModel
-import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.outcomeGraph(navController: NavController) {
 
@@ -31,7 +32,8 @@ fun NavGraphBuilder.outcomeGraph(navController: NavController) {
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut() }
         ) {
-            val outcomeTodayVM = koinViewModel<OutcomeTodayViewModel>()
+            val factory = LocalViewModelFactory.current
+            val outcomeTodayVM = viewModel<OutcomeTodayViewModel>(factory = factory)
 
             OutcomeTodayScreen(
                 outcomeTodayVM = outcomeTodayVM,
@@ -51,7 +53,8 @@ fun NavGraphBuilder.outcomeGraph(navController: NavController) {
         }
 
         composable<OutcomeFlow.MyHistory> {
-            val myHistoryVM = koinViewModel<MyHistoryOutcomeViewModel>()
+            val factory = LocalViewModelFactory.current
+            val myHistoryVM = viewModel<MyHistoryOutcomeViewModel>(factory = factory)
 
             MyHistoryScreen(
                 onAnalysClick = {},

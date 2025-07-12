@@ -2,6 +2,7 @@ package com.yandex.finance.app.presentation.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.yandex.finance.core.data.observer.NetworkConnectivityObserver
 import kotlinx.coroutines.flow.SharingStarted
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 class MainViewModel(
     connectivityObserver: NetworkConnectivityObserver
@@ -33,6 +35,19 @@ class MainViewModel(
 
         viewModelScope.launch {
             _wasDisconnected.value = state
+        }
+    }
+    
+    class Factory @Inject constructor(
+        private val connectivityObserver: NetworkConnectivityObserver
+    ) : ViewModelProvider.Factory {
+        
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                return MainViewModel(connectivityObserver) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 

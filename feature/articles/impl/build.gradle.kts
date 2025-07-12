@@ -1,13 +1,13 @@
 plugins {
     alias(libs.plugins.yandex.finance.android.library.compose)
     alias(libs.plugins.yandex.finance.android.library)
-    alias(libs.plugins.yandex.finance.android.koin)
+    alias(libs.plugins.yandex.finance.android.dagger)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
-    namespace = "com.yandex.finance.feature.articles"
+    namespace = "com.yandex.finance.feature.articles.impl"
 }
 
 dependencies {
@@ -15,6 +15,8 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:data:api"))
     implementation(project(":core:domain"))
+    implementation(project(":core:common"))
+    implementation(project(":core:dagger"))
     implementation(project(":feature:articles:api"))
 
     /**

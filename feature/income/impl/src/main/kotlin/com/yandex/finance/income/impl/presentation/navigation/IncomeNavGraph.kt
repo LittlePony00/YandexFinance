@@ -2,17 +2,18 @@ package com.yandex.finance.income.impl.presentation.navigation
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.feature.income.api.navigation.IncomeFlow
 import com.yandex.finance.feature.income.api.navigation.IncomeGraph
 import com.yandex.finance.income.impl.presentation.screen.IncomeTodayScreen
 import com.yandex.finance.income.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.income.impl.presentation.viewmodel.IncomeTodayViewModel
 import com.yandex.finance.income.impl.presentation.viewmodel.MyHistoryIncomeViewModel
-import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.incomeNavGraph(navController: NavController) {
 
@@ -26,7 +27,8 @@ fun NavGraphBuilder.incomeNavGraph(navController: NavController) {
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut() }
         ) {
-            val incomeTodayVM = koinViewModel<IncomeTodayViewModel>()
+            val incomeTodayVM =
+                viewModel<IncomeTodayViewModel>(factory = LocalViewModelFactory.current)
 
             IncomeTodayScreen(
                 incomeTodayVM = incomeTodayVM,
@@ -40,7 +42,8 @@ fun NavGraphBuilder.incomeNavGraph(navController: NavController) {
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut() }
         ) {
-            val myHistoryViewModel = koinViewModel<MyHistoryIncomeViewModel>()
+            val myHistoryViewModel: MyHistoryIncomeViewModel =
+                viewModel(factory = LocalViewModelFactory.current)
 
             MyHistoryScreen(
                 onBackClick = {

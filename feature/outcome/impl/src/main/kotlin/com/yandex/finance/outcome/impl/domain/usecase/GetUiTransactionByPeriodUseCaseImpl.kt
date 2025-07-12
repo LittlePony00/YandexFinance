@@ -9,8 +9,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import timber.log.Timber
+import javax.inject.Inject
 
-class GetUiTransactionByPeriodUseCaseImpl(
+class GetUiTransactionByPeriodUseCaseImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher,
     private val getUiCurrentCurrencyUseCase: GetUiCurrentCurrencyUseCase,
     private val transactionRepository: TransactionRepository
