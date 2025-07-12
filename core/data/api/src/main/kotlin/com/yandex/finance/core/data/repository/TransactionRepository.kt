@@ -23,7 +23,7 @@ interface TransactionRepository {
      *
      * @return Result<[Transaction]>
      */
-    suspend fun fetchTransactionById(id: String): Result<Transaction>
+    suspend fun fetchTransactionById(id: Int): Result<Transaction>
 
     /**
      * Updates an existing transaction

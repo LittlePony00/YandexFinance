@@ -155,22 +155,49 @@ class TransactionEditViewModel @AssistedInject constructor(
                 val accountsResult = accountRepository.fetchAccounts()
                 val accounts = accountsResult.getOrThrow()
 
-                val categoriesResult = categoryRepository.fetchCategoriesByType(isIncome)
+                val categoriesResult = if (isEditing) {
+                    categoryRepository.fetchCategories()
+                } else {
+                    categoryRepository.fetchCategoriesByType(isIncome)
+                }
                 val categories = categoriesResult.getOrThrow()
 
-                val contentState = State.Content(
-                    isEditing = isEditing,
-                    amount = initialAmount,
-                    description = initialDescription,
-                    availableAccounts = accounts,
-                    availableCategories = categories,
-                    isIncome = isIncome,
-                    selectedAccount = accounts.firstOrNull(),
-                    selectedDate = getCurrentDateIso(),
-                    selectedTime = getCurrentTimeString()
-                )
+                if (isEditing && transactionId != 0) {
+                    val transactionResult = transactionRepository.fetchTransactionById(transactionId)
+                    val transaction = transactionResult.getOrThrow()
 
-                _uiState.value = contentState
+                    val selectedAccount = accounts.find { it.id == transaction.account.id }
+                    val selectedCategory = categories.find { it.id == transaction.category.id }
+
+                    val contentState = State.Content(
+                        isEditing = isEditing,
+                        amount = transaction.amount,
+                        description = transaction.comment ?: "",
+                        availableAccounts = accounts,
+                        availableCategories = categories,
+                        isIncome = transaction.category.isIncome,
+                        selectedAccount = selectedAccount,
+                        selectedCategory = selectedCategory,
+                        selectedDate = extractDateFromIsoString(transaction.transactionDate),
+                        selectedTime = extractTimeFromIsoString(transaction.transactionDate)
+                    )
+
+                    _uiState.value = contentState
+                } else {
+                    val contentState = State.Content(
+                        isEditing = isEditing,
+                        amount = initialAmount,
+                        description = initialDescription,
+                        availableAccounts = accounts,
+                        availableCategories = categories,
+                        isIncome = isIncome,
+                        selectedAccount = accounts.firstOrNull(),
+                        selectedDate = getCurrentDateIso(),
+                        selectedTime = getCurrentTimeString()
+                    )
+
+                    _uiState.value = contentState
+                }
             } catch (e: Exception) {
                 Timber.e(e, "Error loading initial data")
                 _uiState.value = State.Error(retry = { loadInitialData() })
@@ -462,5 +489,27 @@ class TransactionEditViewModel @AssistedInject constructor(
             return "${parts[2]}.${parts[1]}.${parts[0]}"
         }
         return isoDate
+    }
+
+    private fun extractTimeFromIsoString(isoDateString: String): String {
+        return try {
+            val instant = Instant.parse(isoDateString)
+            val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+            "${localDateTime.hour.toString().padStart(2, '0')}:${localDateTime.minute.toString().padStart(2, '0')}"
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to extract time from ISO string: $isoDateString")
+            getCurrentTimeString()
+        }
+    }
+
+    private fun extractDateFromIsoString(isoDateString: String): String {
+        return try {
+            val instant = Instant.parse(isoDateString)
+            val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+            "${localDateTime.year}-${localDateTime.monthNumber.toString().padStart(2, '0')}-${localDateTime.dayOfMonth.toString().padStart(2, '0')}"
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to extract date from ISO string: $isoDateString")
+            getCurrentDateIso()
+        }
     }
 }

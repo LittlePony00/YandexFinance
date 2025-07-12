@@ -44,7 +44,7 @@ class KtorTransactionService(
         }
     }
 
-    override suspend fun fetchTransactionById(id: String): Result<NetworkTransaction> {
+    override suspend fun fetchTransactionById(id: Int): Result<NetworkTransaction> {
         Timber.d("fetchTransactionById was called. id: $id")
 
         return withContext(dispatcher) {
@@ -52,7 +52,7 @@ class KtorTransactionService(
                 get {
                     url {
                         protocol = URLProtocol.HTTP
-                        path("transactions", id)
+                        path("transactions", "$id")
                     }
                     contentType(ContentType.Application.Json)
                 }

@@ -17,7 +17,7 @@ class TransactionRepositoryImpl(
         }
     }
 
-    override suspend fun fetchTransactionById(id: String): Result<Transaction> {
+    override suspend fun fetchTransactionById(id: Int): Result<Transaction> {
         return transactionService.fetchTransactionById(id).asAnotherResult {
             it.asExternalModel()
         }
