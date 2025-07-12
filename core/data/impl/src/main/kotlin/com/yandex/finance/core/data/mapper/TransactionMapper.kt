@@ -55,10 +55,7 @@ fun TransactionWithoutId.asNetworkModel() = NetworkTransactionWithoutId(
     amount = amount,
     categoryId = categoryId,
     comment = comment,
-    transactionDate = Instant
-        .parse(transactionDate)
-        .toLocalDateTime(TimeZone.UTC)
-        .format(DateTimeFormatter.localDateTimeFormatter)
+    transactionDate = transactionDate
 )
 
 // Network to Domain mappers

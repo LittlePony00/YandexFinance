@@ -28,7 +28,7 @@ class KtorTransactionService(
     override suspend fun createTransaction(body: NetworkTransactionWithoutId): Result<NetworkCreatedTransaction> {
         Timber.d("createTransaction was called. body: $body")
         Timber.d("CREATE TRANSACTION URL: https://shmr-finance.ru/api/v1/transactions")
-        Timber.d("CREATE TRANSACTION BODY JSON: ${kotlinx.serialization.json.Json.encodeToString(NetworkTransactionWithoutId.serializer(), body)}")
+        Timber.d("CREATE TRANSACTION BODY JSON: ${Json.encodeToString(NetworkTransactionWithoutId.serializer(), body)}")
 
         return withContext(dispatcher) {
             client.safeResponse<NetworkCreatedTransaction> {
@@ -65,6 +65,8 @@ class KtorTransactionService(
         body: NetworkTransactionWithoutId
     ): Result<NetworkTransaction> {
         Timber.d("updateTransaction was called. id: $id, body: $body")
+        Timber.d("UPDATE TRANSACTION URL: https://shmr-finance.ru/api/v1/transactions/$id")
+        Timber.d("UPDATE TRANSACTION BODY JSON: ${Json.encodeToString(NetworkTransactionWithoutId.serializer(), body)}")
 
         return withContext(dispatcher) {
             client.safeResponse<NetworkTransaction> {
