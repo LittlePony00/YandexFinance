@@ -87,6 +87,18 @@ fun NavGraphBuilder.outcomeGraph(navController: NavController) {
                 onBackClick = {
                     navController.popBackStack()
                 },
+                onItemClick = { transaction ->
+                    navController.navigate(
+                        TransactionEditFlow.EditTransaction(
+                            transactionId = transaction.id,
+                            amount = transaction.amount,
+                            isEdit = true,
+                            isIncome = true,
+                            description = transaction.comment ?: "",
+                            currencyType = transaction.account.currency
+                        )
+                    )
+                },
                 myHistoryVM = myHistoryVM
             )
         }

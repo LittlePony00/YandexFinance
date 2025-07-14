@@ -28,10 +28,6 @@ class MyHistoryOutcomeViewModel @Inject constructor(
 
     val uiState: StateFlow<State> = _uiState.asStateFlow()
 
-    init {
-        loadData()
-    }
-
     sealed interface State {
 
         data object Loading : State
@@ -83,7 +79,7 @@ class MyHistoryOutcomeViewModel @Inject constructor(
         loadData()
     }
 
-    private fun loadData() {
+    fun loadData() {
         Timber.d("loadData was called")
 
         viewModelScope.launch {

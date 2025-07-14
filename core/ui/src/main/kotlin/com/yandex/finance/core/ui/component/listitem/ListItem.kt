@@ -73,7 +73,7 @@ fun ListItem(
                 ),
         ) {
             Row(
-                modifier = modifier.padding(contentPaddings),
+                modifier = Modifier.padding(contentPaddings),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(horizontalSpaceBetweenItems)
             ) {

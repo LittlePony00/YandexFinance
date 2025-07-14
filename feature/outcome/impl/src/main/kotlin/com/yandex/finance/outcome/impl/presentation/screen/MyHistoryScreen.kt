@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ import com.yandex.finance.core.ui.theme.RobotoLabelMediumStyle
 import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.core.ui.util.localDateTimeFormatter
 import com.yandex.finance.feature.outcome.api.domain.model.UiMyHistoryModel
+import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionModel
 import com.yandex.finance.feature.outcome.impl.R
 import com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel
 import kotlinx.datetime.Instant
@@ -52,9 +54,14 @@ fun MyHistoryScreen(
     onBackClick: () -> Unit,
     onAnalysClick: () -> Unit,
     myHistoryVM: MyHistoryOutcomeViewModel,
+    onItemClick: (UiTransactionModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uiState = myHistoryVM.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        myHistoryVM.loadData()
+    }
 
     Scaffold(
         topBar = {
@@ -121,6 +128,7 @@ fun MyHistoryScreen(
                 MyHistoryScreenContent(
                     modifier = modifier.padding(innerPadding),
                     myHistoryUiState = myHistoryUiState,
+                    onItemClick = onItemClick,
                     onBeginClick = {
                         myHistoryVM.changeAction(action = MyHistoryOutcomeViewModel.ContentAction.ChangeStartDate)
                     },
@@ -159,6 +167,7 @@ private fun MyHistoryScreenContent(
     onEndClick: () -> Unit,
     onBeginClick: () -> Unit,
     myHistoryUiState: State<UiMyHistoryModel>,
+    onItemClick: (UiTransactionModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
@@ -237,6 +246,7 @@ private fun MyHistoryScreenContent(
 
         items(myHistoryUiState.value.uiTransactionMainModel.transactions) { transaction ->
             ListItem(
+                onClick = { onItemClick(transaction) },
                 content = {
                     Text(text = transaction.category.name)
                     transaction.comment?.let { comment ->
