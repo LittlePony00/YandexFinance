@@ -2,14 +2,16 @@ package com.yandex.finance.feature.settings.impl.domain
 
 data class UiSettingsModel(
     val isDarkMode: Boolean,
-    val chapters: List<UiChapterModel>
+    val chapters: List<UiChapterModel>,
+    val lastSyncTime: String
 ) {
 
     companion object {
         val initial
             get() = UiSettingsModel(
                 isDarkMode = false,
-                chapters = listOf()
+                chapters = listOf(),
+                lastSyncTime = "Никогда"
             )
     }
 }

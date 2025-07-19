@@ -337,8 +337,9 @@ class TransactionEditViewModel @AssistedInject constructor(
             }
 
             try {
+                Timber.d("Creating transaction with accountId: ${currentState.selectedAccount.id}, accountName: ${currentState.selectedAccount.name}")
                 val transactionData = TransactionWithoutId(
-                    accountId = currentState.selectedAccount.id,
+                    accountId = accountId.toInt(),
                     amount = currentState.amount,
                     categoryId = currentState.selectedCategory.id,
                     comment = currentState.description.ifBlank { "" },

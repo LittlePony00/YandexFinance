@@ -20,6 +20,7 @@ dependencies {
     implementation(project(":feature:outcome:api"))
     implementation(project(":feature:income:api"))
     implementation(project(":feature:transaction-edit:api"))
+    implementation(project(":feature:transaction-analysis:api"))
 
     /**
      * Core dependencies

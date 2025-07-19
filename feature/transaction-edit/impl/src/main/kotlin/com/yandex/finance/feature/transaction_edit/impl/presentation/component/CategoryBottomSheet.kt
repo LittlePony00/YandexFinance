@@ -28,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yandex.finance.core.domain.model.category.Category
 import com.yandex.finance.core.ui.component.bottomsheet.YFBottomSheet
-import com.yandex.finance.core.ui.component.bottomsheet.closeBottomSheet
 import com.yandex.finance.core.ui.component.icon.EmojiWrapper
 import com.yandex.finance.core.ui.component.icon.Search
 import com.yandex.finance.core.ui.component.listitem.ListItem
@@ -53,7 +52,7 @@ fun CategoryBottomSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val hideBottomSheet: () -> Unit = {
         scope.launch {
-            sheetState.closeBottomSheet()
+            sheetState.hide()
             onDismiss()
         }
     }

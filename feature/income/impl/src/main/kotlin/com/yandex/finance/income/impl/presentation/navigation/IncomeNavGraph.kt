@@ -12,6 +12,7 @@ import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.feature.income.api.navigation.IncomeFlow
 import com.yandex.finance.feature.income.api.navigation.IncomeGraph
 import com.yandex.finance.feature.transaction_edit.api.navigation.TransactionEditFlow
+import com.yandex.finance.feature.transaction_analysis.api.navigation.TransactionAnalysisFlow
 import com.yandex.finance.income.impl.presentation.screen.IncomeTodayScreen
 import com.yandex.finance.income.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.income.impl.presentation.viewmodel.IncomeTodayViewModel
@@ -76,7 +77,21 @@ fun NavGraphBuilder.incomeNavGraph(navController: NavController) {
                     navController.popBackStack()
                 },
                 onAnalysClick = {
-
+                    navController.navigate(
+                        TransactionAnalysisFlow.Analysis(
+                            isIncome = true,
+                            startDate = myHistoryViewModel.uiState.value.let { state ->
+                                if (state is com.yandex.finance.income.impl.presentation.viewmodel.MyHistoryIncomeViewModel.State.Content) {
+                                    state.myHistoryUiState.value.startDate
+                                } else ""
+                            },
+                            endDate = myHistoryViewModel.uiState.value.let { state ->
+                                if (state is com.yandex.finance.income.impl.presentation.viewmodel.MyHistoryIncomeViewModel.State.Content) {
+                                    state.myHistoryUiState.value.endDate
+                                } else ""
+                            }
+                        )
+                    )
                 },
                 onItemClick = { transaction ->
                     navController.navigate(

@@ -54,4 +54,5 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(MyHistoryOutcomeViewModel::class)
     fun bindMyHistoryOutcomeViewModel(viewModel: MyHistoryOutcomeViewModel): ViewModel
+
 } 

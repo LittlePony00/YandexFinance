@@ -14,6 +14,8 @@ import timber.log.Timber
 interface NetworkConnectivityObserver {
 
     val isConnected: Flow<Boolean>
+    
+    fun isConnected(): Boolean
 }
 
 class NetworkConnectivityObserverImpl(context: Context) : NetworkConnectivityObserver {
@@ -36,6 +38,8 @@ class NetworkConnectivityObserverImpl(context: Context) : NetworkConnectivityObs
                 connectivityManager.unregisterNetworkCallback(callback)
             }
         }
+    
+    override fun isConnected(): Boolean = getCurrentNetworkState()
 
     private fun ProducerScope<Boolean>.networkCallback(): NetworkCallback =
         object : NetworkCallback() {

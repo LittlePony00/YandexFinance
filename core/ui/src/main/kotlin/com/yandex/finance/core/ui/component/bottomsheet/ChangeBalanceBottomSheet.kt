@@ -54,7 +54,7 @@ fun ChangeBalanceBottomSheet(
 
     val hideBottomSheet: () -> Unit = {
         scope.launch {
-            sheetState.closeBottomSheet()
+            sheetState.hide()
             onDismiss()
         }
     }

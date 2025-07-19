@@ -11,6 +11,7 @@ import com.yandex.finance.app.di.modules.OutcomeDependenciesModule
 import com.yandex.finance.app.di.modules.OutcomeUseCaseModule
 import com.yandex.finance.app.di.modules.SettingsDependenciesModule
 import com.yandex.finance.app.di.modules.TransactionEditDependenciesModule
+import com.yandex.finance.app.di.modules.TransactionAnalysisDependenciesModule
 import com.yandex.finance.app.di.modules.ViewModelModule
 import com.yandex.finance.app.presentation.activity.MainActivity
 import com.yandex.finance.core.common.DepsMap
@@ -21,6 +22,7 @@ import com.yandex.finance.feature.income.api.di.IncomeDependencies
 import com.yandex.finance.feature.outcome.api.di.OutcomeDependencies
 import com.yandex.finance.feature.settings.api.di.SettingsDependencies
 import com.yandex.finance.feature.transaction_edit.api.di.TransactionEditDependencies
+import com.yandex.finance.feature.transaction_analysis.api.di.TransactionAnalysisDependencies
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -41,7 +43,8 @@ import javax.inject.Singleton
         IncomeDependenciesModule::class,
         ArticlesDependenciesModule::class,
         SettingsDependenciesModule::class,
-        TransactionEditDependenciesModule::class
+        TransactionEditDependenciesModule::class,
+        TransactionAnalysisDependenciesModule::class
     ]
 )
 @Singleton
@@ -51,7 +54,8 @@ interface MainActivityComponent :
     IncomeDependencies,
     ArticlesDependencies,
     SettingsDependencies,
-    TransactionEditDependencies {
+    TransactionEditDependencies,
+    TransactionAnalysisDependencies {
     
     /**
      * Provides the map of all dependencies for use by HasDependencies
@@ -67,6 +71,11 @@ interface MainActivityComponent :
      * Inject dependencies into MainActivity
      */
     fun inject(activity: MainActivity)
+    
+    /**
+     * Inject dependencies into Application
+     */
+    fun inject(application: com.yandex.finance.YandexFinanceApp)
     
     @Component.Factory
     interface Factory {

@@ -28,6 +28,7 @@ import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
 import com.yandex.finance.feature.settings.api.navigation.SettingsFlow
 import com.yandex.finance.feature.settings.impl.presentation.navigation.settingsNavGraph
 import com.yandex.finance.feature.transaction_edit.impl.presentation.navigation.transactionEditGraph
+import com.yandex.finance.feature.transaction_analysis.impl.presentation.navigation.transactionAnalysisGraph
 import com.yandex.finance.income.impl.presentation.navigation.incomeNavGraph
 import com.yandex.finance.outcome.impl.presentation.navigation.outcomeGraph
 
@@ -105,6 +106,7 @@ fun AppNavHost(
             accountGraph(navController = navHostController)
             settingsNavGraph(navController = navHostController)
             transactionEditGraph(navController = navHostController)
+            transactionAnalysisGraph(navController = navHostController)
         }
     }
 }

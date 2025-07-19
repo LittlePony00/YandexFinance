@@ -21,7 +21,6 @@ import com.yandex.finance.core.ui.R.string.euro_symbol
 import com.yandex.finance.core.ui.R.string.russian_dollar_name
 import com.yandex.finance.core.ui.R.string.russian_rubble_symbol
 import com.yandex.finance.core.ui.component.bottomsheet.YFBottomSheet
-import com.yandex.finance.core.ui.component.bottomsheet.closeBottomSheet
 import com.yandex.finance.core.ui.component.icon.Cancel
 import com.yandex.finance.core.ui.component.icon.DollarSymbol
 import com.yandex.finance.core.ui.component.icon.EuroSymbol
@@ -45,7 +44,7 @@ internal fun ChooseCurrencyBottomSheet(
 
     val hideBottomSheet: () -> Unit = {
         scope.launch {
-            sheetState.closeBottomSheet()
+            sheetState.hide()
             onDismiss()
         }
     }

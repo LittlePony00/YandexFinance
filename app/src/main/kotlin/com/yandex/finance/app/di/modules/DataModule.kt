@@ -9,15 +9,46 @@ import com.yandex.finance.core.data.repository.CategoryRepository
 import com.yandex.finance.core.data.repository.CategoryRepositoryImpl
 import com.yandex.finance.core.data.repository.TransactionRepository
 import com.yandex.finance.core.data.repository.TransactionRepositoryImpl
-import com.yandex.finance.core.network.account.service.AccountService
-import com.yandex.finance.core.network.category.service.CategoryService
-import com.yandex.finance.core.network.transaction.service.TransactionService
+import com.yandex.finance.core.data.sync.SyncStatusRepository
+import com.yandex.finance.core.data.sync.SyncStatusRepositoryImpl
+import com.yandex.finance.core.localdb.dao.AccountDao
+import com.yandex.finance.core.localdb.dao.CategoryDao
+import com.yandex.finance.core.localdb.dao.SyncMetadataDao
+import com.yandex.finance.core.localdb.dao.TransactionDao
+import com.yandex.finance.core.localdb.database.YandexFinanceDatabase
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object DataModule {
+abstract class DataModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindSyncStatusRepository(
+        syncStatusRepositoryImpl: SyncStatusRepositoryImpl
+    ): SyncStatusRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTransactionRepository(
+        transactionRepositoryImpl: TransactionRepositoryImpl
+    ): TransactionRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAccountRepository(
+        accountRepositoryImpl: AccountRepositoryImpl
+    ): AccountRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCategoryRepository(
+        categoryRepositoryImpl: CategoryRepositoryImpl
+    ): CategoryRepository
+
+    companion object {
     
     @Provides
     @Singleton
@@ -27,19 +58,28 @@ object DataModule {
     
     @Provides
     @Singleton
-    fun provideAccountRepository(accountService: AccountService): AccountRepository {
-        return AccountRepositoryImpl(accountService)
+    fun provideYandexFinanceDatabase(context: Context): YandexFinanceDatabase {
+        return YandexFinanceDatabase.getInstance(context)
     }
-    
+
     @Provides
-    @Singleton
-    fun provideCategoryRepository(categoryService: CategoryService): CategoryRepository {
-        return CategoryRepositoryImpl(categoryService)
+    fun provideTransactionDao(database: YandexFinanceDatabase): TransactionDao {
+        return database.transactionDao()
     }
-    
+
     @Provides
-    @Singleton
-    fun provideTransactionRepository(transactionService: TransactionService): TransactionRepository {
-        return TransactionRepositoryImpl(transactionService)
+    fun provideAccountDao(database: YandexFinanceDatabase): AccountDao {
+        return database.accountDao()
+    }
+
+    @Provides
+    fun provideCategoryDao(database: YandexFinanceDatabase): CategoryDao {
+        return database.categoryDao()
+    }
+
+    @Provides
+    fun provideSyncMetadataDao(database: YandexFinanceDatabase): SyncMetadataDao {
+        return database.syncMetadataDao()
+    }
     }
 } 

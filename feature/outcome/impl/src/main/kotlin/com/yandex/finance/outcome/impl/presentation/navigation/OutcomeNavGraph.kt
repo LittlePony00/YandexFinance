@@ -17,6 +17,7 @@ import com.yandex.finance.core.ui.provider.LocalViewModelFactory
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeFlow
 import com.yandex.finance.feature.outcome.api.navigation.OutcomeGraph
 import com.yandex.finance.feature.transaction_edit.api.navigation.TransactionEditFlow
+import com.yandex.finance.feature.transaction_analysis.api.navigation.TransactionAnalysisFlow
 import com.yandex.finance.outcome.impl.presentation.screen.MyHistoryScreen
 import com.yandex.finance.outcome.impl.presentation.screen.OutcomeTodayScreen
 import com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel
@@ -83,7 +84,23 @@ fun NavGraphBuilder.outcomeGraph(navController: NavController) {
             val myHistoryVM = viewModel<MyHistoryOutcomeViewModel>(factory = factory)
 
             MyHistoryScreen(
-                onAnalysClick = {},
+                onAnalysClick = {
+                    navController.navigate(
+                        TransactionAnalysisFlow.Analysis(
+                            isIncome = false,
+                            startDate = myHistoryVM.uiState.value.let { state ->
+                                if (state is com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel.State.Content) {
+                                    state.myHistoryUiState.value.startDate
+                                } else ""
+                            },
+                            endDate = myHistoryVM.uiState.value.let { state ->
+                                if (state is com.yandex.finance.outcome.impl.presentation.viewmodel.MyHistoryOutcomeViewModel.State.Content) {
+                                    state.myHistoryUiState.value.endDate
+                                } else ""
+                            }
+                        )
+                    )
+                },
                 onBackClick = {
                     navController.popBackStack()
                 },

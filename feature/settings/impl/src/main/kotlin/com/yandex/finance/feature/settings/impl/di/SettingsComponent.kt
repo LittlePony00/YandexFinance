@@ -1,6 +1,7 @@
 package com.yandex.finance.feature.settings.impl.di
 
 import com.yandex.finance.feature.settings.api.di.SettingsDependencies
+import com.yandex.finance.feature.settings.impl.presentation.viewmodel.SettingsViewModel
 import dagger.Component
 
 /**
@@ -9,6 +10,8 @@ import dagger.Component
  */
 @Component(dependencies = [SettingsDependencies::class])
 internal interface SettingsComponent {
+    
+    fun inject(viewModel: SettingsViewModel)
     
     /**
      * Factory for creating SettingsComponent with dependencies

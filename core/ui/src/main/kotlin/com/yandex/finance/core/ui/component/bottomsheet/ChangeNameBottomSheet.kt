@@ -53,7 +53,7 @@ fun ChangeNameBottomSheet(
     val hideBottomSheet: () -> Unit = {
         scope.launch {
             onDismiss()
-            sheetState.closeBottomSheet()
+            sheetState.hide()
         }
     }
 

@@ -23,13 +23,14 @@ class GetUiTransactionByPeriodUseCaseImpl @Inject constructor(
         endDate: String,
         isIncome: Boolean?
     ): Result<UiTransactionMainModel> = withContext(dispatcher) {
-        Timber.d("GetUiTransactionByPeriodImpl was called")
+        Timber.d("GetUiTransactionByPeriodImpl was called. id: $id, startDate: $startDate, endDate: $endDate")
 
         transactionRepository.fetchTransactionsByPeriod(
             id = id,
             startDate = startDate,
             endDate = endDate
         ).mapCatching { transactions ->
+            Timber.d("transactions: $transactions")
             var sum = 0.0
             val incomeTransactions = transactions.filter { transaction ->
 

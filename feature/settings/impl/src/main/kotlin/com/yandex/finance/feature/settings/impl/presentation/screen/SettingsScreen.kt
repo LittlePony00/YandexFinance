@@ -133,5 +133,13 @@ private fun SettingsScreenContent(
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         }
+        
+        // Last sync time display
+        Text(
+            text = "Последняя синхронизация: ${settingsData.value.lastSyncTime}",
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
