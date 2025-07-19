@@ -26,6 +26,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -76,7 +77,13 @@ fun TransactionAnalysisScreen(
                             contentDescription = stringResource(R.string.back_button)
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
+                    actionIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+                    navigationIconContentColor = MaterialTheme.colorScheme.surfaceVariant
+                ),
             )
         },
         modifier = modifier
@@ -118,7 +125,7 @@ fun TransactionAnalysisScreen(
 
             is TransactionAnalysisViewModel.State.Content -> {
                 val analysisState by state.analysisUiState.collectAsStateWithLifecycle()
-                
+
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -127,8 +134,16 @@ fun TransactionAnalysisScreen(
                     item {
                         PeriodSelectionSection(
                             analysisModel = analysisState,
-                            onStartDateClick = { transactionAnalysisVM.changeAction(TransactionAnalysisViewModel.Action.ChangeStartDate) },
-                            onEndDateClick = { transactionAnalysisVM.changeAction(TransactionAnalysisViewModel.Action.ChangeEndDate) }
+                            onStartDateClick = {
+                                transactionAnalysisVM.changeAction(
+                                    TransactionAnalysisViewModel.Action.ChangeStartDate
+                                )
+                            },
+                            onEndDateClick = {
+                                transactionAnalysisVM.changeAction(
+                                    TransactionAnalysisViewModel.Action.ChangeEndDate
+                                )
+                            }
                         )
                     }
 
@@ -153,7 +168,7 @@ fun TransactionAnalysisScreen(
                 }
 
                 when (val action = state.action) {
-                    is TransactionAnalysisViewModel.Action.ChangeEndDate, 
+                    is TransactionAnalysisViewModel.Action.ChangeEndDate,
                     TransactionAnalysisViewModel.Action.ChangeStartDate -> {
                         YandexFinanceCalendar(
                             onDismiss = {
@@ -168,7 +183,9 @@ fun TransactionAnalysisScreen(
                             }
                         )
                     }
-                    else -> { /* Do nothing */ }
+
+                    else -> { /* Do nothing */
+                    }
                 }
             }
         }
@@ -246,7 +263,9 @@ private fun TotalAmountSection(
             },
             trailingContent = {
                 Text(
-                    text = "${analysisModel.totalAmount.toInt().toString().formatWithSeparator()} ${analysisModel.currency.type}",
+                    text = "${
+                        analysisModel.totalAmount.toInt().toString().formatWithSeparator()
+                    } ${analysisModel.currency.type}",
                     style = RobotoBodyLargeStyle
                 )
             }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,6 +35,7 @@ import com.yandex.finance.feature.account.impl.R
 import com.yandex.finance.feature.account.impl.domain.UiAccountModel
 import com.yandex.finance.feature.account.impl.presentation.viewmodel.MyAccountViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyAccountScreen(
     onEditClick: (UiAccountModel) -> Unit,
