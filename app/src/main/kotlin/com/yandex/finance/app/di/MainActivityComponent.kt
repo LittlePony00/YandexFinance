@@ -68,6 +68,11 @@ interface MainActivityComponent :
      */
     fun inject(activity: MainActivity)
     
+    /**
+     * Inject dependencies into Application
+     */
+    fun inject(application: com.yandex.finance.YandexFinanceApp)
+    
     @Component.Factory
     interface Factory {
         fun create(@BindsInstance context: Context): MainActivityComponent

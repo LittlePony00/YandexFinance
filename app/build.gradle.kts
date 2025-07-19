@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:data:api"))
     implementation(project(":core:data:impl"))
+    implementation(project(":core:localdb"))
     implementation(project(":core:common"))
     implementation(project(":core:dagger"))
     implementation(project(":core:domain"))
@@ -94,5 +95,6 @@ dependencies {
      */
     // region lottie
     implementation(libs.airbnb.lottie.compose)
+    implementation(libs.androidx.room.runtime.android)
     // endregion
 }

@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.yandex.finance.android.library)
-    alias(libs.plugins.yandex.finance.android.koin)
+    alias(libs.plugins.yandex.finance.android.dagger)
 }
 
 android {
@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core:data:api"))
     implementation(project(":core:domain"))
     implementation(project(":core:network:api"))
+    implementation(project(":core:localdb"))
 
     /**
      * Date dependencies
@@ -18,4 +19,10 @@ dependencies {
     // region datetime
     implementation(libs.kotlinx.datetime)
     // endregion
+    
+    // WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
+    
+    // Timber
+    implementation(libs.jakewharton.timber)
 } 

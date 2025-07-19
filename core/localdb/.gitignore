@@ -1,0 +1,49 @@
+# Build artifacts
+**/build/
+build/
+
+# Android specific
+*.apk
+*.aar
+*.dex
+*.class
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.properties
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Local configuration
+local.properties
+keystore.properties
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Kotlin
+*.kotlin_module
+*.kotlin_metadata
+
+# AAR metadata
+**/aar-metadata.properties
+
+# Intermediates
+**/intermediates/
+**/tmp/
+**/kotlin-classes/
+**/transforms/

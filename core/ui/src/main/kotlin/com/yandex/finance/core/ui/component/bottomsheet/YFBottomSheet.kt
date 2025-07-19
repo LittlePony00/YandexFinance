@@ -24,11 +24,9 @@ fun YFBottomSheet(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
+        dragHandle = null,
         contentWindowInsets = { WindowInsets.systemBars },
     ) {
         content()
     }
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
-suspend fun SheetState.closeBottomSheet() { this.hide() }
