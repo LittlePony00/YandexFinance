@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,6 +42,7 @@ import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionMainMode
 import com.yandex.finance.feature.outcome.api.domain.model.UiTransactionModel
 import com.yandex.finance.income.impl.presentation.viewmodel.IncomeTodayViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IncomeTodayScreen(
     onHistoryClick: () -> Unit,

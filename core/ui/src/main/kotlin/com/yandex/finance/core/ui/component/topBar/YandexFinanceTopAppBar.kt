@@ -10,6 +10,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -29,6 +30,12 @@ fun YandexFinanceTopAppBar(
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     topBarType: TopAppBarType = TopAppBarType.CENTER_ALIGNED,
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        actionIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+        navigationIconContentColor = MaterialTheme.colorScheme.surfaceVariant
+    ),
 ) {
     CompositionLocalProvider(
         LocalTextStyle provides textStyle
@@ -40,12 +47,7 @@ fun YandexFinanceTopAppBar(
                     title = title,
                     navigationIcon = navigationIcon,
                     actions = actions,
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onSurface,
-                        actionIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
-                        navigationIconContentColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    colors = colors
                 )
             }
 
@@ -55,18 +57,14 @@ fun YandexFinanceTopAppBar(
                     title = title,
                     navigationIcon = navigationIcon,
                     actions = actions,
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onSurface,
-                        navigationIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
-                        actionIconContentColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    colors = colors
                 )
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun YandexFinanceTopAppBarPreview() {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="analysis_title">Анализ</string>
+    <string name="back_button">Назад</string>
+    <string name="error_message">Произошла ошибка при загрузке данных</string>
+    <string name="retry_button">Повторить</string>
+    <string name="period_start">Период: начало</string>
+    <string name="period_end">Период: конец</string>
+    <string name="select_date">Выбрать дату</string>
+    <string name="total_amount">Сумма</string>
+    <string name="chart_placeholder">Круговая диаграмма</string>
+</resources> 
