@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.yandex.finance.feature.outcome.impl"
+    namespace = "com.yandex.finance.feature.transaction_analysis.api"
 }
 
 dependencies {
@@ -17,22 +17,12 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
     implementation(project(":core:dagger"))
-    implementation(project(":feature:outcome:api"))
-    implementation(project(":feature:transaction-edit:api"))
-    implementation(project(":feature:transaction-analysis:api"))
 
     /**
      * Core dependencies
      */
     // region core
     implementation(libs.androidx.core.ktx)
-    // endregion
-
-    /**
-     * Date dependencies
-     */
-    // region datetime
-    implementation(libs.kotlinx.datetime)
     // endregion
 
     /**
@@ -43,9 +33,16 @@ dependencies {
     // endregion
 
     /**
+     * Date dependencies
+     */
+    // region datetime
+    implementation(libs.kotlinx.datetime)
+    // endregion
+
+    /**
      * Serialization dependencies
      */
     // region serialization
     implementation(libs.kotlinx.serialization.json)
     // endregion
-}
+} 

@@ -67,6 +67,8 @@ dependencies {
     implementation(project(":feature:articles:impl"))
     implementation(project(":feature:transaction-edit:api"))
     implementation(project(":feature:transaction-edit:impl"))
+    implementation(project(":feature:transaction-analysis:api"))
+    implementation(project(":feature:transaction-analysis:impl"))
     // endregion
 
     /**
