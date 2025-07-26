@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -30,6 +30,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,10 +38,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ortin.ortinFyForAuthors.core.ui.components.diagram.common.DetailedInformation
 import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.component.calendar.YandexFinanceCalendar
+import com.yandex.finance.core.ui.component.diagram.barDiagram.CustomVerticalBarDiagram
+import com.yandex.finance.core.ui.component.diagram.circleDiagram.CustomCircularDiagram
+import com.yandex.finance.core.ui.component.diagram.circleDiagram.UiDiagramInfo
 import com.yandex.finance.core.ui.component.icon.EmojiWrapper
 import com.yandex.finance.core.ui.component.listitem.ListItem
+import com.yandex.finance.core.ui.component.tabrow.TabRowComponent
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
 import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.core.ui.theme.RobotoLabelMediumStyle
@@ -152,7 +158,8 @@ fun TransactionAnalysisScreen(
                     }
 
                     item {
-                        CategoryChartSection(analysisModel = analysisState)
+                        val chartList by transactionAnalysisVM.chartCategoryList.collectAsStateWithLifecycle()
+                        CategoryChartSection(list = chartList)
                     }
 
                     items(
@@ -264,7 +271,7 @@ private fun TotalAmountSection(
             trailingContent = {
                 Text(
                     text = "${
-                        analysisModel.totalAmount.toInt().toString().formatWithSeparator()
+                        analysisModel.totalAmount.toString().formatWithSeparator()
                     } ${analysisModel.currency.type}",
                     style = RobotoBodyLargeStyle
                 )
@@ -276,24 +283,77 @@ private fun TotalAmountSection(
 
 @Composable
 private fun CategoryChartSection(
-    analysisModel: TransactionAnalysisModel,
+    list: List<CategoryAnalysisItem>,
     modifier: Modifier = Modifier
 ) {
-    // TODO: Реализовать круговую диаграмму
     Column {
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = stringResource(R.string.chart_placeholder),
-                style = RobotoBodyLargeStyle
+        TabRowComponent(
+            tabs = listOf(
+                "Круговая" to null,
+                "Столбчатая" to null
+            ),
+            contentScreens = listOf(
+                @Composable {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CustomCircularDiagram(
+                            isPercent = true,
+                            diagramInfoList = list.map {
+                                UiDiagramInfo(
+                                    value = it.percentage.toInt(),
+                                    name = it.categoryName
+                                )
+                            },
+                            colorText = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                },
+                @Composable {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CustomVerticalBarDiagram(
+                            modifier = Modifier
+                                .height(300.dp)
+                                .width(300.dp),
+                            upperValue = list.maxOf { it.percentage }.toInt(),
+                            detailedInformationContent = { offset, dataIndex ->
+                                DetailedInformation(
+                                    offset = offset,
+                                    constraints = this@CustomVerticalBarDiagram.constraints,
+                                    data = UiDiagramInfo(
+                                        value = list[dataIndex].percentage.toInt(),
+                                        name = list[dataIndex].categoryName
+                                    ),
+                                    colorText = MaterialTheme.colorScheme.onSurface
+                                )
+                            },
+                            data = list.map {
+                                UiDiagramInfo(
+                                    value = it.percentage.toInt(),
+                                    name = it.categoryName
+                                )
+                            }
+                        )
+                    }
+                }
             )
-        }
+        )
+
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
     }
+}
+
+@Composable
+private fun CircularDiagram(list: List<CategoryAnalysisItem>) {
+
 }
 
 @SuppressLint("DefaultLocale")
@@ -332,7 +392,7 @@ private fun CategoryAnalysisItem(
                 horizontalAlignment = Alignment.End
             ) {
                 Text(
-                    text = "${String.format("%.0f", categoryItem.percentage)}%",
+                    text = "${categoryItem.percentage.toInt()}%",
                     style = RobotoBodyLargeStyle
                 )
                 Text(

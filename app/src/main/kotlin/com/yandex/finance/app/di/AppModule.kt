@@ -3,6 +3,7 @@
 //import com.yandex.finance.app.presentation.viewmodel.MainViewModel
 //import com.yandex.finance.core.common.Id
 //import com.yandex.finance.core.common.UserId
+//import com.yandex.finance.core.common.AppInfo
 //import com.yandex.finance.core.network.impl.BuildConfig
 //import com.yandex.finance.core.ui.util.UiDateTimeFormatter
 //import org.koin.androidx.viewmodel.dsl.viewModel
@@ -20,6 +21,10 @@
 //
 //    single<Id> {
 //        BuildConfig.ID
+//    }
+//
+//    single<AppInfo> {
+//        BuildConfig.VERSION_NAME
 //    }
 //
 //    single<UiDateTimeFormatter> {

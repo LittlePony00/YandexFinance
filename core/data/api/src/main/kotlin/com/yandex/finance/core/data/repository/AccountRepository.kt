@@ -59,7 +59,7 @@ interface AccountRepository {
      *
      * @param id account id
      *
-     * @return Result<[AccountHistory]>
+     * @return Result<[History]>
      */
     suspend fun fetchAccountHistory(id: String): Result<AccountHistory>
 }

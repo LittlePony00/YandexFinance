@@ -8,9 +8,8 @@ import com.yandex.finance.core.domain.model.account.AccountDetailed
 import com.yandex.finance.core.domain.model.account.AccountHistory
 import com.yandex.finance.core.domain.model.account.AccountWithoutId
 import com.yandex.finance.core.domain.model.account.MainAccount
-import com.yandex.finance.core.domain.model.account.NewState
-import com.yandex.finance.core.domain.model.account.PreviousState
 import com.yandex.finance.core.localdb.dao.AccountDao
+import com.yandex.finance.core.localdb.entity.AccountEntity
 import com.yandex.finance.core.localdb.mapper.toDetailedAccount
 import com.yandex.finance.core.localdb.mapper.toEntity
 import com.yandex.finance.core.network.account.service.AccountService
@@ -222,7 +221,7 @@ class AccountRepositoryImpl @Inject constructor(
     private suspend fun updateLocalAccount(
         id: Int,
         body: AccountWithoutId,
-        existingEntity: com.yandex.finance.core.localdb.entity.AccountEntity
+        existingEntity: AccountEntity
     ): Result<AccountDetailed> {
         val updatedEntity = body.toEntity(
             id = id,
@@ -289,38 +288,24 @@ class AccountRepositoryImpl @Inject constructor(
             if (connectivityObserver.isConnected()) {
                 val networkResult = accountService.fetchAccountHistory(id)
                 networkResult.fold(
-                    onSuccess = { networkHistory ->
-                        Result.success(networkHistory.asExternalModel())
+                    onSuccess = { networkAccountHistory ->
+                        Result.success(networkAccountHistory.asExternalModel())
                     },
                     onFailure = { error ->
                         Timber.w(error, "Failed to fetch account history from server")
-                        val accountIdInt = id.toIntOrNull() ?: 0
-                        val emptyState = NewState(accountIdInt, "", "0", "")
-                        val emptyPreviousState = PreviousState(accountIdInt, "", "0", "")
-                        Result.success(AccountHistory(
-                            id = 0,
-                            accountId = accountIdInt,
-                            createdAt = System.currentTimeMillis().toString(),
-                            changeType = "NO_CHANGE",
-                            newState = emptyState,
-                            changeTimestamp = System.currentTimeMillis().toString(),
-                            previousState = emptyPreviousState
-                        ))
+                        Result.failure(error)
                     }
                 )
             } else {
-                val accountIdInt = id.toIntOrNull() ?: 0
-                val emptyState = NewState(accountIdInt, "", "0", "")
-                val emptyPreviousState = PreviousState(accountIdInt, "", "0", "")
-                Result.success(AccountHistory(
-                    id = 0,
-                    accountId = accountIdInt,
-                    createdAt = System.currentTimeMillis().toString(),
-                    changeType = "NO_CHANGE",
-                    newState = emptyState,
-                    changeTimestamp = System.currentTimeMillis().toString(),
-                    previousState = emptyPreviousState
-                ))
+                Result.success(
+                    AccountHistory(
+                        accountId = 0,
+                        accountName = "",
+                        currency = "0",
+                        currentBalance = 0.0,
+                        history = listOf()
+                    )
+                )
             }
         } catch (e: Exception) {
             Timber.e(e, "Failed to fetch account history")

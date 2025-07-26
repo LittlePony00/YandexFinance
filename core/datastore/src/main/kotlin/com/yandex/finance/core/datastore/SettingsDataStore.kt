@@ -66,7 +66,7 @@ object SettingsDataStore {
 
     // Locale
     fun locale(context: Context): Flow<String> =
-        context.dataStore.data.map { it[LOCALE_KEY] ?: "ru-RU" }
+        context.dataStore.data.map { it[LOCALE_KEY] ?: "ru" }
     suspend fun setLocale(context: Context, locale: String) {
         context.dataStore.edit { it[LOCALE_KEY] = locale }
     }

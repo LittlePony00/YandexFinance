@@ -23,6 +23,7 @@ import com.yandex.finance.feature.outcome.api.di.OutcomeDependencies
 import com.yandex.finance.feature.settings.api.di.SettingsDependencies
 import com.yandex.finance.feature.transaction_edit.api.di.TransactionEditDependencies
 import com.yandex.finance.feature.transaction_analysis.api.di.TransactionAnalysisDependencies
+import com.yandex.finance.core.common.AppInfoProvider
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -76,6 +77,8 @@ interface MainActivityComponent :
      * Inject dependencies into Application
      */
     fun inject(application: com.yandex.finance.YandexFinanceApp)
+    
+    override val appInfoProvider: AppInfoProvider
     
     @Component.Factory
     interface Factory {

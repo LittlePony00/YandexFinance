@@ -1,5 +1,6 @@
 package com.yandex.finance.app.presentation.activity
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -42,9 +43,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import android.content.res.Configuration
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.State
+import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.first
 import java.util.Locale
 
-class MainActivity : ComponentActivity(), HasDependencies {
+class MainActivity : AppCompatActivity(), HasDependencies {
 
     @Inject
     lateinit var mainViewModelFactory: MainViewModel.Factory
@@ -56,8 +63,6 @@ class MainActivity : ComponentActivity(), HasDependencies {
     }
 
     private val snackBarHostState = SnackbarHostState()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -78,9 +83,6 @@ class MainActivity : ComponentActivity(), HasDependencies {
             val darkThemeFlow = remember { SettingsDataStore.isDarkTheme(applicationContext) }
             val isDarkTheme by darkThemeFlow.collectAsState(initial = false)
 
-            val localeFlow = remember { SettingsDataStore.locale(applicationContext) }
-            val currentLocale by localeFlow.collectAsState(initial = "ru-RU")
-
             var pinChecked by remember { mutableStateOf(false) }
             var pinRequired by remember { mutableStateOf(false) }
             var pinOk by remember { mutableStateOf(false) }
@@ -91,28 +93,11 @@ class MainActivity : ComponentActivity(), HasDependencies {
                 pinChecked = true
             }
 
-            var previousLocale by remember { mutableStateOf<String?>(null) }
-            
-            // Handle locale changes
-            LaunchedEffect(currentLocale) {
-                if (previousLocale != null && previousLocale != currentLocale) {
-                    // Apply locale change
-                    val locale = if (currentLocale.contains("-")) {
-                        val parts = currentLocale.split("-")
-                        Locale(parts[0], parts[1])
-                    } else {
-                        Locale(currentLocale)
-                    }
-                    Locale.setDefault(locale)
-                    
-                    val config = Configuration(resources.configuration)
-                    config.setLocale(locale)
-                    createConfigurationContext(config)
-                    
-                    // Recreate activity to apply changes
-                    recreate()
+            LaunchedEffect(Unit) {
+                SettingsDataStore.locale(applicationContext).collect {
+                    Timber.d("Current language tag: $it")
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(it))
                 }
-                previousLocale = currentLocale
             }
 
             YandexFinanceTheme(
@@ -159,5 +144,16 @@ class MainActivity : ComponentActivity(), HasDependencies {
                 }
             }
         }
+    }
+
+    fun setLocale(context: Context, language: String): Context {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+
+        return context.createConfigurationContext(config)
     }
 }

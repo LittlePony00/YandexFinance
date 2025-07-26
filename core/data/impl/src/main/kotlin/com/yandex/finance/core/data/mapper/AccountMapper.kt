@@ -3,6 +3,7 @@ package com.yandex.finance.core.data.mapper
 import com.yandex.finance.core.domain.model.account.Account
 import com.yandex.finance.core.domain.model.account.AccountDetailed
 import com.yandex.finance.core.domain.model.account.AccountHistory
+import com.yandex.finance.core.domain.model.account.History
 import com.yandex.finance.core.domain.model.account.AccountWithoutId
 import com.yandex.finance.core.domain.model.account.ExpenseStat
 import com.yandex.finance.core.domain.model.account.IncomeStat
@@ -14,6 +15,7 @@ import com.yandex.finance.core.network.account.model.NetworkAccountDetailed
 import com.yandex.finance.core.network.account.model.NetworkAccountHistory
 import com.yandex.finance.core.network.account.model.NetworkAccountWithoutId
 import com.yandex.finance.core.network.account.model.NetworkExpenseStat
+import com.yandex.finance.core.network.account.model.NetworkHistory
 import com.yandex.finance.core.network.account.model.NetworkIncomeStat
 import com.yandex.finance.core.network.account.model.NetworkMainAccount
 import com.yandex.finance.core.network.account.model.NetworkNewState
@@ -72,16 +74,11 @@ fun MainAccount.asNetworkModel() = NetworkMainAccount(
 )
 
 fun AccountHistory.asNetworkModel() = NetworkAccountHistory(
-    id = id,
     accountId = accountId,
-    createdAt = createdAt,
-    changeType = changeType,
-    newState = newState.asNetworkModel(),
-    changeTimestamp = Instant
-        .parse(createdAt)
-        .toLocalDateTime(TimeZone.UTC)
-        .format(DateTimeFormatter.localDateTimeFormatter),
-    previousState = previousState.asNetworkModel()
+    accountName = accountName,
+    currency = currency,
+    currentBalance = currentBalance,
+    history = history.map { it.asNetworkModel() }
 )
 
 fun NewState.asNetworkModel() = NetworkNewState(
@@ -147,14 +144,32 @@ fun NetworkMainAccount.asExternalModel() = MainAccount(
     expenseStats = expenseStats.map { it.asExternalModel() }
 )
 
-fun NetworkAccountHistory.asExternalModel() = AccountHistory(
+fun NetworkHistory.asExternalModel() = History(
     id = id,
     accountId = accountId,
     createdAt = createdAt,
     changeType = changeType,
-    newState = newState.asExternalModel(),
+    newState = newState?.asExternalModel(),
     changeTimestamp = changeTimestamp,
-    previousState = previousState.asExternalModel()
+    previousState = previousState?.asExternalModel()
+)
+
+fun History.asNetworkModel() = NetworkHistory(
+    id = id,
+    accountId = accountId,
+    createdAt = createdAt,
+    changeType = changeType,
+    newState = newState?.asNetworkModel(),
+    changeTimestamp = changeTimestamp,
+    previousState = previousState?.asNetworkModel()
+)
+
+fun NetworkAccountHistory.asExternalModel() = AccountHistory(
+    accountId = accountId,
+    accountName = accountName,
+    currency = currency,
+    currentBalance = currentBalance,
+    history = history.map { it.asExternalModel() }
 )
 
 fun NetworkNewState.asExternalModel() = NewState(

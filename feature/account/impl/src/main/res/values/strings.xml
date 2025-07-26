@@ -25,6 +25,7 @@
     
     <!-- Network errors -->
     <string name="error_network">Ошибка сети</string>
-    <string name="error_save_account">Ошибка при сохранении изменений</string>
-    <string name="error_delete_account">Ошибка при удалении аккаунта</string>
+    <string name="error_save_account">Ошибка сохранения изменений</string>
+    <string name="error_delete_account">Ошибка удаления аккаунта</string>
+    <string name="balance_history">Изменения баланса</string>
 </resources>

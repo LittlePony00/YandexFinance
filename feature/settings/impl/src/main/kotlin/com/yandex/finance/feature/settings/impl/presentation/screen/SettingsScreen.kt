@@ -1,3 +1,5 @@
+@file:Suppress("INFERRED_TYPE_VARIABLE_INTO_POSSIBLE_EMPTY_INTERSECTION")
+
 package com.yandex.finance.feature.settings.impl.presentation.screen
 
 import androidx.compose.foundation.layout.Box
@@ -22,9 +24,12 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yandex.finance.core.common.AppInfoProvider
+import com.yandex.finance.core.common.findDependencies
 import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
@@ -32,6 +37,7 @@ import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.feature.settings.impl.R
 import com.yandex.finance.feature.settings.impl.domain.UiSettingsModel
 import com.yandex.finance.feature.settings.impl.presentation.viewmodel.SettingsViewModel
+import com.yandex.finance.feature.settings.api.di.SettingsDependencies
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -120,6 +126,9 @@ private fun SettingsScreenContent(
     onSyncClick: () -> Unit,
     onLanguageClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val appInfoProvider = context.findDependencies<SettingsDependencies>().appInfoProvider
+    val appVersion = appInfoProvider.appVersion
 
     Column(modifier = modifier.fillMaxSize()) {
         ListItem(
@@ -242,6 +251,19 @@ private fun SettingsScreenContent(
                     tint = MaterialTheme.colorScheme.surfaceVariant,
                     contentDescription = null
                 )
+            }
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        ListItem(
+            contentPaddings = PaddingValues(
+                vertical = 16.dp,
+                horizontal = 16.dp
+            ),
+            content = {
+                Column {
+                    Text(text = stringResource(id = R.string.app_version_label) + ": " + appVersion)
+                    Text(text = stringResource(id = R.string.app_update_label) + ": 2024-06-07")
+                }
             }
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)

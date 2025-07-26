@@ -37,8 +37,8 @@ fun LanguageScreen(
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
-    val languages = listOf("ru-RU" to "Русский", "en-US" to "English")
-    var selected by remember { mutableStateOf("ru-RU") }
+    val languages = listOf("ru" to "Русский", "en" to "English")
+    var selected by remember { mutableStateOf("ru") }
 
     LaunchedEffect(Unit) {
         selected = SettingsDataStore.locale(app).first()

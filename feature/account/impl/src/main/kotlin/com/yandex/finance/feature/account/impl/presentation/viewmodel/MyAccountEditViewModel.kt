@@ -42,7 +42,8 @@ class MyAccountEditViewModel @AssistedInject constructor(
         name = accountName,
         icon = accountIcon,
         balance = accountBalance,
-        currency = currencyType
+        currency = currencyType,
+        balanceHistory = listOf()
     )
 
     private val _uiState: MutableStateFlow<State> = MutableStateFlow(

@@ -4,8 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.CircularProgressIndicator
@@ -34,6 +37,7 @@ import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.account.impl.R
 import com.yandex.finance.feature.account.impl.domain.UiAccountModel
 import com.yandex.finance.feature.account.impl.presentation.viewmodel.MyAccountViewModel
+import com.yandex.finance.feature.account.impl.presentation.component.BalanceChart
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,7 +109,8 @@ fun MyAccountScreen(
             is MyAccountViewModel.State.Content -> {
                 MyAccountScreenContent(
                     modifier = modifier.padding(innerPadding),
-                    accountUiState = accountUiState
+                    accountUiState = accountUiState,
+                    myAccountVM = myAccountVM
                 )
             }
         }
@@ -116,6 +121,7 @@ fun MyAccountScreen(
 private fun MyAccountScreenContent(
     accountUiState: State<UiAccountModel>,
     modifier: Modifier = Modifier,
+    myAccountVM: MyAccountViewModel,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         ListItem(
@@ -170,5 +176,23 @@ private fun MyAccountScreenContent(
                 )
             }
         )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        
+        val balanceChartData = myAccountVM.balanceChartData.collectAsStateWithLifecycle()
+        if (balanceChartData.value.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                BalanceChart(
+                    modifier = Modifier
+                        .height(300.dp)
+                        .fillMaxWidth(),
+                    data = balanceChartData.value,
+                    detailedInformationContent = { _, _ -> }
+                )
+            }
+        }
     }
 }
