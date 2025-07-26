@@ -8,11 +8,15 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import com.yandex.finance.core.ui.util.dateTimeComponentsFormat
+import com.yandex.finance.feature.transaction_analysis.api.domain.model.CategoryAnalysisItem
 import com.yandex.finance.feature.transaction_analysis.api.domain.model.TransactionAnalysisModel
 import com.yandex.finance.feature.transaction_analysis.api.domain.usecase.GetTransactionAnalysisUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -37,6 +41,29 @@ class TransactionAnalysisViewModel @AssistedInject constructor(
     private val _uiState = MutableStateFlow<State>(State.Loading)
 
     val uiState: StateFlow<State> = _uiState.asStateFlow()
+
+    val chartCategoryList: StateFlow<List<CategoryAnalysisItem>>
+        get() = _analysisUiState
+            .asStateFlow()
+            .map { model ->
+                val filtered = model.categoryAnalysis.filter { it.percentage > 0 }
+                if (filtered.size <= 5) return@map filtered
+                val top5 = filtered.sortedByDescending { it.percentage }.take(5)
+                val other = filtered.sortedByDescending { it.percentage }.drop(5)
+                if (other.isEmpty()) return@map top5
+                val otherAmount = other.sumOf { it.amount }
+                val otherPercentage = other.sumOf { it.percentage }
+                val otherItem = CategoryAnalysisItem(
+                    categoryId = -1,
+                    categoryName = "Иное",
+                    categoryEmoji = null,
+                    amount = otherAmount,
+                    percentage = otherPercentage,
+                    description = null
+                )
+                top5 + otherItem
+            }
+            .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     sealed interface State {
 

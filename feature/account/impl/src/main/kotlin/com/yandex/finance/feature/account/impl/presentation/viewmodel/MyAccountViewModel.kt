@@ -14,6 +14,13 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+data class BalanceChartItem(
+    val balance: Double,
+    val change: Double,
+    val date: String,
+    val isIncrease: Boolean = change > 0
+)
+
 class MyAccountViewModel @Inject constructor(
     private val id: Id,
     private val accountRepository: AccountRepository
@@ -24,6 +31,9 @@ class MyAccountViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<State>(State.Loading)
     val uiState: StateFlow<State> = _uiState.asStateFlow()
+
+    private val _balanceChartData = MutableStateFlow<List<BalanceChartItem>>(emptyList())
+    val balanceChartData = _balanceChartData.asStateFlow()
 
     init {
         loadData()
@@ -38,7 +48,6 @@ class MyAccountViewModel @Inject constructor(
 
         data object Content : State
     }
-
 
     private fun loadData() {
         Timber.d("loadData was called")
@@ -66,14 +75,33 @@ class MyAccountViewModel @Inject constructor(
                     _accountUiState.value = _accountUiState.value.copy(
                         balanceHistory = balanceHistory
                     )
+
+                    Timber.d("${accountHistory.history.size}")
+                    val chartData = accountHistory.history
+                        .mapNotNull { history ->
+                            val newBalance = history.newState?.balance?.toDoubleOrNull() ?: return@mapNotNull null
+                            val previousBalance = history.previousState?.balance?.toDoubleOrNull() ?: return@mapNotNull null
+                            
+                            val change = newBalance - previousBalance
+                            BalanceChartItem(
+                                balance = newBalance,
+                                change = change,
+                                date = history.createdAt,
+                                isIncrease = newBalance > previousBalance
+                            )
+                        }
+                        .mapIndexed { index, item ->
+                            item.copy(date = "${item.date}_$index")
+                        }
+
+                    _balanceChartData.value = chartData
                 }.onFailure { error ->
                     Timber.e(error, "ERROR: ")
                 }
 
                 _uiState.value = State.Content
-            }.onFailure {
-                Timber.e(it, "loadData was called with error")
-
+            }.onFailure { error ->
+                Timber.e(error, "ERROR: ")
                 _uiState.value = State.Error(retry = { loadData() })
             }
         }

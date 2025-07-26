@@ -158,7 +158,8 @@ fun TransactionAnalysisScreen(
                     }
 
                     item {
-                        CategoryChartSection(analysisModel = analysisState)
+                        val chartList by transactionAnalysisVM.chartCategoryList.collectAsStateWithLifecycle()
+                        CategoryChartSection(list = chartList)
                     }
 
                     items(
@@ -282,13 +283,9 @@ private fun TotalAmountSection(
 
 @Composable
 private fun CategoryChartSection(
-    analysisModel: TransactionAnalysisModel,
+    list: List<CategoryAnalysisItem>,
     modifier: Modifier = Modifier
 ) {
-    val list = remember(analysisModel.categoryAnalysis) {
-        analysisModel.categoryAnalysis.filter { it.percentage > 0 }
-    }
-
     Column {
         TabRowComponent(
             tabs = listOf(

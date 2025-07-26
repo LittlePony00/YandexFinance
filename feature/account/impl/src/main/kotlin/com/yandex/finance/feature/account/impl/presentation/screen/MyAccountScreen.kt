@@ -28,8 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yandex.finance.core.ui.component.button.FabButton
 import com.yandex.finance.core.ui.component.button.PrimaryButton
-import com.yandex.finance.core.ui.component.diagram.barDiagram.CustomVerticalBarDiagram
-import com.yandex.finance.core.ui.component.diagram.circleDiagram.UiDiagramInfo
 import com.yandex.finance.core.ui.component.icon.Edit
 import com.yandex.finance.core.ui.component.icon.EmojiWrapper
 import com.yandex.finance.core.ui.component.listitem.ListItem
@@ -39,6 +37,7 @@ import com.yandex.finance.core.ui.util.formatWithSeparator
 import com.yandex.finance.feature.account.impl.R
 import com.yandex.finance.feature.account.impl.domain.UiAccountModel
 import com.yandex.finance.feature.account.impl.presentation.viewmodel.MyAccountViewModel
+import com.yandex.finance.feature.account.impl.presentation.component.BalanceChart
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -110,7 +109,8 @@ fun MyAccountScreen(
             is MyAccountViewModel.State.Content -> {
                 MyAccountScreenContent(
                     modifier = modifier.padding(innerPadding),
-                    accountUiState = accountUiState
+                    accountUiState = accountUiState,
+                    myAccountVM = myAccountVM
                 )
             }
         }
@@ -121,6 +121,7 @@ fun MyAccountScreen(
 private fun MyAccountScreenContent(
     accountUiState: State<UiAccountModel>,
     modifier: Modifier = Modifier,
+    myAccountVM: MyAccountViewModel,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         ListItem(
@@ -176,25 +177,22 @@ private fun MyAccountScreenContent(
             }
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            CustomVerticalBarDiagram(
+        
+        val balanceChartData = myAccountVM.balanceChartData.collectAsStateWithLifecycle()
+        if (balanceChartData.value.isNotEmpty()) {
+            Column(
                 modifier = Modifier
-                    .padding(24.dp)
-                    .width(400.dp)
-                    .height(400.dp),
-                upperValue = accountUiState.value.balanceHistory.max().toInt(),
-                barThickness = 10f,
-                detailedInformationContent = { _, _ -> },
-                data = accountUiState.value.balanceHistory.map {
-                    UiDiagramInfo(
-                        value = it,
-                        name = ""
-                    )
-                }
-            )
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                BalanceChart(
+                    modifier = Modifier
+                        .height(300.dp)
+                        .fillMaxWidth(),
+                    data = balanceChartData.value,
+                    detailedInformationContent = { _, _ -> }
+                )
+            }
         }
     }
 }

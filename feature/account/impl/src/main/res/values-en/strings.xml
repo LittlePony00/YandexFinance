@@ -23,4 +23,5 @@
     <string name="error_network">Network error</string>
     <string name="error_save_account">Error saving changes</string>
     <string name="error_delete_account">Error deleting account</string>
+    <string name="balance_history">Balance Changes</string>
 </resources> 
