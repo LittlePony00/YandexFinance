@@ -17,6 +17,13 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.yandex.finance.core.ui.navigation.Graph
 import com.yandex.finance.core.ui.theme.RobotoLabelMediumStyle
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.runtime.rememberCoroutineScope
+import com.yandex.finance.core.datastore.SettingsDataStore
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @Composable
 fun YandexFinanceNavigationBar(
@@ -26,6 +33,9 @@ fun YandexFinanceNavigationBar(
     modifier: Modifier = Modifier,
 ) {
     val currentDestination = navigationBackStackEntry?.destination
+    val haptic = LocalHapticFeedback.current
+    val context = LocalContext.current.applicationContext
+    val scope = rememberCoroutineScope()
 
     NavigationBar(
         modifier = modifier,
@@ -40,6 +50,22 @@ fun YandexFinanceNavigationBar(
                 selected = isSelected,
                 onClick = {
                     if (!isSelected) {
+                        // Haptics integration
+                        scope.launch {
+                            val enabled = SettingsDataStore.isHapticsEnabled(context).first()
+                            if (enabled) {
+                                val effect = SettingsDataStore.hapticsEffect(context).first() ?: "Click"
+                                when (effect) {
+                                    "Click" -> haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                    "Double Click" -> {
+                                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                    }
+                                    "Heavy" -> haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    "Light" -> haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                }
+                            }
+                        }
                         onNavBarItemClick(item.route)
                     }
                 },

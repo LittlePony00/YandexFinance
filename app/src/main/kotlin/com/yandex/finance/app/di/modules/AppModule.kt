@@ -1,5 +1,6 @@
 package com.yandex.finance.app.di.modules
 
+import android.app.Application
 import android.content.Context
 import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.network.impl.BuildConfig
@@ -10,6 +11,12 @@ import javax.inject.Singleton
 
 @Module
 object AppModule {
+    
+    @Provides
+    @Singleton
+    fun provideApplication(context: Context): Application {
+        return context.applicationContext as Application
+    }
     
     @Provides
     @Singleton

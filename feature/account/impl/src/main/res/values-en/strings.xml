@@ -1,0 +1,26 @@
+<resources>
+    <string name="cancel">Cancel</string>
+    <string name="balance">Balance</string>
+    <string name="currency">Currency</string>
+    <string name="error_text">Error</string>
+    <string name="my_account">My Account</string>
+    <string name="retry_text">Retry</string>
+    <string name="account_name">Name</string>
+    <string name="delete_account">Delete account</string>
+    <string name="enter_account_name">Enter name</string>
+    <string name="change_account_name">Change name</string>
+    <string name="save_changes">Save changes</string>
+    <string name="change_balance">Change balance</string>
+    <string name="enter_balance">Enter balance</string>
+    <string name="validation_account_name_empty">Account name cannot be empty</string>
+    <string name="validation_account_name_too_short">Account name must be at least 2 characters</string>
+    <string name="validation_account_name_too_long">Account name cannot be longer than 50 characters</string>
+    <string name="validation_balance_empty">Balance cannot be empty</string>
+    <string name="validation_balance_invalid_format">Enter a valid amount (e.g., 1000 or 1000.50)</string>
+    <string name="validation_balance_negative">Balance cannot be negative</string>
+    <string name="validation_balance_too_large">Amount is too large</string>
+    <string name="validation_balance_invalid_amount">Enter a valid amount</string>
+    <string name="error_network">Network error</string>
+    <string name="error_save_account">Error saving changes</string>
+    <string name="error_delete_account">Error deleting account</string>
+</resources> 

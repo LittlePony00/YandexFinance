@@ -1,0 +1,25 @@
+<resources>
+    <string name="my_outcome">My Expenses</string>
+    <string name="my_income">My Income</string>
+    <string name="delete_income">Delete Income</string>
+    <string name="delete_outcome">Delete Expense</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="error_text">Error</string>
+    <string name="retry_text">Retry</string>
+    <string name="error_network">Network error</string>
+    <string name="error_save_transaction">Error saving transaction</string>
+    <string name="error_delete_transaction">Error deleting transaction</string>
+    <string name="error_load_data">Error loading data</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="select_account">Select account</string>
+    <string name="select_category">Select category</string>
+    <string name="select_date">Select date</string>
+    <string name="select_time">Select time</string>
+    <string name="add_description">Add description</string>
+    <string name="account">Account</string>
+    <string name="category">Category</string>
+    <string name="amount">Amount</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+</resources> 

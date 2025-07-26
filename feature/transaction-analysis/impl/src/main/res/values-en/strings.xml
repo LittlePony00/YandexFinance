@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="analysis_title">Analysis</string>
+    <string name="back_button">Back</string>
+    <string name="error_message">An error occurred while loading data</string>
+    <string name="retry_button">Retry</string>
+    <string name="period_start">Period: start</string>
+    <string name="period_end">Period: end</string>
+    <string name="select_date">Select date</string>
+    <string name="total_amount">Amount</string>
+    <string name="chart_placeholder">Pie chart</string>
+</resources> 

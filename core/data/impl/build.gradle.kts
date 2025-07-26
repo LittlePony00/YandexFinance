@@ -10,6 +10,7 @@ android {
 dependencies {
     implementation(project(":core:data:api"))
     implementation(project(":core:domain"))
+    implementation(project(":core:datastore"))
     implementation(project(":core:network:api"))
     implementation(project(":core:localdb"))
 

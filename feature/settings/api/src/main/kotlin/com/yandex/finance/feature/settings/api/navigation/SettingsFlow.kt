@@ -10,4 +10,19 @@ sealed interface SettingsFlow {
 
     @Serializable
     data object Settings : SettingsFlow
+    
+    @Serializable
+    data object ColorPicker : SettingsFlow
+    
+    @Serializable
+    data object HapticsSettings : SettingsFlow
+    
+    @Serializable
+    data object PinCode : SettingsFlow
+    
+    @Serializable
+    data object SyncFrequency : SettingsFlow
+    
+    @Serializable
+    data object Language : SettingsFlow
 }

@@ -1,8 +1,10 @@
 package com.yandex.finance.feature.settings.impl.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.yandex.finance.core.data.sync.SyncStatusRepository
+import com.yandex.finance.core.datastore.SettingsDataStore
 import com.yandex.finance.feature.settings.impl.domain.UiChapterModel
 import com.yandex.finance.feature.settings.impl.domain.UiSettingsModel
 import kotlinx.coroutines.delay
@@ -14,8 +16,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
-    private val syncStatusRepository: SyncStatusRepository
-) : ViewModel() {
+    private val syncStatusRepository: SyncStatusRepository,
+    private val app: Application
+) : AndroidViewModel(app) {
 
     private val _settingsUiState = MutableStateFlow(UiSettingsModel.initial)
 
@@ -25,7 +28,6 @@ class SettingsViewModel @Inject constructor(
 
     private val chapters = listOf(
         UiChapterModel(title = "Основной цвет"),
-        UiChapterModel(title = "Звуки"),
         UiChapterModel(title = "Хаптики"),
         UiChapterModel(title = "Код пароль"),
         UiChapterModel(title = "Синхронизация"),
@@ -35,19 +37,31 @@ class SettingsViewModel @Inject constructor(
 
     init {
         loadData()
+        observeTheme()
     }
 
     sealed interface State {
 
         data object Loading : State
 
-        data object Error : State
+        @JvmInline
+        value class Error(val retry: () -> Unit) : State
 
         data class Content(val settingsUiState: StateFlow<UiSettingsModel>) : State
     }
 
+    private fun observeTheme() {
+        viewModelScope.launch {
+            SettingsDataStore.isDarkTheme(app.applicationContext).collect { isDark ->
+                _settingsUiState.value = _settingsUiState.value.copy(isDarkMode = isDark)
+            }
+        }
+    }
+
     fun changeTheme(isDarkMode: Boolean) {
-        _settingsUiState.value = _settingsUiState.value.copy(isDarkMode = isDarkMode)
+        viewModelScope.launch {
+            SettingsDataStore.setDarkTheme(app.applicationContext, isDarkMode)
+        }
     }
     
     fun refreshSyncStatus() {
@@ -77,12 +91,7 @@ class SettingsViewModel @Inject constructor(
                 _uiState.value = State.Content(_settingsUiState.asStateFlow())
             } catch (e: Exception) {
                 Timber.e(e, "Failed to load sync status")
-                
-                _settingsUiState.value = _settingsUiState.value.copy(
-                    chapters = chapters,
-                    lastSyncTime = "Ошибка загрузки"
-                )
-                _uiState.value = State.Content(_settingsUiState.asStateFlow())
+                _uiState.value = State.Error { loadData() }
             }
         }
     }

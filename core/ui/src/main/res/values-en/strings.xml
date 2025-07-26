@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">YandexFinance</string>
+    <string name="account">Account</string>
+    <string name="income">Income</string>
+    <string name="articles">Articles</string>
+    <string name="outcome">Expenses</string>
+    <string name="settings">Settings</string>
+    <string name="my_account">My Account</string>
+    <string name="my_articles">My Articles</string>
+    <string name="income_today">Today's Income</string>
+    <string name="outcome_today">Today's Expenses</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="internet_connection_restored">Internet connection restored</string>
+
+    <!-- Months -->
+    <string name="month_january">January</string>
+    <string name="month_february">February</string>
+    <string name="month_march">March</string>
+    <string name="month_april">April</string>
+    <string name="month_may">May</string>
+    <string name="month_june">June</string>
+    <string name="month_july">July</string>
+    <string name="month_august">August</string>
+    <string name="month_september">September</string>
+    <string name="month_october">October</string>
+    <string name="month_november">November</string>
+    <string name="month_december">December</string>
+
+    <!-- Months in nominative case -->
+    <string name="month_january_nominative">January</string>
+    <string name="month_february_nominative">February</string>
+    <string name="month_march_nominative">March</string>
+    <string name="month_april_nominative">April</string>
+    <string name="month_may_nominative">May</string>
+    <string name="month_june_nominative">June</string>
+    <string name="month_july_nominative">July</string>
+    <string name="month_august_nominative">August</string>
+    <string name="month_september_nominative">September</string>
+    <string name="month_october_nominative">October</string>
+    <string name="month_november_nominative">November</string>
+    <string name="month_december_nominative">December</string>
+
+    <!-- Currency symbols -->
+    <string name="euro_symbol">€</string>
+    <string name="dollar_symbol">$</string>
+    <string name="russian_rubble_symbol">₽</string>
+
+    <!-- Currency names -->
+    <string name="euro_name">Euro</string>
+    <string name="american_dollar_name">US Dollar</string>
+    <string name="russian_dollar_name">Russian Ruble</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="balance">Balance</string>
+    <string name="currency">Currency</string>
+    <string name="error_text">Error</string>
+    <string name="retry_text">Retry</string>
+    <string name="account_name">Account Name</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="enter_account_name">Enter account name</string>
+    <string name="change_account_name">Change Account Name</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="change_balance">Change Balance</string>
+    <string name="enter_balance">Enter balance</string>
+
+    <!-- Validation errors -->
+    <string name="validation_account_name_empty">Account name cannot be empty</string>
+    <string name="validation_account_name_too_short">Account name must contain at least 2 characters</string>
+    <string name="validation_account_name_too_long">Account name cannot be longer than 50 characters</string>
+    <string name="validation_balance_empty">Balance cannot be empty</string>
+    <string name="validation_balance_invalid_format">Enter a valid amount (e.g., 1000 or 1000.50)</string>
+    <string name="validation_balance_negative">Balance cannot be negative</string>
+    <string name="validation_balance_too_large">Amount is too large</string>
+    <string name="validation_balance_invalid_amount">Enter a valid amount</string>
+</resources> 
