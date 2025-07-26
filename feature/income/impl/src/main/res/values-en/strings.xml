@@ -1,0 +1,10 @@
+<resources>
+    <string name="income_today">Today's Income</string>
+    <string name="my_history">My History</string>
+    <string name="beginning">Start</string>
+    <string name="end">End</string>
+    <string name="sum">Sum</string>
+    <string name="total">Total</string>
+    <string name="error_text">Error</string>
+    <string name="retry_text">Retry</string>
+</resources> 

@@ -18,3 +18,10 @@ val ColorSurfaceContainer = Color(0xFFF3EDF7)
 val ColorSurfaceVariant = Color(0xFF49454F)
 val ColorOnSurface = Color(0xFF1D1B20)
 val ColorSurfaceContainerHigh = Color(0xFFECE6F0)
+
+// Dark theme colors
+val ColorSurfaceDark = Color(0xFF1D1B20)
+val ColorSurfaceContainerDark = Color(0xFF211F26)
+val ColorSurfaceVariantDark = Color(0xFF49454F)
+val ColorOnSurfaceDark = Color(0xFFE6E1E5)
+val ColorSurfaceContainerHighDark = Color(0xFF2B2930)

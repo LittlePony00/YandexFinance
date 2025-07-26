@@ -2,11 +2,14 @@ package com.yandex.finance
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import com.yandex.finance.app.di.DaggerMainActivityComponent
 import com.yandex.finance.app.di.MainActivityComponent
 import com.yandex.finance.core.common.HasDependencies
 import com.yandex.finance.core.data.sync.OfflineManager
 import timber.log.Timber
+import java.util.Locale
 import javax.inject.Inject
 
 class YandexFinanceApp : Application(), HasDependencies {
@@ -18,6 +21,8 @@ class YandexFinanceApp : Application(), HasDependencies {
     lateinit var offlineManager: OfflineManager
 
     override val depsMap by lazy { mainActivityComponent.depsMap() }
+
+    
 
     override fun onCreate() {
         super.onCreate()

@@ -25,8 +25,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yandex.finance.core.ui.component.button.PrimaryButton
 import com.yandex.finance.core.ui.component.listitem.ListItem
 import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
+import com.yandex.finance.core.ui.theme.RobotoBodyLargeStyle
 import com.yandex.finance.feature.settings.impl.R
 import com.yandex.finance.feature.settings.impl.domain.UiSettingsModel
 import com.yandex.finance.feature.settings.impl.presentation.viewmodel.SettingsViewModel
@@ -34,8 +36,13 @@ import com.yandex.finance.feature.settings.impl.presentation.viewmodel.SettingsV
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
+    onColorClick: () -> Unit,
+    onHapticsClick: () -> Unit,
+    onPinClick: () -> Unit,
+    onSyncClick: () -> Unit,
+    onLanguageClick: () -> Unit,
+    settingsVM: SettingsViewModel,
     modifier: Modifier = Modifier,
-    settingsVM: SettingsViewModel
 ) {
     val uiState = settingsVM.uiState.collectAsStateWithLifecycle()
 
@@ -44,7 +51,7 @@ fun SettingsScreen(
             YandexFinanceTopAppBar(
                 title = {
                     Text(text = stringResource(R.string.settings))
-                },
+                }
             )
         }
     ) { innerPadding ->
@@ -67,7 +74,18 @@ fun SettingsScreen(
                         .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Error") // Пока так
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = stringResource(R.string.error),
+                            style = RobotoBodyLargeStyle
+                        )
+                        PrimaryButton(
+                            text = stringResource(com.yandex.finance.core.ui.R.string.retry_text),
+                            onButtonClick = {
+                                state.retry.invoke()
+                            }
+                        )
+                    }
                 }
             }
 
@@ -80,6 +98,11 @@ fun SettingsScreen(
                     onChange = {
                         settingsVM.changeTheme(it)
                     },
+                    onColorClick = onColorClick,
+                    onHapticsClick = onHapticsClick,
+                    onPinClick = onPinClick,
+                    onSyncClick = onSyncClick,
+                    onLanguageClick = onLanguageClick
                 )
             }
         }
@@ -91,13 +114,18 @@ private fun SettingsScreenContent(
     modifier: Modifier = Modifier,
     settingsData: State<UiSettingsModel>,
     onChange: (Boolean) -> Unit,
+    onColorClick: () -> Unit,
+    onHapticsClick: () -> Unit,
+    onPinClick: () -> Unit,
+    onSyncClick: () -> Unit,
+    onLanguageClick: () -> Unit
 ) {
 
     Column(modifier = modifier.fillMaxSize()) {
         ListItem(
             modifier = Modifier.height(56.dp),
             content = {
-                Text(text = "Тёмная тема")
+                Text(text = stringResource(R.string.dark_theme))
             },
             contentPaddings = PaddingValues(
                 vertical = 16.dp,
@@ -112,33 +140,113 @@ private fun SettingsScreenContent(
             }
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        settingsData.value.chapters.forEach { chapter ->
-            ListItem(
-                onClick = {},
-                contentPaddings = PaddingValues(
-                    vertical = 16.dp,
-                    horizontal = 16.dp
-                ),
-                content = {
-                    Text(text = chapter.title)
-                },
-                trailingContent = {
-                    Icon(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .rotate(-90f),
-                        imageVector = Icons.Default.ArrowDropDown,
-                        tint = MaterialTheme.colorScheme.surfaceVariant,
-                        contentDescription = null
-                    )
-                }
-            )
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        }
-        
-        // Last sync time display
+        ListItem(
+            onClick = onColorClick,
+            contentPaddings = PaddingValues(
+                vertical = 16.dp,
+                horizontal = 16.dp
+            ),
+            content = {
+                Text(text = stringResource(R.string.main_color))
+            },
+            trailingContent = {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(-90f),
+                    imageVector = Icons.Default.ArrowDropDown,
+                    tint = MaterialTheme.colorScheme.surfaceVariant,
+                    contentDescription = null
+                )
+            }
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        ListItem(
+            onClick = onHapticsClick,
+            contentPaddings = PaddingValues(
+                vertical = 16.dp,
+                horizontal = 16.dp
+            ),
+            content = {
+                Text(text = stringResource(R.string.haptics))
+            },
+            trailingContent = {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(-90f),
+                    imageVector = Icons.Default.ArrowDropDown,
+                    tint = MaterialTheme.colorScheme.surfaceVariant,
+                    contentDescription = null
+                )
+            }
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        ListItem(
+            onClick = onPinClick,
+            contentPaddings = PaddingValues(
+                vertical = 16.dp,
+                horizontal = 16.dp
+            ),
+            content = {
+                Text(text = stringResource(R.string.pin_code))
+            },
+            trailingContent = {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(-90f),
+                    imageVector = Icons.Default.ArrowDropDown,
+                    tint = MaterialTheme.colorScheme.surfaceVariant,
+                    contentDescription = null
+                )
+            }
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        ListItem(
+            onClick = onSyncClick,
+            contentPaddings = PaddingValues(
+                vertical = 16.dp,
+                horizontal = 16.dp
+            ),
+            content = {
+                Text(text = stringResource(R.string.sync))
+            },
+            trailingContent = {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(-90f),
+                    imageVector = Icons.Default.ArrowDropDown,
+                    tint = MaterialTheme.colorScheme.surfaceVariant,
+                    contentDescription = null
+                )
+            }
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        ListItem(
+            onClick = onLanguageClick,
+            contentPaddings = PaddingValues(
+                vertical = 16.dp,
+                horizontal = 16.dp
+            ),
+            content = {
+                Text(text = stringResource(R.string.language))
+            },
+            trailingContent = {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(-90f),
+                    imageVector = Icons.Default.ArrowDropDown,
+                    tint = MaterialTheme.colorScheme.surfaceVariant,
+                    contentDescription = null
+                )
+            }
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         Text(
-            text = "Последняя синхронизация: ${settingsData.value.lastSyncTime}",
+            text = stringResource(R.string.last_sync, settingsData.value.lastSyncTime),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant

@@ -53,6 +53,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:dagger"))
     implementation(project(":core:domain"))
+    implementation(project(":core:datastore"))
     implementation(project(":core:network:api"))
     implementation(project(":core:network:impl"))
     implementation(project(":feature:income:api"))

@@ -18,6 +18,8 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.yandex.finance.core.datastore.SettingsDataStore
+import kotlinx.coroutines.flow.first
 
 @Singleton
 class DataSyncService @Inject constructor(
@@ -99,6 +101,34 @@ class DataSyncService @Inject constructor(
             Timber.d("Scheduled periodic sync every 2 hours")
         } catch (e: Exception) {
             Timber.e(e, "Failed to schedule periodic sync")
+        }
+    }
+
+    suspend fun schedulePeriodicSyncWithInterval() {
+        try {
+            val hours = SettingsDataStore.syncFrequency(context).first()
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .setRequiresBatteryNotLow(true)
+                .build()
+            val periodicSyncRequest = PeriodicWorkRequestBuilder<SyncWorker>(
+                hours.toLong(), TimeUnit.HOURS
+            )
+                .setConstraints(constraints)
+                .setBackoffCriteria(
+                    BackoffPolicy.EXPONENTIAL,
+                    15, TimeUnit.MINUTES
+                )
+                .addTag("periodic_sync")
+                .build()
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                "periodic_sync_work",
+                ExistingPeriodicWorkPolicy.UPDATE,
+                periodicSyncRequest
+            )
+            Timber.d("Scheduled periodic sync every $hours hours")
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to schedule periodic sync with user interval")
         }
     }
 
