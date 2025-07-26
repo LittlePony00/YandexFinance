@@ -27,4 +27,6 @@
     <string name="haptics_description">Включите вибрацию для тактильной отдачи при нажатии на вкладки.</string>
     <string name="last_sync">Последняя синхронизация: %s</string>
     <string name="load_error">Ошибка загрузки</string>
+    <string name="app_version_label">Версия приложения</string>
+    <string name="app_update_label">Последнее обновление</string>
 </resources>

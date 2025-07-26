@@ -1,6 +1,7 @@
 package com.yandex.finance.feature.settings.api.di
 
 import com.yandex.finance.core.common.Dependencies
+import com.yandex.finance.core.common.AppInfoProvider
 import com.yandex.finance.core.data.sync.SyncStatusRepository
 
 /**
@@ -9,4 +10,5 @@ import com.yandex.finance.core.data.sync.SyncStatusRepository
  */
 interface SettingsDependencies : Dependencies {
     val syncStatusRepository: SyncStatusRepository
+    val appInfoProvider: AppInfoProvider
 } 
