@@ -4,8 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yandex.finance.core.ui.component.button.FabButton
 import com.yandex.finance.core.ui.component.button.PrimaryButton
+import com.yandex.finance.core.ui.component.diagram.barDiagram.CustomVerticalBarDiagram
+import com.yandex.finance.core.ui.component.diagram.circleDiagram.UiDiagramInfo
 import com.yandex.finance.core.ui.component.icon.Edit
 import com.yandex.finance.core.ui.component.icon.EmojiWrapper
 import com.yandex.finance.core.ui.component.listitem.ListItem
@@ -170,5 +175,26 @@ private fun MyAccountScreenContent(
                 )
             }
         )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            CustomVerticalBarDiagram(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .width(400.dp)
+                    .height(400.dp),
+                upperValue = accountUiState.value.balanceHistory.max().toInt(),
+                barThickness = 10f,
+                detailedInformationContent = { _, _ -> },
+                data = accountUiState.value.balanceHistory.map {
+                    UiDiagramInfo(
+                        value = it,
+                        name = ""
+                    )
+                }
+            )
+        }
     }
 }

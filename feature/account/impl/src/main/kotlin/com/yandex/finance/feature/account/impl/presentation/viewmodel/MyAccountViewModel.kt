@@ -6,6 +6,7 @@ import com.yandex.finance.core.common.Id
 import com.yandex.finance.core.data.repository.AccountRepository
 import com.yandex.finance.core.domain.model.CurrencyType
 import com.yandex.finance.feature.account.impl.domain.UiAccountModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -42,7 +43,7 @@ class MyAccountViewModel @Inject constructor(
     private fun loadData() {
         Timber.d("loadData was called")
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             accountRepository.fetchAccount(id).onSuccess {
                 Timber.d("loadData was called with success: $it")
 
@@ -53,6 +54,22 @@ class MyAccountViewModel @Inject constructor(
                     icon = "\uD83D\uDCB0",
                     currency = CurrencyType.convertFromString(it.currency)
                 )
+
+                accountRepository.fetchAccountHistory(id).onSuccess { accountHistory ->
+                    val balanceHistory =
+                        accountHistory.history.map { s ->
+                            s.newState?.balance
+                                ?.toDoubleOrNull()
+                                ?.toInt() ?: 0
+                        }
+
+                    _accountUiState.value = _accountUiState.value.copy(
+                        balanceHistory = balanceHistory
+                    )
+                }.onFailure { error ->
+                    Timber.e(error, "ERROR: ")
+                }
+
                 _uiState.value = State.Content
             }.onFailure {
                 Timber.e(it, "loadData was called with error")

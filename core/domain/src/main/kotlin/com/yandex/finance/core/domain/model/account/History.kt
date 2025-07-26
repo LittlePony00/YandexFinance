@@ -11,12 +11,20 @@ package com.yandex.finance.core.domain.model.account
  * @param changeTimestamp Timestamp when change occurred
  * @param previousState Account state before change
  */
-data class AccountHistory(
+data class History(
     val id: Int,
     val accountId: Int,
     val createdAt: String,
     val changeType: String,
-    val newState: NewState,
+    val newState: NewState?,
     val changeTimestamp: String,
-    val previousState: PreviousState
+    val previousState: PreviousState?
+)
+
+data class AccountHistory(
+    val accountId: Int,
+    val accountName: String,
+    val currency: String,
+    val currentBalance: Double,
+    val history: List<History>
 )

@@ -8,6 +8,7 @@ data class UiAccountModel(
     val icon: String?,
     val balance: String,
     val currency: CurrencyType,
+    val balanceHistory: List<Int>
 ) {
 
     companion object {
@@ -18,7 +19,8 @@ data class UiAccountModel(
                 name = String(),
                 balance = "0",
                 icon = String(),
-                currency = CurrencyType.RUB
+                currency = CurrencyType.RUB,
+                balanceHistory = listOf()
             )
     }
 }
