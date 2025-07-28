@@ -79,7 +79,8 @@ fun BalanceChart(
     BoxWithConstraints(modifier = modifier) {
         val availableWidth = constraints.maxWidth.toFloat()
         val spacing = 16f
-        val maxBars = ((availableWidth + spacing) / (barThickness + spacing)).toInt().coerceAtLeast(1)
+        val maxBars =
+            ((availableWidth + spacing) / (barThickness + spacing)).toInt().coerceAtLeast(1)
         val visibleData = if (data.size > maxBars) data.take(maxBars) else data
 
         Canvas(modifier = Modifier.matchParentSize()) {
@@ -148,7 +149,10 @@ fun BalanceChart(
                     color = barColor
                 )
 
-                if (index % 3 == 0 || index == visibleData.lastIndex) {
+                if (
+                    visibleData.size > 10 &&
+                    (index % (visibleData.size / 2) == 0 || index == visibleData.lastIndex || index == 0)
+                ) {
                     drawContext.canvas.nativeCanvas.apply {
                         val cleanDate = item.date.split("_")[0]
                         val dateText = try {
@@ -223,16 +227,61 @@ fun BalanceChart(
 @Composable
 private fun BalanceChartPreview() {
     val testData = listOf(
-        BalanceChartItem(balance = 60000.0, change = 60000.0, date = "2024-07-26", isIncrease = true),
-        BalanceChartItem(balance = -1000.0, change = -1000.0, date = "2024-07-25", isIncrease = false),
-        BalanceChartItem(balance = -1000.0, change = -1000.0, date = "2024-07-24", isIncrease = false),
-        BalanceChartItem(balance = 26000.0, change = 26000.0, date = "2024-07-23", isIncrease = true),
-        BalanceChartItem(balance = 26000.0, change = 26000.0, date = "2024-07-22", isIncrease = true),
-        BalanceChartItem(balance = -5000.0, change = -5000.0, date = "2024-07-21", isIncrease = false),
-        BalanceChartItem(balance = 15000.0, change = 15000.0, date = "2024-07-20", isIncrease = true),
-        BalanceChartItem(balance = -2000.0, change = -2000.0, date = "2024-07-19", isIncrease = false),
+        BalanceChartItem(
+            balance = 60000.0,
+            change = 60000.0,
+            date = "2024-07-26",
+            isIncrease = true
+        ),
+        BalanceChartItem(
+            balance = -1000.0,
+            change = -1000.0,
+            date = "2024-07-25",
+            isIncrease = false
+        ),
+        BalanceChartItem(
+            balance = -1000.0,
+            change = -1000.0,
+            date = "2024-07-24",
+            isIncrease = false
+        ),
+        BalanceChartItem(
+            balance = 26000.0,
+            change = 26000.0,
+            date = "2024-07-23",
+            isIncrease = true
+        ),
+        BalanceChartItem(
+            balance = 26000.0,
+            change = 26000.0,
+            date = "2024-07-22",
+            isIncrease = true
+        ),
+        BalanceChartItem(
+            balance = -5000.0,
+            change = -5000.0,
+            date = "2024-07-21",
+            isIncrease = false
+        ),
+        BalanceChartItem(
+            balance = 15000.0,
+            change = 15000.0,
+            date = "2024-07-20",
+            isIncrease = true
+        ),
+        BalanceChartItem(
+            balance = -2000.0,
+            change = -2000.0,
+            date = "2024-07-19",
+            isIncrease = false
+        ),
         BalanceChartItem(balance = 8000.0, change = 8000.0, date = "2024-07-18", isIncrease = true),
-        BalanceChartItem(balance = -3000.0, change = -3000.0, date = "2024-07-17", isIncrease = false),
+        BalanceChartItem(
+            balance = -3000.0,
+            change = -3000.0,
+            date = "2024-07-17",
+            isIncrease = false
+        ),
     )
 
     Column(

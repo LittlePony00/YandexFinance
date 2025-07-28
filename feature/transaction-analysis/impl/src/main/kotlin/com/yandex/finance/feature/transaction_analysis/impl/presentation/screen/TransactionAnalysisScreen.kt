@@ -55,6 +55,7 @@ import com.yandex.finance.feature.transaction_analysis.api.domain.model.Category
 import com.yandex.finance.feature.transaction_analysis.api.domain.model.TransactionAnalysisModel
 import com.yandex.finance.feature.transaction_analysis.impl.R
 import com.yandex.finance.feature.transaction_analysis.impl.presentation.viewmodel.TransactionAnalysisViewModel
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -304,7 +305,7 @@ private fun CategoryChartSection(
                             isPercent = true,
                             diagramInfoList = list.map {
                                 UiDiagramInfo(
-                                    value = it.percentage.toInt(),
+                                    value = it.percentage.roundToInt(),
                                     name = it.categoryName
                                 )
                             },
@@ -337,7 +338,7 @@ private fun CategoryChartSection(
                             },
                             data = list.map {
                                 UiDiagramInfo(
-                                    value = it.percentage.toInt(),
+                                    value = it.percentage.roundToInt(),
                                     name = it.categoryName
                                 )
                             }
@@ -392,7 +393,7 @@ private fun CategoryAnalysisItem(
                 horizontalAlignment = Alignment.End
             ) {
                 Text(
-                    text = "${categoryItem.percentage.toInt()}%",
+                    text = "${categoryItem.percentage.roundToInt()}%",
                     style = RobotoBodyLargeStyle
                 )
                 Text(

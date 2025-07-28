@@ -27,4 +27,6 @@
     <string name="haptics_description">Enable vibration for tactile feedback when pressing tabs.</string>
     <string name="last_sync">Last sync: %s</string>
     <string name="load_error">Load error</string>
+    <string name="app_version_label">App version</string>
+    <string name="app_update_label">Last update</string>
 </resources> 

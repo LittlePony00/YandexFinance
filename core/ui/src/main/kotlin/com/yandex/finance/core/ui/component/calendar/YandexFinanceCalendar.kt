@@ -51,7 +51,10 @@ fun YandexFinanceCalendar(
                 )
             }
         },
-        colors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.secondary),
+        colors = DatePickerDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            weekdayContentColor = MaterialTheme.colorScheme.surface
+        ),
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(

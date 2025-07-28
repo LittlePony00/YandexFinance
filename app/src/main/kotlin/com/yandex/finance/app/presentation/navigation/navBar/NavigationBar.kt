@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.text.style.TextOverflow
 import com.yandex.finance.core.datastore.SettingsDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -84,6 +85,8 @@ fun YandexFinanceNavigationBar(
                 label = {
                     Text(
                         text = stringResource(item.title),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
                         style = RobotoLabelMediumStyle.copy(
                             color = if (isSelected) {
                                 MaterialTheme.colorScheme.onSurface

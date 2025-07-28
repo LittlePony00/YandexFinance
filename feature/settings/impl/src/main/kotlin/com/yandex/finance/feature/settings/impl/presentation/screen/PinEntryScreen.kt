@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -24,8 +25,10 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import com.yandex.finance.core.datastore.PinCodeStorage
 import androidx.compose.ui.res.stringResource
+import com.yandex.finance.core.ui.component.topBar.YandexFinanceTopAppBar
 import com.yandex.finance.feature.settings.impl.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PinEntryScreen(
     app: Application,
@@ -37,10 +40,14 @@ fun PinEntryScreen(
 
     Scaffold(
         topBar = {
-            Text(
-                text = stringResource(R.string.enter_pin),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(16.dp)
+            YandexFinanceTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.enter_pin),
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
             )
         }
     ) { innerPadding ->
